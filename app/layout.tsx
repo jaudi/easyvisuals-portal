@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "EasyVisuals — Visual Analytics for Finance Teams",
+  title: "FinancePlots — Visual Analytics for Finance Teams",
   description:
     "Custom dashboards and finance tools. Pay per solution, not per user. Power BI alternative for SMBs.",
 };

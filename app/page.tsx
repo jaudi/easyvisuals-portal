@@ -42,7 +42,7 @@ export default function Home() {
             </ul>
           </div>
           <div className="bg-blue-950/30 border border-blue-700/40 rounded-xl p-8">
-            <h3 className="text-blue-400 font-bold text-lg mb-4">The EasyVisuals Solution</h3>
+            <h3 className="text-blue-400 font-bold text-lg mb-4">The FinancePlots Solution</h3>
             <ul className="text-gray-300 space-y-3 text-sm">
               <li>✅ Pay once per dashboard</li>
               <li>✅ Unlimited viewers, no per-seat fees</li>
@@ -141,7 +141,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-gray-800 py-8 px-6 text-center text-gray-500 text-sm">
-        © 2026 EasyVisuals · Visual analytics for everyone
+        © 2026 FinancePlots · Visual analytics for finance teams
       </footer>
     </main>
   );
