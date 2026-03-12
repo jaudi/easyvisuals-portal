@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const STREAMLIT_BASE = "https://finance-tools-i4jfj2y88rs9r4hpquligl.streamlit.app";
+const STREAMLIT_BASE = "https://hepmp6yh.up.railway.app";
 
 const TOOLS = [
   {
