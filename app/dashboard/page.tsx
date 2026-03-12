@@ -52,7 +52,7 @@ export default function DashboardPage() {
       {/* Top bar */}
       <header className="bg-[#0d1426] border-b border-gray-800 px-6 py-4 flex items-center justify-between">
         <a href="/" className="text-white font-bold text-lg tracking-tight">
-          Easy<span className="text-blue-400">Visuals</span>
+          Finance<span className="text-blue-400">Plots</span>
         </a>
         <nav className="flex gap-2 overflow-x-auto max-w-2xl">
           {TOOLS.map((tool) => (
