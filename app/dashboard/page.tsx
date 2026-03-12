@@ -40,6 +40,21 @@ const TOOLS = [
     label: "Stock Analysis",
     url: `${STREAMLIT_BASE}/Stock_Analysis?embed=true&embed_options=show_sidebar`,
   },
+  {
+    id: "cash-flow-forecast",
+    label: "Cash Flow Forecast",
+    url: `${STREAMLIT_BASE}/Cash_Flow_Forecast?embed=true&embed_options=show_sidebar`,
+  },
+  {
+    id: "break-even",
+    label: "Break-Even",
+    url: `${STREAMLIT_BASE}/Break_Even?embed=true&embed_options=show_sidebar`,
+  },
+  {
+    id: "valuation",
+    label: "Valuation",
+    url: `${STREAMLIT_BASE}/Valuation?embed=true&embed_options=show_sidebar`,
+  },
 ];
 
 export default function DashboardPage() {
