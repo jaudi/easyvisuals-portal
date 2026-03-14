@@ -1,12 +1,5 @@
 import type { Metadata } from "next";
 
-// ── Replace these two values once accounts are set up ──────────────────────
-// 1. Stripe: create a Payment Link at dashboard.stripe.com → paste URL below
-const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/REPLACE_WITH_YOUR_LINK";
-// 2. Formspree: sign up at formspree.io → create form → paste endpoint below
-const FORMSPREE_ENDPOINT  = "https://formspree.io/f/REPLACE_WITH_YOUR_ID";
-// ───────────────────────────────────────────────────────────────────────────
-
 export const metadata: Metadata = {
   title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
   description:
@@ -20,7 +13,6 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 overflow-hidden">
-        {/* Glow */}
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <span className="inline-block text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full px-4 py-1.5 mb-6">
@@ -192,7 +184,7 @@ export default function Home() {
                     "Click any tool — opens instantly in your browser",
                     "Enter your data in the sidebar",
                     "See live charts and KPIs update in real time",
-                    "Export to PDF or Excel (Pro)",
+                    "Export to PDF or Excel",
                   ].map((step, i) => (
                     <li key={step} className="flex gap-2 text-gray-400 text-sm">
                       <span className="text-blue-400 font-bold shrink-0">{i + 1}.</span>{step}
@@ -214,73 +206,104 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Pricing ── */}
-      <section id="pricing" className="bg-[#0d1426] py-20 px-6">
+      {/* ── Free Forever banner ── */}
+      <section className="bg-[#0d1426] py-16 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-3">Pricing</p>
-          <h2 className="text-3xl font-bold mb-3">Simple &amp; Transparent</h2>
-          <p className="text-gray-400 mb-12">Use everything free. Pay only if you want to export reports.</p>
-          <div className="grid md:grid-cols-2 gap-6 text-left">
+          <div className="bg-blue-600/5 border border-blue-700/30 rounded-2xl p-10">
+            <span className="inline-block text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full px-4 py-1.5 mb-6">
+              Always Free
+            </span>
+            <h2 className="text-3xl font-bold mb-4">No pricing. No plans. No catch.</h2>
+            <p className="text-gray-400 text-base max-w-xl mx-auto mb-8 leading-relaxed">
+              Every tool on FinancePlots is free — including PDF and Excel exports.
+              No account, no credit card, no time limit. Finance tools should be accessible to everyone.
+            </p>
+            <div className="flex flex-wrap justify-center gap-6 mb-8">
+              {[
+                ["✓", "All 11 tools free"],
+                ["✓", "PDF & Excel exports free"],
+                ["✓", "No signup ever"],
+                ["✓", "No ads"],
+              ].map(([check, text]) => (
+                <div key={text} className="flex items-center gap-2 text-gray-300 text-sm">
+                  <span className="text-green-400 font-bold">{check}</span>{text}
+                </div>
+              ))}
+            </div>
+            <a
+              href="/dashboard"
+              className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl transition shadow-lg shadow-blue-600/25"
+            >
+              Open All Tools →
+            </a>
+          </div>
+        </div>
+      </section>
 
-            <div className="bg-[#111827] border border-gray-700 rounded-2xl p-8">
-              <div className="text-4xl font-extrabold text-white mb-1">€0</div>
-              <p className="text-gray-500 text-sm mb-6 font-semibold uppercase tracking-wider">Free · Forever</p>
-              <ul className="space-y-3 text-sm text-gray-300 mb-8">
+      {/* ── Custom Dashboards ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">For companies</p>
+          <h2 className="text-3xl font-bold text-center mb-4">Need a custom dashboard?</h2>
+          <p className="text-gray-400 text-center max-w-2xl mx-auto mb-14 leading-relaxed">
+            We build bespoke financial dashboards for companies — branded, connected to your data,
+            and delivered as a hosted link or self-hosted Docker file.
+          </p>
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {[
+              {
+                icon: "📊",
+                title: "Revenue & KPI Dashboard",
+                desc: "Monthly revenue, burn rate, MoM growth, churn — all from your spreadsheet or database.",
+              },
+              {
+                icon: "💰",
+                title: "Cash Flow Monitor",
+                desc: "13-week rolling forecast with actuals tracking, variance alerts and PDF reporting.",
+              },
+              {
+                icon: "📈",
+                title: "Portfolio Tracker",
+                desc: "Client-facing portfolio dashboard with performance, allocation and risk metrics.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="bg-[#0d1426] border border-gray-800 rounded-2xl p-7 hover:border-blue-700/50 transition">
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-white font-bold text-base mb-2">{item.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="bg-[#0d1426] border border-gray-800 rounded-2xl p-8 flex flex-col md:flex-row items-center gap-8">
+            <div className="flex-1">
+              <h3 className="text-white font-bold text-xl mb-2">How it works</h3>
+              <ol className="space-y-2">
                 {[
-                  "All 11 finance tools",
-                  "Personal & professional FP&A",
-                  "CSV data downloads",
-                  "Unlimited usage",
-                  "No account required",
-                ].map((item) => (
-                  <li key={item} className="flex gap-2 items-center">
-                    <span className="text-green-400 font-bold">✓</span>{item}
+                  "You describe the KPIs and data sources you need",
+                  "We build a custom Streamlit dashboard in 3–5 days",
+                  "Delivered as a hosted link or Docker file (runs in your environment)",
+                  "One-time project fee — no recurring charges",
+                ].map((step, i) => (
+                  <li key={step} className="flex gap-3 text-gray-400 text-sm">
+                    <span className="text-blue-400 font-bold shrink-0 mt-0.5">{i + 1}.</span>{step}
                   </li>
                 ))}
-              </ul>
+              </ol>
+            </div>
+            <div className="shrink-0">
               <a
-                href="/dashboard"
-                className="block text-center border border-blue-600 hover:bg-blue-600/10 text-blue-400 hover:text-blue-300 font-semibold py-3 rounded-xl transition"
+                href="#contact"
+                className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl transition shadow-lg shadow-blue-600/25 text-sm"
               >
-                Start Free
+                Request a Custom Dashboard →
               </a>
             </div>
-
-            <div className="bg-[#111827] border-2 border-blue-600 rounded-2xl p-8 relative">
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-bold text-white bg-blue-600 rounded-full px-4 py-1">
-                Most Popular
-              </span>
-              <div className="text-4xl font-extrabold text-white mb-1">€4.99<span className="text-lg text-gray-400 font-normal">/mo</span></div>
-              <p className="text-gray-500 text-sm mb-6 font-semibold uppercase tracking-wider">Pro Exports</p>
-              <ul className="space-y-3 text-sm text-gray-300 mb-8">
-                {[
-                  "Everything in Free",
-                  "PDF report exports",
-                  "Excel workbook exports",
-                  "Priority support",
-                  "Custom dashboard request",
-                ].map((item) => (
-                  <li key={item} className="flex gap-2 items-center">
-                    <span className="text-green-400 font-bold">✓</span>{item}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={STRIPE_PAYMENT_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-600/25"
-              >
-                Get Pro Exports
-              </a>
-            </div>
-
           </div>
         </div>
       </section>
 
       {/* ── Blog teaser ── */}
-      <section className="py-20 px-6">
+      <section className="bg-[#0d1426] py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">From the blog</p>
           <h2 className="text-3xl font-bold text-center mb-12">FP&amp;A Guides &amp; Articles</h2>
@@ -293,7 +316,7 @@ export default function Home() {
               <a
                 key={a.slug}
                 href={`/blog/${a.slug}`}
-                className="block bg-[#0d1426] border border-gray-800 rounded-2xl p-6 hover:border-blue-700/50 transition group"
+                className="block bg-[#111827] border border-gray-800 rounded-2xl p-6 hover:border-blue-700/50 transition group"
               >
                 <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">{a.tag}</span>
                 <h3 className="text-white font-semibold mt-2 text-sm leading-snug group-hover:text-blue-300 transition">{a.title}</h3>
@@ -310,27 +333,29 @@ export default function Home() {
       </section>
 
       {/* ── Contact ── */}
-      <section id="contact" className="bg-[#0d1426] py-20 px-6">
+      <section id="contact" className="py-20 px-6">
         <div className="max-w-xl mx-auto">
           <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">Contact</p>
           <h2 className="text-3xl font-bold text-center mb-3">Get in Touch</h2>
           <p className="text-gray-400 text-center mb-10 text-sm">
-            Questions, custom dashboard requests, or Pro access — we reply within 24 hours.
+            Questions, custom dashboard requests, or feedback — we reply within 24 hours.
           </p>
-          <form action={FORMSPREE_ENDPOINT} method="POST" className="space-y-4">
+          <form action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST" className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="text"
+                name="name"
                 placeholder="Your name"
                 className="w-full bg-[#111827] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition"
               />
               <input
                 type="email"
+                name="email"
                 placeholder="Email address"
                 className="w-full bg-[#111827] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition"
               />
             </div>
-            <select className="w-full bg-[#111827] border border-gray-700 rounded-xl px-4 py-3 text-gray-300 focus:outline-none focus:border-blue-500 transition">
+            <select name="type" className="w-full bg-[#111827] border border-gray-700 rounded-xl px-4 py-3 text-gray-300 focus:outline-none focus:border-blue-500 transition">
               <option value="">I am a...</option>
               <option>Individual investor</option>
               <option>Finance team / company</option>
@@ -339,8 +364,9 @@ export default function Home() {
               <option>Other</option>
             </select>
             <textarea
+              name="message"
               rows={4}
-              placeholder="How can we help? (custom dashboard, Pro access, question...)"
+              placeholder="How can we help? (custom dashboard, question, feedback...)"
               className="w-full bg-[#111827] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition"
             />
             <button
@@ -366,7 +392,6 @@ export default function Home() {
             <div className="flex gap-8 text-sm text-gray-500">
               <a href="/dashboard" className="hover:text-gray-300 transition">Tools</a>
               <a href="/blog" className="hover:text-gray-300 transition">Blog</a>
-              <a href="/#pricing" className="hover:text-gray-300 transition">Pricing</a>
               <a href="/#contact" className="hover:text-gray-300 transition">Contact</a>
             </div>
           </div>
