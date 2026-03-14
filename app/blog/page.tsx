@@ -2,11 +2,31 @@ import Link from "next/link";
 
 const articles = [
   {
+    slug: "financial-forecasting",
+    title: "Why Financial Forecasting Is the Most Underused Tool in Business",
+    date: "March 2026",
+    description: "Most businesses react to numbers. The best ones anticipate them. Here's why forecasting is the foundation of every sound business decision.",
+    tag: "Corporate Finance",
+  },
+  {
+    slug: "bootstrapping-runway",
+    title: "Bootstrapping & Runway: How to Extend Your Startup's Life Without Giving Up Equity",
+    date: "March 2026",
+    description: "Every month of runway is a month of optionality. How founders can think rigorously about burn rate and capital efficiency before the pressure is on.",
+    tag: "Startup Finance",
+  },
+  {
+    slug: "uk-pension-savings",
+    title: "The UK Pension Puzzle: Why Starting Early Could Mean £200,000 More in Retirement",
+    date: "March 2026",
+    description: "How the UK tax system makes pension contributions one of the most efficient wealth-building tools available — and why most people underuse it.",
+    tag: "Personal Finance",
+  },
+  {
     slug: "powerbi-vs-streamlit",
     title: "Power BI vs Streamlit: Which One Is Right for Your Finance Team?",
     date: "March 2026",
-    description:
-      "An honest comparison of two popular analytics tools — pros, cons, and when to use each.",
+    description: "An honest comparison of two popular analytics tools — pros, cons, and when to use each.",
     tag: "Analysis",
   },
 ];
