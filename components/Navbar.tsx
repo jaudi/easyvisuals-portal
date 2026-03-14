@@ -20,8 +20,8 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
-          <Link href="/#products" className="hover:text-white transition">Products</Link>
           <Link href="/blog" className="hover:text-white transition">Blog</Link>
+          <Link href="/#pricing" className="hover:text-white transition">Pricing</Link>
           <Link href="/#contact" className="hover:text-white transition">Contact</Link>
           <Link
             href="/dashboard"
@@ -43,8 +43,8 @@ export default function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden bg-[#0d1426] border-t border-gray-800 px-6 py-4 flex flex-col gap-4 text-sm">
-          <Link href="/#products" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>Products</Link>
           <Link href="/blog" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>Blog</Link>
+          <Link href="/#pricing" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>Pricing</Link>
           <Link href="/#contact" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>Contact</Link>
           <Link href="/dashboard" className="text-blue-400 font-semibold" onClick={() => setMenuOpen(false)}>Finance Tools →</Link>
         </div>
