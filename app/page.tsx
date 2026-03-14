@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 
+// ── Replace these two values once accounts are set up ──────────────────────
+// 1. Stripe: create a Payment Link at dashboard.stripe.com → paste URL below
+const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/REPLACE_WITH_YOUR_LINK";
+// 2. Formspree: sign up at formspree.io → create form → paste endpoint below
+const FORMSPREE_ENDPOINT  = "https://formspree.io/f/REPLACE_WITH_YOUR_ID";
+// ───────────────────────────────────────────────────────────────────────────
+
 export const metadata: Metadata = {
   title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
   description:
@@ -259,7 +266,9 @@ export default function Home() {
                 ))}
               </ul>
               <a
-                href="#contact"
+                href={STRIPE_PAYMENT_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-600/25"
               >
                 Get Pro Exports
@@ -308,7 +317,7 @@ export default function Home() {
           <p className="text-gray-400 text-center mb-10 text-sm">
             Questions, custom dashboard requests, or Pro access — we reply within 24 hours.
           </p>
-          <form className="space-y-4">
+          <form action={FORMSPREE_ENDPOINT} method="POST" className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="text"
