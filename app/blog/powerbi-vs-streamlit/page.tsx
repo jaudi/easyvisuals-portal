@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "Power BI vs Streamlit: Which One Is Right for Your Finance Team? | FinancePlots",
+  description: "An honest comparison of two popular analytics tools for finance teams — costs, flexibility, speed to deploy, and when to use each.",
+  openGraph: {
+    title: "Power BI vs Streamlit: Which One Is Right for Your Finance Team?",
+    description: "An honest comparison of two popular analytics tools for finance teams — costs, flexibility, speed to deploy, and when to use each.",
+    url: "https://www.financeplots.com/blog/powerbi-vs-streamlit",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Power BI vs Streamlit: Which One Is Right for Your Finance Team?",
+    description: "An honest comparison of two popular analytics tools for finance teams — costs, flexibility, speed to deploy, and when to use each.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function ArticlePowerBIvsStreamlit() {
   return (
@@ -124,6 +145,11 @@ export default function ArticlePowerBIvsStreamlit() {
             For finance teams at SMBs who need tailored dashboards without paying per-seat licensing fees, a custom Streamlit solution can deliver the same insights at a fraction of the ongoing cost.
           </p>
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/powerbi-vs-streamlit"
+          title="Power BI vs Streamlit: Which One Is Right for Your Finance Team?"
+        />
 
         {/* CTA */}
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">

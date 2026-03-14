@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "Break-Even Analysis: The First Financial Calculation Every Business Owner Should Know | FinancePlots",
+  description: "Fixed costs, variable costs, contribution margin and margin of safety — the break-even formula every founder and finance team should master.",
+  openGraph: {
+    title: "Break-Even Analysis: The First Financial Calculation Every Business Owner Should Know",
+    description: "Fixed costs, variable costs, contribution margin and margin of safety — the break-even formula every founder and finance team should master.",
+    url: "https://www.financeplots.com/blog/break-even-analysis-guide",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Break-Even Analysis: The First Financial Calculation Every Business Owner Should Know",
+    description: "Fixed costs, variable costs, contribution margin and margin of safety — the break-even formula every founder and finance team should master.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function BreakEvenAnalysisGuide() {
   return (
@@ -135,6 +156,11 @@ export default function BreakEvenAnalysisGuide() {
           </p>
 
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/break-even-analysis-guide"
+          title="Break-Even Analysis: The First Financial Calculation Every Business Owner Should Know"
+        />
 
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">
           <h3 className="text-xl font-bold mb-2">Calculate Your Break-Even Point Free</h3>

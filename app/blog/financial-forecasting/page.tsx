@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "Why Financial Forecasting Is the Most Underused Tool in Business | FinancePlots",
+  description: "Most businesses react to numbers. The best ones anticipate them. Why financial forecasting is the single most important habit a business can build.",
+  openGraph: {
+    title: "Why Financial Forecasting Is the Most Underused Tool in Business",
+    description: "Most businesses react to numbers. The best ones anticipate them. Why financial forecasting is the single most important habit a business can build.",
+    url: "https://www.financeplots.com/blog/financial-forecasting",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Why Financial Forecasting Is the Most Underused Tool in Business",
+    description: "Most businesses react to numbers. The best ones anticipate them. Why financial forecasting is the single most important habit a business can build.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function ArticleFinancialForecasting() {
   return (
@@ -114,6 +135,11 @@ export default function ArticleFinancialForecasting() {
           </p>
 
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/financial-forecasting"
+          title="Why Financial Forecasting Is the Most Underused Tool in Business"
+        />
 
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">
           <h3 className="text-xl font-bold mb-2">Build Your Financial Forecast</h3>

@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "How to Build a 5-Year Financial Model for Your Business | FinancePlots",
+  description: "A complete guide to building a three-statement financial model — P&L, cash flow and balance sheet — that investors and banks will trust.",
+  openGraph: {
+    title: "How to Build a 5-Year Financial Model for Your Business",
+    description: "A complete guide to building a three-statement financial model — P&L, cash flow and balance sheet — that investors and banks will trust.",
+    url: "https://www.financeplots.com/blog/5-year-financial-model",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "How to Build a 5-Year Financial Model for Your Business",
+    description: "A complete guide to building a three-statement financial model — P&L, cash flow and balance sheet — that investors and banks will trust.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function FiveYearFinancialModel() {
   return (
@@ -135,6 +156,11 @@ export default function FiveYearFinancialModel() {
           </p>
 
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/5-year-financial-model"
+          title="How to Build a 5-Year Financial Model for Your Business"
+        />
 
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">
           <h3 className="text-xl font-bold mb-2">Build Your 5-Year Financial Model Free</h3>

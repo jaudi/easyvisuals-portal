@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "The UK Pension Puzzle: Why Starting Early Could Mean £200,000 More in Retirement | FinancePlots",
+  description: "How the UK tax system makes pension contributions one of the most efficient wealth-building tools available — and why most people underuse it.",
+  openGraph: {
+    title: "The UK Pension Puzzle: Why Starting Early Could Mean £200,000 More in Retirement",
+    description: "How the UK tax system makes pension contributions one of the most efficient wealth-building tools available — and why most people underuse it.",
+    url: "https://www.financeplots.com/blog/uk-pension-savings",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The UK Pension Puzzle: Why Starting Early Could Mean £200,000 More in Retirement",
+    description: "How the UK tax system makes pension contributions one of the most efficient wealth-building tools available — and why most people underuse it.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function ArticleUKPensionSavings() {
   return (
@@ -134,6 +155,11 @@ export default function ArticleUKPensionSavings() {
           </ul>
 
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/uk-pension-savings"
+          title="The UK Pension Puzzle: Why Starting Early Could Mean £200,000 More in Retirement"
+        />
 
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">
           <h3 className="text-xl font-bold mb-2">Model Your Retirement</h3>

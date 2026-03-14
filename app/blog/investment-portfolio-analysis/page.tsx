@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "How to Analyse Your Investment Portfolio: Return, Risk and Diversification | FinancePlots",
+  description: "Most investors only track returns. Learn how to measure risk-adjusted returns, portfolio volatility, Sharpe ratio and diversification properly.",
+  openGraph: {
+    title: "How to Analyse Your Investment Portfolio: Return, Risk and Diversification",
+    description: "Most investors only track returns. Learn how to measure risk-adjusted returns, portfolio volatility, Sharpe ratio and diversification properly.",
+    url: "https://www.financeplots.com/blog/investment-portfolio-analysis",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "How to Analyse Your Investment Portfolio: Return, Risk and Diversification",
+    description: "Most investors only track returns. Learn how to measure risk-adjusted returns, portfolio volatility, Sharpe ratio and diversification properly.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function InvestmentPortfolioAnalysis() {
   return (
@@ -145,6 +166,11 @@ export default function InvestmentPortfolioAnalysis() {
           </p>
 
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/investment-portfolio-analysis"
+          title="How to Analyse Your Investment Portfolio: Return, Risk and Diversification"
+        />
 
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">
           <h3 className="text-xl font-bold mb-2">Analyse Your Portfolio Free — No Signup</h3>

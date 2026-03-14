@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "DCF Valuation Explained: How to Value a Business Using Discounted Cash Flow | FinancePlots",
+  description: "The gold standard for business valuation explained clearly — free cash flows, WACC, terminal value, and how to interpret the output.",
+  openGraph: {
+    title: "DCF Valuation Explained: How to Value a Business Using Discounted Cash Flow",
+    description: "The gold standard for business valuation explained clearly — free cash flows, WACC, terminal value, and how to interpret the output.",
+    url: "https://www.financeplots.com/blog/dcf-valuation-guide",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DCF Valuation Explained: How to Value a Business Using Discounted Cash Flow",
+    description: "The gold standard for business valuation explained clearly — free cash flows, WACC, terminal value, and how to interpret the output.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function DcfValuationGuide() {
   return (
@@ -135,6 +156,11 @@ export default function DcfValuationGuide() {
           </p>
 
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/dcf-valuation-guide"
+          title="DCF Valuation Explained: How to Value a Business Using Discounted Cash Flow"
+        />
 
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">
           <h3 className="text-xl font-bold mb-2">Try the Free DCF Valuation Tool</h3>

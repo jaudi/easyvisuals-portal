@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "The 13-Week Cash Flow Forecast: Why Every Business Needs One | FinancePlots",
+  description: "Profit and cash are not the same thing. Learn how to build a 13-week rolling cash flow forecast that gives your business real financial visibility.",
+  openGraph: {
+    title: "The 13-Week Cash Flow Forecast: Why Every Business Needs One",
+    description: "Profit and cash are not the same thing. Learn how to build a 13-week rolling cash flow forecast that gives your business real financial visibility.",
+    url: "https://www.financeplots.com/blog/cash-flow-forecast-guide",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The 13-Week Cash Flow Forecast: Why Every Business Needs One",
+    description: "Profit and cash are not the same thing. Learn how to build a 13-week rolling cash flow forecast that gives your business real financial visibility.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function CashFlowForecastGuide() {
   return (
@@ -141,6 +162,11 @@ export default function CashFlowForecastGuide() {
           </p>
 
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/cash-flow-forecast-guide"
+          title="The 13-Week Cash Flow Forecast: Why Every Business Needs One"
+        />
 
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">
           <h3 className="text-xl font-bold mb-2">Try the Free 13-Week Cash Flow Forecast Tool</h3>

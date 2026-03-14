@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "How to Build an Annual Budget That Your Finance Team Will Actually Use | FinancePlots",
+  description: "Most company budgets fail because they are set once and ignored. Learn zero-based budgeting, rolling forecasts, and how to get department buy-in.",
+  openGraph: {
+    title: "How to Build an Annual Budget That Your Finance Team Will Actually Use",
+    description: "Most company budgets fail because they are set once and ignored. Learn zero-based budgeting, rolling forecasts, and how to get department buy-in.",
+    url: "https://www.financeplots.com/blog/annual-budget-guide",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "How to Build an Annual Budget That Your Finance Team Will Actually Use",
+    description: "Most company budgets fail because they are set once and ignored. Learn zero-based budgeting, rolling forecasts, and how to get department buy-in.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function AnnualBudgetGuide() {
   return (
@@ -146,6 +167,11 @@ export default function AnnualBudgetGuide() {
           </p>
 
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/annual-budget-guide"
+          title="How to Build an Annual Budget That Your Finance Team Will Actually Use"
+        />
 
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">
           <h3 className="text-xl font-bold mb-2">Build Your Annual Budget Free</h3>

@@ -1,4 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import ShareButtons from "@/components/ShareButtons";
+
+export const metadata: Metadata = {
+  title: "Bootstrapping & Runway: How to Extend Your Startup's Life Without Giving Up Equity | FinancePlots",
+  description: "How founders can think rigorously about burn rate, runway and capital efficiency — before the pressure is on.",
+  openGraph: {
+    title: "Bootstrapping & Runway: How to Extend Your Startup's Life Without Giving Up Equity",
+    description: "How founders can think rigorously about burn rate, runway and capital efficiency — before the pressure is on.",
+    url: "https://www.financeplots.com/blog/bootstrapping-runway",
+    siteName: "FinancePlots",
+    type: "article",
+    images: [{ url: "https://www.financeplots.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bootstrapping & Runway: How to Extend Your Startup's Life Without Giving Up Equity",
+    description: "How founders can think rigorously about burn rate, runway and capital efficiency — before the pressure is on.",
+    images: ["https://www.financeplots.com/og-image.png"],
+  },
+};
 
 export default function ArticleBootstrappingRunway() {
   return (
@@ -117,6 +138,11 @@ export default function ArticleBootstrappingRunway() {
           <p>A founder who can explain their unit economics in two minutes is a founder who raises faster and at better terms.</p>
 
         </div>
+
+        <ShareButtons
+          url="https://www.financeplots.com/blog/bootstrapping-runway"
+          title="Bootstrapping & Runway: How to Extend Your Startup's Life Without Giving Up Equity"
+        />
 
         <div className="mt-14 bg-[#0d1426] border border-blue-700/40 rounded-xl p-8 text-center">
           <h3 className="text-xl font-bold mb-2">Model Your Runway</h3>
