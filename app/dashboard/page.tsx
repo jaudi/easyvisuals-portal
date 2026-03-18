@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const STREAMLIT_BASE = "https://tools.financeplots.com";
+const STREAMLIT_BASE = "https://humble-beauty-production-82c1.up.railway.app";
 
 const CATEGORIES = [
   {
