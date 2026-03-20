@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
@@ -341,7 +340,14 @@ export default function Home() {
           <p className="text-gray-400 text-center mb-10 text-sm">
             Questions, custom dashboard requests, or feedback — we reply within 24 hours.
           </p>
-          <ContactForm />
+          <div className="text-center">
+            <a
+              href="mailto:hello@financeplots.com"
+              className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-xl transition shadow-lg shadow-blue-600/25"
+            >
+              Email us at hello@financeplots.com
+            </a>
+          </div>
         </div>
       </section>
 
