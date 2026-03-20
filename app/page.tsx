@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
@@ -340,42 +341,7 @@ export default function Home() {
           <p className="text-gray-400 text-center mb-10 text-sm">
             Questions, custom dashboard requests, or feedback — we reply within 24 hours.
           </p>
-          <form action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST" className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your name"
-                className="w-full bg-[#111827] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email address"
-                className="w-full bg-[#111827] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition"
-              />
-            </div>
-            <select name="type" className="w-full bg-[#111827] border border-gray-700 rounded-xl px-4 py-3 text-gray-300 focus:outline-none focus:border-blue-500 transition">
-              <option value="">I am a...</option>
-              <option>Individual investor</option>
-              <option>Finance team / company</option>
-              <option>Wealth manager</option>
-              <option>Startup / founder</option>
-              <option>Other</option>
-            </select>
-            <textarea
-              name="message"
-              rows={4}
-              placeholder="How can we help? (custom dashboard, question, feedback...)"
-              className="w-full bg-[#111827] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition"
-            />
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-600/25"
-            >
-              Send Message
-            </button>
-          </form>
+          <ContactForm />
         </div>
       </section>
 
