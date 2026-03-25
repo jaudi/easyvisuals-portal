@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import ShareButtons from "@/components/ShareButtons";
+import BlogArticleShell from "@/components/BlogArticleShell";
 
 export const metadata: Metadata = {
   title: "Power BI vs Streamlit: Which One Is Right for Your Finance Team? | FinancePlots",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 export default function ArticlePowerBIvsStreamlit() {
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white pt-28 pb-20 px-6">
-      <div className="max-w-2xl mx-auto">
+      <BlogArticleShell>
 
         {/* Back */}
         <Link href="/blog" className="text-blue-400 text-sm hover:text-blue-300 transition mb-8 inline-block">
@@ -165,7 +166,7 @@ export default function ArticlePowerBIvsStreamlit() {
           </Link>
         </div>
 
-      </div>
+      </BlogArticleShell>
     </main>
   );
 }

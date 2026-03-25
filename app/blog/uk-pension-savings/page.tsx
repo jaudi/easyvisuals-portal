@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import ShareButtons from "@/components/ShareButtons";
+import BlogArticleShell from "@/components/BlogArticleShell";
 
 export const metadata: Metadata = {
   title: "The UK Pension Puzzle: Why Starting Early Could Mean £200,000 More in Retirement | FinancePlots",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 export default function ArticleUKPensionSavings() {
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white pt-28 pb-20 px-6">
-      <div className="max-w-2xl mx-auto">
+      <BlogArticleShell>
 
         <Link href="/blog" className="text-blue-400 text-sm hover:text-blue-300 transition mb-8 inline-block">
           ← Back to Blog
@@ -174,7 +175,7 @@ export default function ArticleUKPensionSavings() {
         <p className="text-gray-600 text-xs mt-8 text-center">
           This article is for informational purposes only and does not constitute financial or tax advice. Tax rules are subject to change. Figures based on 2024/25 UK tax year. Consult a qualified IFA for personal guidance.
         </p>
-      </div>
+      </BlogArticleShell>
     </main>
   );
 }
