@@ -10,11 +10,11 @@ const CATEGORIES = [
     label: "Personal",
     emoji: "👤",
     tools: [
+      { id: "personal-budget",     label: "Personal Budget",     url: `${STREAMLIT_BASE}/Personal_Budget?embed=true&embed_options=show_sidebar` },
       { id: "portfolio-analysis",  label: "Portfolio Analysis",  url: `${STREAMLIT_BASE}/Portfolio_Analysis?embed=true&embed_options=show_sidebar` },
       { id: "stock-analysis",      label: "Stock Analysis",      url: `${STREAMLIT_BASE}/Stock_Analysis?embed=true&embed_options=show_sidebar` },
       { id: "stock-comparison",    label: "Stock Comparison",    url: `${STREAMLIT_BASE}/Stock_Comparison?embed=true&embed_options=show_sidebar` },
       { id: "commodities",         label: "Commodities",         url: `${STREAMLIT_BASE}/Commodities?embed=true&embed_options=show_sidebar` },
-      { id: "personal-budget",     label: "Personal Budget",     url: `${STREAMLIT_BASE}/Personal_Budget?embed=true&embed_options=show_sidebar` },
       { id: "lending",             label: "Mortgage & Loans",    url: `${STREAMLIT_BASE}/Lending?embed=true&embed_options=show_sidebar` },
     ],
   },

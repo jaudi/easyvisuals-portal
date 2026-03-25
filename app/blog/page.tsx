@@ -2,6 +2,13 @@ import Link from "next/link";
 
 const articles = [
   {
+    slug: "personal-budget-guide",
+    title: "How to Build a Personal Budget That Actually Works",
+    date: "March 2026",
+    description: "Most people try to budget and give up within a month. A simple, honest framework for taking control of your money — income, expenses, savings rate, and what to do first.",
+    tag: "Personal Finance",
+  },
+  {
     slug: "cash-flow-forecast-guide",
     title: "The 13-Week Cash Flow Forecast: Why Every Business Needs One",
     date: "March 2026",
