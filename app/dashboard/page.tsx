@@ -14,7 +14,7 @@ const CATEGORIES = [
       { id: "portfolio-analysis",  label: "Portfolio Analysis",  url: `${STREAMLIT_BASE}/Portfolio_Analysis?embed=true&embed_options=show_sidebar` },
       { id: "stock-analysis",      label: "Stock Analysis",      url: `${STREAMLIT_BASE}/Stock_Analysis?embed=true&embed_options=show_sidebar` },
       { id: "stock-comparison",    label: "Stock Comparison",    url: `${STREAMLIT_BASE}/Stock_Comparison?embed=true&embed_options=show_sidebar` },
-      { id: "commodities",         label: "Commodities",         url: `${STREAMLIT_BASE}/Commodities?embed=true&embed_options=show_sidebar` },
+      { id: "compound-interest",   label: "Compound Interest",   url: `${STREAMLIT_BASE}/Compound_Interest?embed=true&embed_options=show_sidebar` },
       { id: "lending",             label: "Mortgage & Loans",    url: `${STREAMLIT_BASE}/Lending?embed=true&embed_options=show_sidebar` },
     ],
   },

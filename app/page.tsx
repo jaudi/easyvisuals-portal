@@ -135,7 +135,7 @@ export default function Home() {
                   ["📊", "Portfolio Analysis", "Upload holdings. Analyse returns, risk and asset allocation."],
                   ["📉", "Stock Comparison",   "Compare two tickers side by side — returns, volatility, key ratios."],
                   ["📈", "Stock Analysis",     "Price history, moving averages and cumulative return for any ticker."],
-                  ["🛢️", "Commodities",        "Live prices and charts for Gold, Oil, Copper, Wheat and more."],
+                  ["💹", "Compound Interest",  "See how your capital and monthly contributions grow. Uses historical market benchmarks."],
                   ["🏠", "Mortgage & Loans",   "Amortisation schedule and mortgage payment calculator."],
                 ].map(([icon, name, desc]) => (
                   <li key={name as string} className="flex gap-3 items-start bg-[#0d1426] border border-gray-800 rounded-xl p-4 hover:border-blue-700/50 transition group">
