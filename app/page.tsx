@@ -332,6 +332,30 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Book ── */}
+      <section className="py-16 px-6">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-[#0d1426] border border-blue-700/30 rounded-2xl p-8 flex flex-col md:flex-row items-center gap-8">
+            <div className="text-6xl shrink-0">📖</div>
+            <div className="flex-1 text-center md:text-left">
+              <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-2">By the FinancePlots founder</p>
+              <h2 className="text-2xl font-bold text-white mb-2">Your Money Rules</h2>
+              <p className="text-gray-400 text-sm leading-relaxed mb-5">
+                A practical personal finance book to help you take control of your money, build better habits, and make smarter financial decisions.
+              </p>
+              <a
+                href="https://www.amazon.co.uk/Your-money-rules-Javier-Audibert-ebook/dp/B0GT78FLKJ/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-7 py-3 rounded-xl transition shadow-lg shadow-blue-600/25 text-sm"
+              >
+                Get the book on Amazon →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Contact ── */}
       <section id="contact" className="py-20 px-6">
         <div className="max-w-xl mx-auto">
