@@ -75,7 +75,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <p className="text-white font-semibold text-sm">Break-Even Analysis</p>
+              <p className="text-white font-semibold text-sm">5-Year Financial Model</p>
             </div>
           </div>
           <div className="text-center mt-12">
