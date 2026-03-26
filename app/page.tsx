@@ -57,6 +57,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── See it in action ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">See it in action</p>
+          <h2 className="text-3xl font-bold text-center mb-12">Watch the tools in action</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { id: "UnrCIGV4X5w", title: "Personal Budget Planner" },
+              { id: "G0sTkJ_wjnw", title: "Break-Even Analysis" },
+              { id: "fLTLzyI0vW8", title: "5-Year Financial Model" },
+            ].map(({ id, title }) => (
+              <div key={id} className="flex flex-col items-center gap-4">
+                <div className="w-full max-w-[280px] mx-auto">
+                  <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
+                    <iframe
+                      className="absolute inset-0 w-full h-full rounded-2xl"
+                      src={`https://www.youtube.com/embed/${id}`}
+                      title={title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+                <p className="text-white font-semibold text-sm text-center">{title}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <a
+              href="/dashboard"
+              className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl transition shadow-lg shadow-blue-600/25"
+            >
+              Try All Tools Free →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ── Who it's for ── */}
       <section className="bg-[#0d1426] py-20 px-6">
         <div className="max-w-5xl mx-auto">
