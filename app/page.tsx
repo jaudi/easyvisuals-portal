@@ -68,14 +68,14 @@ export default function Home() {
                 <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
                   <iframe
                     className="absolute inset-0 w-full h-full rounded-2xl"
-                    src="https://www.youtube.com/embed/z56d-d9_V6o"
-                    title="Personal Budget Planner"
+                    src="https://www.youtube.com/embed/MwEDJPlvKG0"
+                    title="Break-Even Analysis"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 </div>
               </div>
-              <p className="text-white font-semibold text-sm">Personal Budget Planner</p>
+              <p className="text-white font-semibold text-sm">Break-Even Analysis</p>
             </div>
           </div>
           <div className="text-center mt-12">
