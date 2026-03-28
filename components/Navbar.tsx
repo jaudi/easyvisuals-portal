@@ -41,12 +41,9 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-1 text-sm text-gray-400">
 
           {/* Tools dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => setToolsOpen(true)}
-            onMouseLeave={() => setToolsOpen(false)}
-          >
+          <div className="relative">
             <button
+              onClick={() => setToolsOpen(v => !v)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg transition font-medium ${
                 pathname?.startsWith("/tools")
                   ? "text-white bg-blue-600/10"
@@ -60,7 +57,11 @@ export default function Navbar() {
             </button>
 
             {toolsOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 bg-[#0d1426] border border-gray-700 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden">
+              <div className="fixed inset-0 z-40" onClick={() => setToolsOpen(false)} />
+            )}
+
+            {toolsOpen && (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 bg-[#0d1426] border border-gray-700 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden z-50">
                 <div className="p-2">
                   {/* Featured */}
                   {TOOLS_LINKS.filter(t => t.highlight).map(t => (
