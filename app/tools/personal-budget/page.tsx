@@ -238,7 +238,7 @@ export default function PersonalBudgetPage() {
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Sidebar */}
             <aside className="lg:w-72 xl:w-80 shrink-0">
-              <div className="lg:sticky lg:top-[133px] flex flex-col gap-4 max-h-[calc(100vh-153px)] overflow-y-auto pr-1">
+              <div className="lg:sticky lg:top-[133px] flex flex-col gap-4">
                 {/* Settings */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Settings</h3>
