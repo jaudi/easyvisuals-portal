@@ -155,7 +155,7 @@ export default function PersonalBudgetPage() {
       category: g.category,
       color: g.color,
       monthly: g.items.reduce((a, i) => a + (expenses[i.key] ?? 0), 0),
-    })).filter(c => c.monthly > 0),
+    })).filter(c => c.monthly > 0).sort((a, b) => b.monthly - a.monthly),
   [expenses]);
 
   const pieData = categoryTotals.map(c => ({ name: c.category, value: c.monthly, color: c.color }));
@@ -176,7 +176,7 @@ export default function PersonalBudgetPage() {
           annual: expenses[i.key] * 12,
           pctExpenses: totalExpenses > 0 ? (expenses[i.key] / totalExpenses) * 100 : 0,
         }))
-    ),
+    ).sort((a, b) => b.monthly - a.monthly),
   [expenses, totalExpenses]);
 
   const handleExportPdf = useCallback(async () => {
