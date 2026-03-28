@@ -210,6 +210,7 @@ export default function FinancialModelPage() {
         <FinancialModelPDF
           companyName={companyName}
           years={years}
+          bsAndCf={bsAndCf}
           cagr={cagr}
           avgEbitdaMargin={avgEbitdaMargin}
           avgNetMargin={avgNetMargin}
