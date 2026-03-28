@@ -137,9 +137,10 @@ export default function PersonalBudgetPage() {
     Object.fromEntries(EXPENSE_GROUPS.flatMap(g => g.items.map(i => [i.key, i.default])))
   );
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(EXPENSE_GROUPS.map(g => [g.category, true]))
+    Object.fromEntries(EXPENSE_GROUPS.map((g, i) => [g.category, i === 0]))
   );
   const [isExporting, setIsExporting] = useState(false);
+  const [pdfError, setPdfError] = useState<string>("");
 
   const toggleGroup = (cat: string) =>
     setOpenGroups(prev => ({ ...prev, [cat]: !prev[cat] }));
@@ -180,6 +181,7 @@ export default function PersonalBudgetPage() {
 
   const handleExportPdf = useCallback(async () => {
     setIsExporting(true);
+    setPdfError("");
     try {
       const { pdf } = await import("@react-pdf/renderer");
       const { default: PersonalBudgetPDF } = await import("./pdf");
@@ -200,6 +202,8 @@ export default function PersonalBudgetPage() {
       a.download = "personal-budget.pdf";
       a.click();
       URL.revokeObjectURL(url);
+    } catch (e) {
+      setPdfError(e instanceof Error ? e.message : "PDF generation failed");
     } finally {
       setIsExporting(false);
     }
@@ -216,13 +220,16 @@ export default function PersonalBudgetPage() {
             <span className="text-gray-700 hidden sm:block">|</span>
             <h1 className="text-white font-bold hidden sm:block">💰 Personal Budget Planner</h1>
           </div>
-          <button
-            onClick={handleExportPdf}
-            disabled={isExporting}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
-          >
-            {isExporting ? "Generating…" : "📄 Export PDF"}
-          </button>
+          <div className="flex flex-col items-end gap-1">
+            <button
+              onClick={handleExportPdf}
+              disabled={isExporting}
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
+            >
+              {isExporting ? "Generating…" : "📄 Export PDF"}
+            </button>
+            {pdfError && <p className="text-red-400 text-xs max-w-xs text-right">{pdfError}</p>}
+          </div>
         </div>
       </div>
 
@@ -279,6 +286,17 @@ export default function PersonalBudgetPage() {
                     <span className="text-gray-400">Total Income</span>
                     <span className="text-green-400 font-bold">{fmtC(totalIncome)}</span>
                   </div>
+                </div>
+
+                {/* Expenses header */}
+                <div className="flex items-center justify-between px-1">
+                  <p className="text-xs font-bold uppercase tracking-wider text-red-400">Monthly Expenses</p>
+                  <button
+                    onClick={() => setOpenGroups(Object.fromEntries(EXPENSE_GROUPS.map(g => [g.category, true])))}
+                    className="text-xs text-gray-500 hover:text-gray-300 transition"
+                  >
+                    Expand all
+                  </button>
                 </div>
 
                 {/* Expenses */}

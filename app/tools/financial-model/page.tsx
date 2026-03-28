@@ -58,6 +58,31 @@ function NumInput({ label, value, onChange, step = 10000 }: { label: string; val
   );
 }
 
+function DaysInput({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <label className="text-xs text-gray-400">{label}</label>
+      <div className="flex items-center bg-[#111827] border border-gray-700 rounded-lg px-3 py-1.5 focus-within:border-blue-500 transition">
+        <input
+          type="number"
+          min={0}
+          step={1}
+          value={value}
+          onChange={e => onChange(parseFloat(e.target.value) || 0)}
+          className="bg-transparent text-white text-sm w-full outline-none"
+        />
+        <span className="text-gray-500 text-sm ml-1 shrink-0">days</span>
+      </div>
+    </div>
+  );
+}
+
+type YearData = {
+  year: number; revenue: number; cogs: number; grossProfit: number; grossMargin: number;
+  opex: number; ebitda: number; ebitdaMargin: number; depreciation: number; ebit: number;
+  interest: number; ebt: number; tax: number; netIncome: number; netMargin: number;
+};
+
 export default function FinancialModelPage() {
   const [companyName, setCompanyName] = useState("My Company");
   const [baseRevenue, setBaseRevenue] = useState(1000000);
@@ -67,9 +92,18 @@ export default function FinancialModelPage() {
   const [daRate, setDaRate] = useState(5);
   const [interestExpense, setInterestExpense] = useState(20000);
   const [taxRate, setTaxRate] = useState(25);
+  // Balance sheet / CF inputs
+  const [startingCash, setStartingCash] = useState(100000);
+  const [startingPPE, setStartingPPE] = useState(500000);
+  const [startingDebt, setStartingDebt] = useState(200000);
+  const [capexRate, setCapexRate] = useState(5);
+  const [arDays, setArDays] = useState(45);
+  const [apDays, setApDays] = useState(30);
+  const [debtRepayment, setDebtRepayment] = useState(20000);
+  const [activeTab, setActiveTab] = useState<"income" | "balance" | "cashflow">("income");
   const [isExporting, setIsExporting] = useState(false);
 
-  const years = useMemo(() => {
+  const years = useMemo<YearData[]>(() => {
     let revenue = baseRevenue;
     return Array.from({ length: 5 }, (_, i) => {
       if (i > 0) revenue = revenue * (1 + revenueGrowth / 100);
@@ -88,27 +122,67 @@ export default function FinancialModelPage() {
       const netMargin = revenue > 0 ? (netIncome / revenue) * 100 : 0;
       return {
         year: i + 1,
-        revenue: Math.round(revenue),
-        cogs: Math.round(cogs),
-        grossProfit: Math.round(grossProfit),
-        grossMargin,
-        opex: Math.round(opex),
-        ebitda: Math.round(ebitda),
-        ebitdaMargin,
-        depreciation: Math.round(depreciation),
-        ebit: Math.round(ebit),
-        interest: Math.round(interest),
-        ebt: Math.round(ebt),
-        tax: Math.round(tax),
-        netIncome: Math.round(netIncome),
-        netMargin,
+        revenue: Math.round(revenue), cogs: Math.round(cogs), grossProfit: Math.round(grossProfit), grossMargin,
+        opex: Math.round(opex), ebitda: Math.round(ebitda), ebitdaMargin,
+        depreciation: Math.round(depreciation), ebit: Math.round(ebit), interest: Math.round(interest),
+        ebt: Math.round(ebt), tax: Math.round(tax), netIncome: Math.round(netIncome), netMargin,
       };
     });
   }, [baseRevenue, revenueGrowth, cogsRate, opexRate, daRate, interestExpense, taxRate]);
 
+  // Balance Sheet & Cash Flow model
+  const bsAndCf = useMemo(() => {
+    // Opening AR/AP (Year 0) approximated from Year 1 revenue
+    let prevAR = years[0].revenue * (arDays / 365);
+    let prevAP = years[0].cogs * (apDays / 365);
+    let prevCash = startingCash;
+    let prevPPE = startingPPE;
+    let prevDebt = startingDebt;
+    // Opening equity: assets − liabilities
+    let prevEquity = startingCash + prevAR + startingPPE - prevAP - startingDebt;
+
+    return years.map((y) => {
+      const ar = y.revenue * (arDays / 365);
+      const ap = y.cogs * (apDays / 365);
+      const capex = y.revenue * (capexRate / 100);
+      const deltaAR = ar - prevAR;
+      const deltaAP = ap - prevAP;
+      const repayment = Math.min(debtRepayment, prevDebt);
+
+      const operatingCF = y.netIncome + y.depreciation - deltaAR + deltaAP;
+      const investingCF = -capex;
+      const financingCF = -repayment;
+      const netCF = operatingCF + investingCF + financingCF;
+
+      const cash = prevCash + netCF;
+      const ppeNet = Math.max(0, prevPPE + capex - y.depreciation);
+      const debt = Math.max(0, prevDebt - debtRepayment);
+      const equity = prevEquity + y.netIncome;
+      const totalCurrentAssets = cash + ar;
+      const totalAssets = totalCurrentAssets + ppeNet;
+      const totalLiabilities = ap + debt;
+      const totalLE = totalLiabilities + equity;
+
+      const result = {
+        year: y.year,
+        // CF rows
+        netIncome: y.netIncome, depreciation: y.depreciation,
+        changeAR: -deltaAR, changeAP: deltaAP,
+        operatingCF, capex: -capex, investingCF, debtRepayment: -repayment, financingCF, netCF,
+        beginningCash: prevCash, endingCash: cash,
+        // BS rows
+        cash, ar, totalCurrentAssets, ppeNet, totalAssets,
+        ap, debt, totalLiabilities, equity, totalLE,
+      };
+
+      prevAR = ar; prevAP = ap; prevCash = cash;
+      prevPPE = ppeNet; prevDebt = debt; prevEquity = equity;
+      return result;
+    });
+  }, [years, startingCash, startingPPE, startingDebt, capexRate, arDays, apDays, debtRepayment]);
+
   const cagr = useMemo(() => {
-    const y1 = years[0].revenue;
-    const y5 = years[4].revenue;
+    const y1 = years[0].revenue; const y5 = years[4].revenue;
     return y1 > 0 ? (Math.pow(y5 / y1, 1 / 4) - 1) * 100 : 0;
   }, [years]);
 
@@ -116,11 +190,8 @@ export default function FinancialModelPage() {
   const avgNetMargin = years.reduce((a, y) => a + y.netMargin, 0) / 5;
 
   const chartData = years.map(y => ({
-    year: `Year ${y.year}`,
-    Revenue: y.revenue,
-    "Gross Profit": y.grossProfit,
-    EBITDA: y.ebitda,
-    "Net Income": y.netIncome,
+    year: `Year ${y.year}`, Revenue: y.revenue,
+    "Gross Profit": y.grossProfit, EBITDA: y.ebitda, "Net Income": y.netIncome,
   }));
 
   const marginData = years.map(y => ({
@@ -156,7 +227,7 @@ export default function FinancialModelPage() {
     }
   }, [companyName, years, cagr, avgEbitdaMargin, avgNetMargin]);
 
-  const ROWS: { label: string; key: keyof (typeof years)[0]; isPct?: boolean; bold?: boolean; color?: string }[] = [
+  const IS_ROWS: { label: string; key: keyof YearData; isPct?: boolean; bold?: boolean; color?: string }[] = [
     { label: "Revenue", key: "revenue", bold: true, color: "text-green-400" },
     { label: "COGS", key: "cogs", color: "text-red-400" },
     { label: "Gross Profit", key: "grossProfit", bold: true },
@@ -166,11 +237,54 @@ export default function FinancialModelPage() {
     { label: "EBITDA Margin %", key: "ebitdaMargin", isPct: true },
     { label: "D&A", key: "depreciation", color: "text-red-400" },
     { label: "EBIT", key: "ebit", bold: true },
-    { label: "Interest", key: "interest", color: "text-red-400" },
+    { label: "Interest Expense", key: "interest", color: "text-red-400" },
     { label: "EBT", key: "ebt" },
     { label: "Tax", key: "tax", color: "text-red-400" },
     { label: "Net Income", key: "netIncome", bold: true },
     { label: "Net Margin %", key: "netMargin", isPct: true },
+  ];
+
+  type BsCfKey = keyof (typeof bsAndCf)[0];
+  const BS_ROWS: { label: string; key: BsCfKey; bold?: boolean; color?: string; section?: boolean }[] = [
+    { label: "ASSETS", key: "cash", section: true, bold: true },
+    { label: "Cash & Equivalents", key: "cash", color: "text-blue-300" },
+    { label: "Accounts Receivable", key: "ar" },
+    { label: "Total Current Assets", key: "totalCurrentAssets", bold: true },
+    { label: "PP&E (net)", key: "ppeNet" },
+    { label: "Total Assets", key: "totalAssets", bold: true, color: "text-white" },
+    { label: "LIABILITIES & EQUITY", key: "ap", section: true, bold: true },
+    { label: "Accounts Payable", key: "ap", color: "text-red-400" },
+    { label: "Long-term Debt", key: "debt", color: "text-red-400" },
+    { label: "Total Liabilities", key: "totalLiabilities", bold: true, color: "text-red-300" },
+    { label: "Shareholders' Equity", key: "equity", color: "text-green-400" },
+    { label: "Total L&E", key: "totalLE", bold: true, color: "text-white" },
+  ];
+
+  const CF_ROWS: { label: string; key: BsCfKey; bold?: boolean; color?: string; section?: boolean }[] = [
+    { label: "OPERATING ACTIVITIES", key: "netIncome", section: true, bold: true },
+    { label: "Net Income", key: "netIncome" },
+    { label: "Add: Depreciation & Amortisation", key: "depreciation" },
+    { label: "Change in Accounts Receivable", key: "changeAR" },
+    { label: "Change in Accounts Payable", key: "changeAP" },
+    { label: "Cash from Operations", key: "operatingCF", bold: true, color: "text-blue-300" },
+    { label: "INVESTING ACTIVITIES", key: "capex", section: true, bold: true },
+    { label: "Capital Expenditure", key: "capex", color: "text-red-400" },
+    { label: "Cash from Investing", key: "investingCF", bold: true, color: "text-red-300" },
+    { label: "FINANCING ACTIVITIES", key: "debtRepayment", section: true, bold: true },
+    { label: "Debt Repayment", key: "debtRepayment", color: "text-red-400" },
+    { label: "Cash from Financing", key: "financingCF", bold: true, color: "text-red-300" },
+    { label: "NET CHANGE IN CASH", key: "netCF", bold: true, section: true },
+    { label: "Beginning Cash", key: "beginningCash" },
+    { label: "Ending Cash", key: "endingCash", bold: true, color: "text-green-400" },
+  ];
+
+  const fmtVal = (val: number, isPct?: boolean) =>
+    isPct ? `${fmtM(val)}%` : val < 0 ? `(£${fmt(Math.abs(val))})` : `£${fmt(val)}`;
+
+  const TABS = [
+    { id: "income" as const, label: "Income Statement" },
+    { id: "balance" as const, label: "Balance Sheet" },
+    { id: "cashflow" as const, label: "Cash Flow" },
   ];
 
   return (
@@ -197,7 +311,7 @@ export default function FinancialModelPage() {
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Sidebar */}
             <aside className="lg:w-72 xl:w-80 shrink-0">
-              <div className="lg:sticky lg:top-[133px] flex flex-col gap-4">
+              <div className="lg:sticky lg:top-[133px] flex flex-col gap-4 max-h-[calc(100vh-153px)] overflow-y-auto pr-1">
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Company</h3>
                   <div className="flex flex-col gap-1">
@@ -219,11 +333,12 @@ export default function FinancialModelPage() {
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Cost Structure (% of Revenue)</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Cost Structure (% Revenue)</h3>
                   <div className="flex flex-col gap-3">
                     <PctInput label="COGS %" value={cogsRate} onChange={setCogsRate} />
                     <PctInput label="OpEx %" value={opexRate} onChange={setOpexRate} />
                     <PctInput label="D&A %" value={daRate} onChange={setDaRate} />
+                    <PctInput label="CapEx %" value={capexRate} onChange={setCapexRate} />
                   </div>
                 </div>
 
@@ -232,6 +347,24 @@ export default function FinancialModelPage() {
                   <div className="flex flex-col gap-3">
                     <NumInput label="Annual Interest Expense" value={interestExpense} onChange={setInterestExpense} step={5000} />
                     <PctInput label="Tax Rate %" value={taxRate} onChange={setTaxRate} />
+                    <NumInput label="Annual Debt Repayment" value={debtRepayment} onChange={setDebtRepayment} step={5000} />
+                  </div>
+                </div>
+
+                <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-3">Opening Balance Sheet</h3>
+                  <div className="flex flex-col gap-3">
+                    <NumInput label="Starting Cash" value={startingCash} onChange={setStartingCash} step={10000} />
+                    <NumInput label="Starting PP&E (net)" value={startingPPE} onChange={setStartingPPE} step={50000} />
+                    <NumInput label="Starting Debt" value={startingDebt} onChange={setStartingDebt} step={10000} />
+                  </div>
+                </div>
+
+                <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-3">Working Capital</h3>
+                  <div className="flex flex-col gap-3">
+                    <DaysInput label="Accounts Receivable Days" value={arDays} onChange={setArDays} />
+                    <DaysInput label="Accounts Payable Days" value={apDays} onChange={setApDays} />
                   </div>
                 </div>
               </div>
@@ -293,40 +426,131 @@ export default function FinancialModelPage() {
                 </ResponsiveContainer>
               </div>
 
-              {/* Income Statement Table */}
-              <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-4">Income Statement</h2>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr className="border-b border-gray-700">
-                        <th className="text-left text-xs text-gray-400 uppercase py-2 pr-4 w-36">Metric</th>
-                        {years.map(y => (
-                          <th key={y.year} className="text-left text-xs text-gray-400 uppercase py-2 pr-4">Year {y.year}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {ROWS.map((row, idx) => (
-                        <tr
-                          key={row.label}
-                          className={`border-b text-xs transition ${row.bold ? "bg-blue-900/10 border-blue-900/30" : "border-gray-800 hover:bg-gray-800/20"}`}
-                        >
-                          <td className={`py-2 pr-4 ${row.bold ? "text-white font-bold" : "text-gray-400"}`}>{row.label}</td>
-                          {years.map(y => {
-                            const val = y[row.key as keyof typeof y] as number;
-                            let cls = row.color ?? (row.bold ? "text-white font-semibold" : "text-gray-300");
-                            if (row.key === "netIncome") cls = val >= 0 ? "text-green-400 font-bold" : "text-red-400 font-bold";
-                            return (
-                              <td key={y.year} className={`py-2 pr-4 ${cls}`}>
-                                {row.isPct ? `${fmtM(val)}%` : `£${fmt(val)}`}
-                              </td>
-                            );
-                          })}
+              {/* Tabbed Statements */}
+              <div className="bg-[#0d1426] border border-gray-800 rounded-xl overflow-hidden">
+                {/* Tab Nav */}
+                <div className="flex border-b border-gray-800">
+                  {TABS.map(tab => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`px-5 py-3 text-sm font-semibold transition border-b-2 ${
+                        activeTab === tab.id
+                          ? "border-blue-500 text-white"
+                          : "border-transparent text-gray-400 hover:text-white hover:bg-gray-800/30"
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="p-6 overflow-x-auto">
+                  {activeTab === "income" && (
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-gray-700">
+                          <th className="text-left text-xs text-gray-400 uppercase py-2 pr-4 w-44">Metric</th>
+                          {years.map(y => (
+                            <th key={y.year} className="text-left text-xs text-gray-400 uppercase py-2 pr-4">Year {y.year}</th>
+                          ))}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {IS_ROWS.map(row => (
+                          <tr
+                            key={row.label}
+                            className={`border-b text-xs transition ${row.bold ? "bg-blue-900/10 border-blue-900/30" : "border-gray-800 hover:bg-gray-800/20"}`}
+                          >
+                            <td className={`py-2 pr-4 ${row.bold ? "text-white font-bold" : "text-gray-400"}`}>{row.label}</td>
+                            {years.map(y => {
+                              const val = y[row.key as keyof YearData] as number;
+                              let cls = row.color ?? (row.bold ? "text-white font-semibold" : "text-gray-300");
+                              if (row.key === "netIncome") cls = val >= 0 ? "text-green-400 font-bold" : "text-red-400 font-bold";
+                              return (
+                                <td key={y.year} className={`py-2 pr-4 ${cls}`}>
+                                  {row.isPct ? `${fmtM(val)}%` : `£${fmt(val)}`}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+
+                  {activeTab === "balance" && (
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-gray-700">
+                          <th className="text-left text-xs text-gray-400 uppercase py-2 pr-4 w-52">Item</th>
+                          {bsAndCf.map(y => (
+                            <th key={y.year} className="text-left text-xs text-gray-400 uppercase py-2 pr-4">Year {y.year}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {BS_ROWS.map((row, idx) => {
+                          if (row.section && idx > 0) {
+                            return (
+                              <tr key={row.label} className="border-t-2 border-gray-600">
+                                <td colSpan={6} className="pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-blue-400">{row.label}</td>
+                              </tr>
+                            );
+                          }
+                          if (row.section) return (
+                            <tr key={row.label}>
+                              <td colSpan={6} className="pb-1 text-xs font-bold uppercase tracking-wider text-blue-400">{row.label}</td>
+                            </tr>
+                          );
+                          return (
+                            <tr key={row.label} className={`border-b text-xs transition ${row.bold ? "bg-blue-900/10 border-blue-900/30" : "border-gray-800 hover:bg-gray-800/20"}`}>
+                              <td className={`py-2 pr-4 ${row.bold ? "text-white font-bold" : "text-gray-400"}`}>{row.label}</td>
+                              {bsAndCf.map(y => {
+                                const val = y[row.key] as number;
+                                const cls = row.color ?? (row.bold ? "text-white font-semibold" : "text-gray-300");
+                                return <td key={y.year} className={`py-2 pr-4 ${cls}`}>{fmtVal(val)}</td>;
+                              })}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  )}
+
+                  {activeTab === "cashflow" && (
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-gray-700">
+                          <th className="text-left text-xs text-gray-400 uppercase py-2 pr-4 w-52">Item</th>
+                          {bsAndCf.map(y => (
+                            <th key={y.year} className="text-left text-xs text-gray-400 uppercase py-2 pr-4">Year {y.year}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {CF_ROWS.map((row, idx) => {
+                          if (row.section) {
+                            return (
+                              <tr key={`sec-${idx}`} className={idx > 0 ? "border-t-2 border-gray-600" : ""}>
+                                <td colSpan={6} className={`${idx > 0 ? "pt-3" : ""} pb-1 text-xs font-bold uppercase tracking-wider text-purple-400`}>{row.label}</td>
+                              </tr>
+                            );
+                          }
+                          return (
+                            <tr key={row.label} className={`border-b text-xs transition ${row.bold ? "bg-blue-900/10 border-blue-900/30" : "border-gray-800 hover:bg-gray-800/20"}`}>
+                              <td className={`py-2 pr-4 ${row.bold ? "text-white font-bold" : "text-gray-400"}`}>{row.label}</td>
+                              {bsAndCf.map(y => {
+                                const val = y[row.key] as number;
+                                const cls = row.color ?? (row.bold ? "text-white font-semibold" : "text-gray-300");
+                                return <td key={y.year} className={`py-2 pr-4 ${cls}`}>{fmtVal(val)}</td>;
+                              })}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
               </div>
             </div>
