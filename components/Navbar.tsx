@@ -2,31 +2,19 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-const FPA_TOOLS = [
-  { label: "🗺️ Financial Journey", href: "/tools/financial-planner", featured: true },
-  { label: "⚖️ Break-Even",         href: "/tools/break-even"         },
-  { label: "📈 Financial Model",    href: "/tools/financial-model"    },
-  { label: "💰 Annual Budget",      href: "/tools/annual-budget"      },
-  { label: "💧 Cash Flow Forecast", href: "/tools/cash-flow"          },
-  { label: "🏢 Business Valuation", href: "/tools/valuation"          },
-  { label: "🏦 Lending Calculator", href: "/tools/lending"            },
-  { label: "💸 Personal Budget",    href: "/tools/personal-budget"    },
-  { label: "💹 Compound Interest",  href: "/tools/compound-interest"  },
-];
-
-const MARKET_TOOLS = [
-  { label: "📊 Portfolio Analysis", href: "/tools/portfolio-analysis" },
-  { label: "📉 Stock Comparison",   href: "/tools/stock-comparison"   },
-  { label: "📈 Stock Analysis",     href: "/tools/stock-analysis"     },
-];
+import { usePathname, useRouter } from "next/navigation";
+import { useTranslations, useLocale } from "next-intl";
+import { useTransition } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("nav");
   const [menuOpen, setMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isPending, startTransition] = useTransition();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -45,7 +33,40 @@ export default function Navbar() {
     setMenuOpen(false);
   }, [pathname]);
 
-  if (pathname?.startsWith("/dashboard")) return null;
+  if (pathname?.startsWith("/dashboard") || pathname?.includes("/dashboard")) return null;
+
+  function switchLocale(next: "en" | "es") {
+    startTransition(() => {
+      // Strip current locale prefix if present
+      let path = pathname;
+      if (path.startsWith("/es")) {
+        path = path.slice(3) || "/";
+      }
+      if (next === "es") {
+        router.push(`/es${path === "/" ? "" : path}`);
+      } else {
+        router.push(path || "/");
+      }
+    });
+  }
+
+  const FPA_TOOLS = [
+    { label: `🗺️ ${t("financialJourney")}`, href: "/tools/financial-planner", featured: true },
+    { label: `⚖️ ${t("breakEven")}`,         href: "/tools/break-even"         },
+    { label: `📈 ${t("financialModel")}`,    href: "/tools/financial-model"    },
+    { label: `💰 ${t("annualBudget")}`,      href: "/tools/annual-budget"      },
+    { label: `💧 ${t("cashFlow")}`,          href: "/tools/cash-flow"          },
+    { label: `🏢 ${t("valuation")}`,         href: "/tools/valuation"          },
+    { label: `🏦 ${t("lending")}`,           href: "/tools/lending"            },
+    { label: `💸 ${t("personalBudget")}`,    href: "/tools/personal-budget"    },
+    { label: `💹 ${t("compoundInterest")}`,  href: "/tools/compound-interest"  },
+  ];
+
+  const MARKET_TOOLS = [
+    { label: `📊 ${t("portfolioAnalysis")}`, href: "/tools/portfolio-analysis" },
+    { label: `📉 ${t("stockComparison")}`,   href: "/tools/stock-comparison"   },
+    { label: `📈 ${t("stockAnalysis")}`,     href: "/tools/stock-analysis"     },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0f1e]/95 backdrop-blur border-b border-gray-800">
@@ -64,10 +85,10 @@ export default function Navbar() {
             <button
               onClick={() => setToolsOpen(v => !v)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg transition font-medium ${
-                pathname?.startsWith("/tools") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
+                pathname?.includes("/tools") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
               }`}
             >
-              Tools
+              {t("tools")}
               <svg
                 className={`w-3.5 h-3.5 transition-transform duration-200 ${toolsOpen ? "rotate-180" : ""}`}
                 fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
@@ -85,34 +106,34 @@ export default function Navbar() {
                     href="/tools/financial-planner"
                     className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-blue-300 bg-blue-600/10 hover:bg-blue-600/20 border border-blue-600/20 mb-2 transition"
                   >
-                    🗺️ Financial Journey
+                    🗺️ {t("financialJourney")}
                   </Link>
 
                   {/* FP&A */}
-                  <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-3 py-1">FP&A Tools</p>
-                  {FPA_TOOLS.filter(t => !t.featured).map(t => (
+                  <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-3 py-1">{t("fpaSectionLabel")}</p>
+                  {FPA_TOOLS.filter(t => !t.featured).map(tool => (
                     <Link
-                      key={t.href}
-                      href={t.href}
+                      key={tool.href}
+                      href={tool.href}
                       className={`flex items-center px-3 py-2 rounded-lg text-sm transition ${
-                        pathname === t.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white hover:bg-white/5"
+                        pathname === tool.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white hover:bg-white/5"
                       }`}
                     >
-                      {t.label}
+                      {tool.label}
                     </Link>
                   ))}
 
                   {/* Market */}
-                  <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-3 py-1 mt-2">Market Tools</p>
-                  {MARKET_TOOLS.map(t => (
+                  <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-3 py-1 mt-2">{t("marketSectionLabel")}</p>
+                  {MARKET_TOOLS.map(tool => (
                     <Link
-                      key={t.href}
-                      href={t.href}
+                      key={tool.href}
+                      href={tool.href}
                       className={`flex items-center px-3 py-2 rounded-lg text-sm transition ${
-                        pathname === t.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white hover:bg-white/5"
+                        pathname === tool.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white hover:bg-white/5"
                       }`}
                     >
-                      {t.label}
+                      {tool.label}
                     </Link>
                   ))}
 
@@ -121,7 +142,7 @@ export default function Navbar() {
                       href="/tools"
                       className="flex items-center justify-center px-3 py-2 rounded-lg text-xs text-blue-400 hover:text-blue-300 transition"
                     >
-                      View all tools →
+                      {t("viewAllTools")}
                     </Link>
                   </div>
                 </div>
@@ -132,21 +153,41 @@ export default function Navbar() {
           <Link
             href="/blog"
             className={`px-4 py-2 rounded-lg transition font-medium ${
-              pathname?.startsWith("/blog") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
+              pathname?.includes("/blog") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
             }`}
           >
-            Blog
+            {t("blog")}
           </Link>
 
           <Link href="/#contact" className="px-4 py-2 rounded-lg transition font-medium hover:text-white hover:bg-white/5">
-            Contact
+            {t("contact")}
           </Link>
+
+          {/* Language switcher */}
+          <div className="flex items-center gap-1 ml-1 border border-gray-700 rounded-lg px-1 py-0.5">
+            <button
+              onClick={() => switchLocale("en")}
+              disabled={isPending}
+              title="English"
+              className={`text-lg px-1 rounded transition ${locale === "en" ? "opacity-100" : "opacity-40 hover:opacity-80"}`}
+            >
+              🇬🇧
+            </button>
+            <button
+              onClick={() => switchLocale("es")}
+              disabled={isPending}
+              title="Español"
+              className={`text-lg px-1 rounded transition ${locale === "es" ? "opacity-100" : "opacity-40 hover:opacity-80"}`}
+            >
+              🇪🇸
+            </button>
+          </div>
 
           <Link
             href="/tools/financial-planner"
             className="ml-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg font-semibold transition shadow-lg shadow-blue-600/20"
           >
-            Get Started
+            {t("getStarted")}
           </Link>
         </div>
 
@@ -167,26 +208,42 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-[#0d1426] border-t border-gray-800 px-4 py-4 flex flex-col gap-1 text-sm max-h-[80vh] overflow-y-auto">
           <Link href="/tools/financial-planner" className="flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-blue-300 bg-blue-600/10 border border-blue-600/20 mb-2">
-            🗺️ Financial Journey Planner
+            🗺️ {t("financialJourney")}
           </Link>
 
-          <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-4 py-1">FP&A Tools</p>
-          {FPA_TOOLS.filter(t => !t.featured).map(t => (
-            <Link key={t.href} href={t.href} className={`px-4 py-2.5 rounded-lg transition ${pathname === t.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white"}`}>
-              {t.label}
+          <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-4 py-1">{t("fpaSectionLabel")}</p>
+          {FPA_TOOLS.filter(t => !t.featured).map(tool => (
+            <Link key={tool.href} href={tool.href} className={`px-4 py-2.5 rounded-lg transition ${pathname === tool.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white"}`}>
+              {tool.label}
             </Link>
           ))}
 
-          <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-4 py-1 mt-2">Market Tools</p>
-          {MARKET_TOOLS.map(t => (
-            <Link key={t.href} href={t.href} className={`px-4 py-2.5 rounded-lg transition ${pathname === t.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white"}`}>
-              {t.label}
+          <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-4 py-1 mt-2">{t("marketSectionLabel")}</p>
+          {MARKET_TOOLS.map(tool => (
+            <Link key={tool.href} href={tool.href} className={`px-4 py-2.5 rounded-lg transition ${pathname === tool.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white"}`}>
+              {tool.label}
             </Link>
           ))}
 
           <div className="border-t border-gray-800 mt-3 pt-3 flex flex-col gap-1">
-            <Link href="/blog" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">Blog</Link>
-            <Link href="/#contact" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">Contact</Link>
+            <Link href="/blog" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("blog")}</Link>
+            <Link href="/#contact" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("contact")}</Link>
+          </div>
+
+          {/* Mobile language switcher */}
+          <div className="border-t border-gray-800 mt-3 pt-3 flex items-center gap-2 px-4">
+            <button
+              onClick={() => switchLocale("en")}
+              className={`text-xl transition ${locale === "en" ? "opacity-100" : "opacity-40"}`}
+            >
+              🇬🇧
+            </button>
+            <button
+              onClick={() => switchLocale("es")}
+              className={`text-xl transition ${locale === "es" ? "opacity-100" : "opacity-40"}`}
+            >
+              🇪🇸
+            </button>
           </div>
         </div>
       )}

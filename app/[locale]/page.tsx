@@ -1,0 +1,425 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+
+export const metadata: Metadata = {
+  title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
+  description:
+    "Free financial planning & analysis tools for individuals, finance teams and wealth managers. Personal budget, portfolio analysis, cash flow forecast, DCF valuation and more. No signup.",
+  alternates: { canonical: "https://www.financeplots.com" },
+};
+
+export default function Home() {
+  const t = useTranslations("home");
+
+  const personalTools = t.raw("personalTools") as [string, string, string, string][];
+  const professionalTools = t.raw("professionalTools") as [string, string, string, string][];
+
+  return (
+    <main className="min-h-screen bg-[#0a0f1e] text-white">
+
+      {/* ── Hero ── */}
+      <section className="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 overflow-hidden">
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+
+        <span className="inline-block text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full px-4 py-1.5 mb-6">
+          {t("badge")}
+        </span>
+        <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] max-w-4xl mb-6 tracking-tight">
+          {t("heroTitle1")}<br />
+          <span className="text-blue-400">{t("heroTitle2")}</span>
+        </h1>
+        <p className="text-gray-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed">
+          {t("heroSubtitle")}
+        </p>
+        <div className="flex gap-4 flex-wrap justify-center mb-16">
+          <Link
+            href="/tools/financial-planner"
+            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl text-base transition shadow-lg shadow-blue-600/25"
+          >
+            {t("ctaPrimary")}
+          </Link>
+          <a
+            href="#contact"
+            className="border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold px-8 py-4 rounded-xl text-base transition"
+          >
+            {t("ctaSecondary")}
+          </a>
+        </div>
+
+        {/* Stats bar */}
+        <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
+          {[
+            ["11", t("stat1Label")],
+            ["2",  t("stat2Label")],
+            ["10", t("stat3Label")],
+            ["0",  t("stat4Label")],
+          ].map(([num, label]) => (
+            <div key={label}>
+              <div className="text-3xl font-extrabold text-white">{num}</div>
+              <div className="text-gray-500 text-xs uppercase tracking-wider mt-1">{label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── See it in action ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("seeInActionLabel")}</p>
+          <h2 className="text-3xl font-bold text-center mb-12">{t("seeInActionTitle")}</h2>
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-[280px]">
+                <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
+                  <iframe
+                    className="absolute inset-0 w-full h-full rounded-2xl"
+                    src="https://www.youtube.com/embed/MwEDJPlvKG0"
+                    title="Break-Even Analysis"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+              <p className="text-white font-semibold text-sm">{t("videoCaption")}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Who it's for ── */}
+      <section className="bg-[#0d1426] py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("whoLabel")}</p>
+          <h2 className="text-3xl font-bold text-center mb-12">{t("whoTitle")}</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: "👤",
+                title: t("persona1Title"),
+                points: [
+                  { label: t("persona1p1"), href: "/tools/personal-budget" },
+                  { label: t("persona1p2"), href: "/tools/portfolio-analysis" },
+                  { label: t("persona1p3"), href: "/tools/stock-comparison" },
+                  { label: t("persona1p4"), href: "/tools/lending" },
+                ],
+              },
+              {
+                icon: "🏢",
+                title: t("persona2Title"),
+                points: [
+                  { label: t("persona2p1"), href: "/tools/financial-model" },
+                  { label: t("persona2p2"), href: "/tools/cash-flow" },
+                  { label: t("persona2p3"), href: "/tools/annual-budget" },
+                  { label: t("persona2p4"), href: "/tools/break-even" },
+                ],
+              },
+              {
+                icon: "📈",
+                title: t("persona3Title"),
+                points: [
+                  { label: t("persona3p1"), href: "/tools/portfolio-analysis" },
+                  { label: t("persona3p2"), href: "/tools/portfolio-analysis" },
+                  { label: t("persona3p3"), href: "/tools/stock-analysis" },
+                  { label: t("persona3p4"), href: "/tools/portfolio-analysis" },
+                ],
+              },
+            ].map((item) => (
+              <div key={item.title} className="bg-[#111827] border border-gray-800 rounded-2xl p-7 hover:border-blue-700/50 transition">
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-white font-bold text-lg mb-4">{item.title}</h3>
+                <ul className="space-y-2">
+                  {item.points.map((p) => (
+                    <li key={p.label} className="flex gap-2 text-sm">
+                      <span className="text-blue-400 shrink-0 mt-0.5">✓</span>
+                      <Link href={p.href} className="text-gray-400 hover:text-blue-300 transition">{p.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Tools ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("toolsLabel")}</p>
+          <h2 className="text-3xl font-bold text-center mb-3">{t("toolsTitle")}</h2>
+          <p className="text-gray-400 text-center mb-10">{t("toolsSubtitle")}</p>
+
+          {/* Featured: Financial Journey Planner */}
+          <div className="flex justify-center mb-10">
+            <Link
+              href="/tools/financial-planner"
+              className="block w-full max-w-2xl bg-gradient-to-br from-blue-900/40 to-purple-900/20 border border-blue-700/40 hover:border-blue-500 rounded-2xl p-7 transition group"
+            >
+              <div className="flex items-start gap-4 overflow-hidden">
+                <span className="text-4xl shrink-0">🗺️</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-2 flex-wrap">
+                    <h3 className="text-white font-bold text-lg md:text-xl group-hover:text-blue-300 transition">{t("featuredToolTitle")}</h3>
+                    <span className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full font-semibold">{t("featuredBadge")}</span>
+                  </div>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    {t("featuredToolDesc")}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-4 text-xs text-gray-500">
+                    <span>💰 Budget</span>
+                    <span>→</span>
+                    <span>💳 Debt</span>
+                    <span>→</span>
+                    <span>📈 Compounding</span>
+                    <span>→</span>
+                    <span>🎯 Allocation</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-10">
+
+            {/* Personal */}
+            <div>
+              <div className="flex items-center gap-3 mb-5 pb-4 border-b border-gray-800">
+                <span className="text-2xl">👤</span>
+                <div>
+                  <h3 className="text-white font-bold">{t("personalFinanceTitle")}</h3>
+                  <p className="text-gray-500 text-xs">{t("personalFinanceSubtitle")}</p>
+                </div>
+              </div>
+              <ul className="space-y-3">
+                {personalTools.map(([icon, name, desc, href]) => (
+                  <li key={name}>
+                    <Link href={href} className="flex gap-3 items-start bg-[#0d1426] border border-gray-800 rounded-xl p-4 hover:border-blue-700/50 transition group">
+                      <span className="text-xl mt-0.5">{icon}</span>
+                      <div>
+                        <p className="text-white font-semibold text-sm group-hover:text-blue-300 transition">{name}</p>
+                        <p className="text-gray-500 text-xs mt-0.5 leading-relaxed">{desc}</p>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Professional */}
+            <div>
+              <div className="flex items-center gap-3 mb-5 pb-4 border-b border-gray-800">
+                <span className="text-2xl">🏢</span>
+                <div>
+                  <h3 className="text-white font-bold">{t("professionalTitle")}</h3>
+                  <p className="text-gray-500 text-xs">{t("professionalSubtitle")}</p>
+                </div>
+              </div>
+              <ul className="space-y-3">
+                {professionalTools.map(([icon, name, desc, href]) => (
+                  <li key={name}>
+                    <Link href={href} className="flex gap-3 items-start bg-[#0d1426] border border-gray-800 rounded-xl p-4 hover:border-blue-700/50 transition group">
+                      <span className="text-xl mt-0.5">{icon}</span>
+                      <div>
+                        <p className="text-white font-semibold text-sm group-hover:text-blue-300 transition">{name}</p>
+                        <p className="text-gray-500 text-xs mt-0.5 leading-relaxed">{desc}</p>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              {/* How it works */}
+              <div className="mt-6 bg-blue-600/5 border border-blue-700/20 rounded-xl p-5">
+                <p className="text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">{t("howItWorksLabel")}</p>
+                <ol className="space-y-2">
+                  {[
+                    t("howItWorks1"),
+                    t("howItWorks2"),
+                    t("howItWorks3"),
+                    t("howItWorks4"),
+                  ].map((step, i) => (
+                    <li key={i} className="flex gap-2 text-gray-400 text-sm">
+                      <span className="text-blue-400 font-bold shrink-0">{i + 1}.</span>{step}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Free Forever banner ── */}
+      <section className="bg-[#0d1426] py-16 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="bg-blue-600/5 border border-blue-700/30 rounded-2xl p-10">
+            <span className="inline-block text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full px-4 py-1.5 mb-6">
+              {t("freeBadge")}
+            </span>
+            <h2 className="text-3xl font-bold mb-4">{t("freeTitle")}</h2>
+            <p className="text-gray-400 text-base max-w-xl mx-auto mb-8 leading-relaxed">
+              {t("freeDesc")}
+            </p>
+            <div className="flex flex-wrap justify-center gap-6">
+              {[
+                t("freeCheck1"),
+                t("freeCheck2"),
+                t("freeCheck3"),
+                t("freeCheck4"),
+              ].map((text) => (
+                <div key={text} className="flex items-center gap-2 text-gray-300 text-sm">
+                  <span className="text-green-400 font-bold">✓</span>{text}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Custom Dashboards ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("customLabel")}</p>
+          <h2 className="text-3xl font-bold text-center mb-4">{t("customTitle")}</h2>
+          <p className="text-gray-400 text-center max-w-2xl mx-auto mb-14 leading-relaxed">
+            {t("customDesc")}
+          </p>
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {[
+              { icon: "📊", title: t("custom1Title"), desc: t("custom1Desc") },
+              { icon: "💰", title: t("custom2Title"), desc: t("custom2Desc") },
+              { icon: "📈", title: t("custom3Title"), desc: t("custom3Desc") },
+            ].map((item) => (
+              <div key={item.title} className="bg-[#0d1426] border border-gray-800 rounded-2xl p-7 hover:border-blue-700/50 transition">
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-white font-bold text-base mb-2">{item.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="bg-[#0d1426] border border-gray-800 rounded-2xl p-8 flex flex-col md:flex-row items-center gap-8">
+            <div className="flex-1">
+              <h3 className="text-white font-bold text-xl mb-2">{t("customHowTitle")}</h3>
+              <ol className="space-y-2">
+                {[
+                  t("customStep1"),
+                  t("customStep2"),
+                  t("customStep3"),
+                  t("customStep4"),
+                ].map((step, i) => (
+                  <li key={i} className="flex gap-3 text-gray-400 text-sm">
+                    <span className="text-blue-400 font-bold shrink-0 mt-0.5">{i + 1}.</span>{step}
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="shrink-0">
+              <a
+                href="#contact"
+                className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl transition shadow-lg shadow-blue-600/25 text-sm"
+              >
+                {t("customCta")}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Blog teaser ── */}
+      <section className="bg-[#0d1426] py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("blogLabel")}</p>
+          <h2 className="text-3xl font-bold text-center mb-12">{t("blogTitle")}</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { slug: "cash-flow-forecast-guide", tag: t("blogArticle1Tag"), title: t("blogArticle1Title") },
+              { slug: "investment-portfolio-analysis", tag: t("blogArticle2Tag"), title: t("blogArticle2Title") },
+              { slug: "dcf-valuation-guide", tag: t("blogArticle3Tag"), title: t("blogArticle3Title") },
+            ].map((a) => (
+              <a
+                key={a.slug}
+                href={`/blog/${a.slug}`}
+                className="block bg-[#111827] border border-gray-800 rounded-2xl p-6 hover:border-blue-700/50 transition group"
+              >
+                <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">{a.tag}</span>
+                <h3 className="text-white font-semibold mt-2 text-sm leading-snug group-hover:text-blue-300 transition">{a.title}</h3>
+                <span className="text-gray-500 text-xs mt-3 block">{t("readArticle")}</span>
+              </a>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <a href="/blog" className="text-blue-400 hover:text-blue-300 text-sm font-semibold transition">
+              {t("viewAllArticles")}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Book ── */}
+      <section className="py-16 px-6">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-[#0d1426] border border-blue-700/30 rounded-2xl p-8 flex flex-col md:flex-row items-center gap-8">
+            <div className="text-6xl shrink-0">📖</div>
+            <div className="flex-1 text-center md:text-left">
+              <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-2">{t("bookLabel")}</p>
+              <h2 className="text-2xl font-bold text-white mb-2">{t("bookTitle")}</h2>
+              <p className="text-gray-400 text-sm leading-relaxed mb-5">
+                {t("bookDesc")}
+              </p>
+              <a
+                href="https://www.amazon.co.uk/Your-money-rules-Javier-Audibert-ebook/dp/B0GT78FLKJ/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-7 py-3 rounded-xl transition shadow-lg shadow-blue-600/25 text-sm"
+              >
+                {t("bookCta")}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Contact ── */}
+      <section id="contact" className="py-20 px-6">
+        <div className="max-w-xl mx-auto">
+          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("contactLabel")}</p>
+          <h2 className="text-3xl font-bold text-center mb-3">{t("contactTitle")}</h2>
+          <p className="text-gray-400 text-center mb-10 text-sm">
+            {t("contactDesc")}
+          </p>
+          <div className="text-center">
+            <a
+              href="mailto:hello@financeplots.com"
+              className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-xl transition shadow-lg shadow-blue-600/25"
+            >
+              {t("contactCta")}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer className="border-t border-gray-800 py-10 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <div className="text-white font-bold text-xl mb-1">
+                Finance<span className="text-blue-400">Plots</span>
+              </div>
+              <p className="text-gray-500 text-xs">{t("footerTagline")}</p>
+            </div>
+            <div className="flex gap-8 text-sm text-gray-500">
+              <a href="/tools" className="hover:text-gray-300 transition">Tools</a>
+              <a href="/blog" className="hover:text-gray-300 transition">Blog</a>
+              <a href="/#contact" className="hover:text-gray-300 transition">Contact</a>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-6 text-center text-gray-600 text-xs">
+            {t("footerCopyright")}
+          </div>
+        </div>
+      </footer>
+
+    </main>
+  );
+}
