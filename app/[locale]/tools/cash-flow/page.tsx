@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar, ReferenceLine,
@@ -48,6 +49,8 @@ const WEEK_LABELS = [
 ];
 
 export default function CashFlowPage() {
+  const t = useTranslations("cashFlow");
+  const tc = useTranslations("toolCommon");
   const [forecastName, setForecastName] = useState("Q1 Forecast");
   const [openingBalance, setOpeningBalance] = useState(50000);
   // Weekly inflows & outflows
@@ -133,16 +136,16 @@ export default function CashFlowPage() {
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">← All Tools</Link>
+            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">{tc("allTools")}</Link>
             <span className="text-gray-700 hidden sm:block">|</span>
-            <h1 className="text-white font-bold hidden sm:block">📊 13-Week Cash Flow Forecast</h1>
+            <h1 className="text-white font-bold hidden sm:block">{t("title")}</h1>
           </div>
           <button
             onClick={handleExportPdf}
             disabled={isExporting}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
           >
-            {isExporting ? "Generating…" : "📄 Export PDF"}
+            {isExporting ? tc("generating") : tc("exportPdf")}
           </button>
         </div>
       </div>
@@ -155,43 +158,43 @@ export default function CashFlowPage() {
               <div className="lg:sticky lg:top-[133px] flex flex-col gap-4">
                 {/* Settings */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Settings</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionSettings")}</h3>
                   <div className="flex flex-col gap-3">
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs text-gray-400">Forecast Name</label>
+                      <label className="text-xs text-gray-400">{t("labelName")}</label>
                       <input
                         value={forecastName}
                         onChange={e => setForecastName(e.target.value)}
                         className="bg-[#111827] border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500 transition"
                       />
                     </div>
-                    <NumInput label="Opening Balance" value={openingBalance} onChange={setOpeningBalance} />
+                    <NumInput label={t("labelOpening")} value={openingBalance} onChange={setOpeningBalance} />
                   </div>
                 </div>
 
                 {/* Quick Setup */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Quick Setup</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionQuickSetup")}</h3>
                   <div className="flex flex-col gap-3">
                     <NumInput
-                      label="Week 1 Inflows (base)"
+                      label={t("labelWeek1Inflows")}
                       value={weeklyInflows[0]}
                       onChange={v => setWeeklyInflows(prev => { const n = [...prev]; n[0] = v; return n; })}
                     />
                     <NumInput
-                      label="Weekly Inflow Growth %"
+                      label={t("labelInflowGrowth")}
                       value={inflowGrowth}
                       onChange={setInflowGrowth}
                       prefix="%"
                       step={0.5}
                     />
                     <NumInput
-                      label="Week 1 Outflows (base)"
+                      label={t("labelWeek1Outflows")}
                       value={weeklyOutflows[0]}
                       onChange={v => setWeeklyOutflows(prev => { const n = [...prev]; n[0] = v; return n; })}
                     />
                     <NumInput
-                      label="Weekly Outflow Growth %"
+                      label={t("labelOutflowGrowth")}
                       value={outflowGrowth}
                       onChange={setOutflowGrowth}
                       prefix="%"
@@ -201,7 +204,7 @@ export default function CashFlowPage() {
                       onClick={applyGrowthRates}
                       className="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-2 rounded-lg transition"
                     >
-                      Apply Growth Rates
+                      {t("btnApply")}
                     </button>
                   </div>
                 </div>
@@ -209,7 +212,7 @@ export default function CashFlowPage() {
                 {/* Warnings */}
                 {(weeksNegative > 0 || minBalance < 10000) && (
                   <div className="bg-red-900/20 border border-red-800 rounded-xl p-4">
-                    <div className="text-xs font-bold text-red-400 uppercase tracking-wider mb-2">⚠ Cash Alerts</div>
+                    <div className="text-xs font-bold text-red-400 uppercase tracking-wider mb-2">⚠ {t("alertTitle")}</div>
                     {weeksNegative > 0 && (
                       <div className="text-xs text-red-300">{weeksNegative} week{weeksNegative > 1 ? "s" : ""} with negative balance</div>
                     )}
@@ -241,7 +244,7 @@ export default function CashFlowPage() {
 
               {/* Balance Chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">Cash Balance Over 13 Weeks</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartBalance")}</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <AreaChart data={chartData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -264,7 +267,7 @@ export default function CashFlowPage() {
 
               {/* Inflows vs Outflows */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">Weekly Inflows vs Outflows</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartInOut")}</h2>
                 <ResponsiveContainer width="100%" height={260}>
                   <BarChart data={chartData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -289,12 +292,12 @@ export default function CashFlowPage() {
               {/* Weekly Table */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-white font-bold">Weekly Detail</h2>
+                  <h2 className="text-white font-bold">{t("tableTitle")}</h2>
                   <button
                     onClick={() => setShowTable(v => !v)}
                     className="text-xs text-gray-400 hover:text-white transition"
                   >
-                    {showTable ? "▲ Collapse" : "▼ Expand"}
+                    {showTable ? `▲ ${t("collapse")}` : `▼ ${t("expand")}`}
                   </button>
                 </div>
                 {showTable && (
@@ -334,7 +337,7 @@ export default function CashFlowPage() {
 
               {/* Edit weekly values */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-4">Edit Weekly Values</h2>
+                <h2 className="text-white font-bold mb-4">{t("editTitle")}</h2>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>

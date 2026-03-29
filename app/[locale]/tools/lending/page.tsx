@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, PieChart, Pie, Cell, Tooltip as PieTooltip,
@@ -69,6 +70,8 @@ function SliderInput({ label, value, onChange, min, max, step = 0.1 }: { label: 
 }
 
 export default function LendingPage() {
+  const t = useTranslations("lending");
+  const tc = useTranslations("toolCommon");
   const [tab, setTab] = useState<"loan" | "mortgage">("loan");
   const [lAmount, setLAmount] = useState(20000);
   const [lRate, setLRate] = useState(5.0);
@@ -159,12 +162,12 @@ export default function LendingPage() {
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">← All Tools</Link>
+            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">{tc("allTools")}</Link>
             <span className="text-gray-700 hidden sm:block">|</span>
-            <h1 className="text-white font-bold hidden sm:block">🏦 Lending Calculator</h1>
+            <h1 className="text-white font-bold hidden sm:block">{t("title")}</h1>
           </div>
           <button onClick={handleExportPdf} disabled={isExporting} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
-            {isExporting ? "Generating…" : "📄 Export PDF"}
+            {isExporting ? tc("generating") : tc("exportPdf")}
           </button>
         </div>
       </div>
@@ -173,10 +176,10 @@ export default function LendingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Tabs */}
           <div className="flex gap-2 mb-6">
-            {[{ id: "loan", label: "📋 Loan Calculator" }, { id: "mortgage", label: "🏠 Mortgage & Early Repayment" }].map(t => (
-              <button key={t.id} onClick={() => setTab(t.id as "loan" | "mortgage")}
-                className={`px-5 py-2 rounded-lg text-sm font-semibold transition ${tab === t.id ? "bg-blue-600 text-white" : "bg-[#0d1426] text-gray-400 border border-gray-800 hover:text-white"}`}>
-                {t.label}
+            {([{ id: "loan", label: t("tabLoan") }, { id: "mortgage", label: t("tabMortgage") }] as { id: "loan" | "mortgage"; label: string }[]).map(tb => (
+              <button key={tb.id} onClick={() => setTab(tb.id)}
+                className={`px-5 py-2 rounded-lg text-sm font-semibold transition ${tab === tb.id ? "bg-blue-600 text-white" : "bg-[#0d1426] text-gray-400 border border-gray-800 hover:text-white"}`}>
+                {tb.label}
               </button>
             ))}
           </div>
@@ -187,13 +190,13 @@ export default function LendingPage() {
               <div className="lg:sticky lg:top-[133px] flex flex-col gap-4">
                 {tab === "loan" ? (
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Loan Parameters</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionLoan")}</h3>
                     <div className="flex flex-col gap-3">
-                      <NumInput label="Loan Amount" value={lAmount} onChange={setLAmount} step={500} />
-                      <SliderInput label="Annual Interest Rate" value={lRate} onChange={setLRate} min={0.1} max={20} />
+                      <NumInput label={t("labelAmount")} value={lAmount} onChange={setLAmount} step={500} />
+                      <SliderInput label={t("labelRate")} value={lRate} onChange={setLRate} min={0.1} max={20} />
                       <div className="flex flex-col gap-1">
                         <div className="flex justify-between">
-                          <label className="text-xs text-gray-400 font-medium">Duration</label>
+                          <label className="text-xs text-gray-400 font-medium">{t("labelDuration")}</label>
                           <span className="text-xs text-blue-400 font-semibold">{lYears} years</span>
                         </div>
                         <input type="range" min={1} max={40} step={1} value={lYears} onChange={e => setLYears(parseInt(e.target.value))} className="w-full accent-blue-500" />
@@ -202,18 +205,18 @@ export default function LendingPage() {
                   </div>
                 ) : (
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Mortgage Parameters</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionMortgage")}</h3>
                     <div className="flex flex-col gap-3">
-                      <NumInput label="Mortgage Amount" value={mAmount} onChange={setMAmount} step={5000} />
-                      <SliderInput label="Mortgage Rate" value={mRate} onChange={setMRate} min={0.1} max={20} />
+                      <NumInput label={t("labelMortgageAmount")} value={mAmount} onChange={setMAmount} step={5000} />
+                      <SliderInput label={t("labelMortgageRate")} value={mRate} onChange={setMRate} min={0.1} max={20} />
                       <div className="flex flex-col gap-1">
                         <div className="flex justify-between">
-                          <label className="text-xs text-gray-400 font-medium">Duration</label>
+                          <label className="text-xs text-gray-400 font-medium">{t("labelDuration")}</label>
                           <span className="text-xs text-blue-400 font-semibold">{mYears} years</span>
                         </div>
                         <input type="range" min={1} max={40} step={1} value={mYears} onChange={e => setMYears(parseInt(e.target.value))} className="w-full accent-blue-500" />
                       </div>
-                      <SliderInput label="Savings / Investment Rate" value={mSavRate} onChange={setMSavRate} min={0.1} max={20} />
+                      <SliderInput label={t("labelSavingsRate")} value={mSavRate} onChange={setMSavRate} min={0.1} max={20} />
                     </div>
                   </div>
                 )}
@@ -224,16 +227,16 @@ export default function LendingPage() {
             <div className="flex-1 min-w-0 flex flex-col gap-6">
               {/* KPIs */}
               <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
-                <KpiCard label="Monthly Payment" value={`£${fmtM(activeCalc.pmt)}`} sub={`${activeYears}-year term`} />
-                <KpiCard label="Total Repayment" value={`£${fmt(activeCalc.totalPaid)}`} sub={`Loan: £${fmt(activeAmount)}`} />
-                <KpiCard label="Total Interest" value={`£${fmt(activeCalc.totalInterest)}`} sub={`${activeAmount > 0 ? ((activeCalc.totalInterest / activeAmount) * 100).toFixed(1) : 0}% of loan`} color="red" />
-                <KpiCard label="Interest Rate" value={`${activeRate}%`} sub="Annual" />
+                <KpiCard label={t("kpiPayment")} value={`£${fmtM(activeCalc.pmt)}`} sub={`${activeYears}-year term`} />
+                <KpiCard label={t("kpiTotal")} value={`£${fmt(activeCalc.totalPaid)}`} sub={`Loan: £${fmt(activeAmount)}`} />
+                <KpiCard label={t("kpiInterest")} value={`£${fmt(activeCalc.totalInterest)}`} sub={`${activeAmount > 0 ? ((activeCalc.totalInterest / activeAmount) * 100).toFixed(1) : 0}% of loan`} color="red" />
+                <KpiCard label={t("kpiRate")} value={`${activeRate}%`} sub="Annual" />
               </div>
 
               {/* Early Repayment (mortgage only) */}
               {tab === "mortgage" && mCalc.earlyRepay && (
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                  <h2 className="text-white font-bold mb-4">Early Repayment Analysis</h2>
+                  <h2 className="text-white font-bold mb-4">{t("earlyRepaymentTitle")}</h2>
                   <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 mb-4">
                     <KpiCard label="Balance at Year -5" value={`£${fmt(mCalc.earlyRepay.balAtCutoff)}`} sub={`After ${mYears - 5} years`} />
                     <KpiCard label="Interest Saved" value={`£${fmt(mCalc.earlyRepay.interestSaved)}`} sub="Last 5 years eliminated" color="green" />
@@ -251,7 +254,7 @@ export default function LendingPage() {
               {/* Charts */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                  <h2 className="text-white font-bold mb-4">Interest vs Principal</h2>
+                  <h2 className="text-white font-bold mb-4">{t("chartInterestPrincipal")}</h2>
                   <ResponsiveContainer width="100%" height={260}>
                     <AreaChart data={activeCalc.chartData} margin={{ top: 5, right: 10, bottom: 10, left: 5 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -266,7 +269,7 @@ export default function LendingPage() {
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                  <h2 className="text-white font-bold mb-4">Outstanding Balance</h2>
+                  <h2 className="text-white font-bold mb-4">{t("chartBalance")}</h2>
                   <ResponsiveContainer width="100%" height={260}>
                     <AreaChart data={activeCalc.chartData} margin={{ top: 5, right: 10, bottom: 10, left: 5 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -281,7 +284,7 @@ export default function LendingPage() {
 
               {/* Donut */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-4">Payment Breakdown</h2>
+                <h2 className="text-white font-bold mb-4">{t("chartPaymentBreakdown")}</h2>
                 <div className="flex flex-col md:flex-row items-center gap-6">
                   <ResponsiveContainer width={200} height={200}>
                     <PieChart>
@@ -295,11 +298,11 @@ export default function LendingPage() {
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-green-500" />
-                      <div><div className="text-xs text-gray-400">Principal</div><div className="text-sm font-semibold text-white">£{fmt(activeAmount)}</div></div>
+                      <div><div className="text-xs text-gray-400">{t("legendPrincipal")}</div><div className="text-sm font-semibold text-white">£{fmt(activeAmount)}</div></div>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <div><div className="text-xs text-gray-400">Total Interest</div><div className="text-sm font-semibold text-white">£{fmt(activeCalc.totalInterest)}</div></div>
+                      <div><div className="text-xs text-gray-400">{t("legendInterest")}</div><div className="text-sm font-semibold text-white">£{fmt(activeCalc.totalInterest)}</div></div>
                     </div>
                   </div>
                 </div>
@@ -308,15 +311,15 @@ export default function LendingPage() {
               {/* Amortisation table */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl overflow-hidden">
                 <button onClick={() => setShowTable(!showTable)} className="w-full flex items-center justify-between px-6 py-4 text-sm font-semibold text-white hover:bg-gray-800/20 transition">
-                  <span>Full Amortisation Schedule</span>
-                  <span className="text-gray-500 text-xs">{showTable ? "▲ collapse" : "▼ expand"}</span>
+                  <span>{t("tableTitle")}</span>
+                  <span className="text-gray-500 text-xs">{showTable ? `▲ ${t("collapse")}` : `▼ ${t("expand")}`}</span>
                 </button>
                 {showTable && (
                   <div className="px-6 pb-6 border-t border-gray-800 overflow-x-auto">
                     <table className="w-full text-xs mt-4">
                       <thead>
                         <tr className="border-b border-gray-700">
-                          {["Month", "Payment", "Interest", "Principal", "Balance"].map(h => (
+                          {[t("colMonth"), t("colPayment"), t("colInterest"), t("colPrincipal"), t("colBalance")].map(h => (
                             <th key={h} className="text-left text-gray-400 uppercase tracking-wider py-2 pr-4 font-semibold">{h}</th>
                           ))}
                         </tr>

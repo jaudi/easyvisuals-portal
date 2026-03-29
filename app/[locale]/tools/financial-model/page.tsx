@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar,
@@ -84,6 +85,8 @@ type YearData = {
 };
 
 export default function FinancialModelPage() {
+  const t = useTranslations("financialModel");
+  const tc = useTranslations("toolCommon");
   const [companyName, setCompanyName] = useState("My Company");
   const [baseRevenue, setBaseRevenue] = useState(1000000);
   const [revenueGrowth, setRevenueGrowth] = useState(20);
@@ -283,9 +286,9 @@ export default function FinancialModelPage() {
     isPct ? `${fmtM(val)}%` : val < 0 ? `(£${fmt(Math.abs(val))})` : `£${fmt(val)}`;
 
   const TABS = [
-    { id: "income" as const, label: "Income Statement" },
-    { id: "balance" as const, label: "Balance Sheet" },
-    { id: "cashflow" as const, label: "Cash Flow" },
+    { id: "income" as const, label: t("tabIS") },
+    { id: "balance" as const, label: t("tabBS") },
+    { id: "cashflow" as const, label: t("tabCF") },
   ];
 
   return (
@@ -293,16 +296,16 @@ export default function FinancialModelPage() {
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">← All Tools</Link>
+            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">{tc("allTools")}</Link>
             <span className="text-gray-700 hidden sm:block">|</span>
-            <h1 className="text-white font-bold hidden sm:block">📈 5-Year Financial Model</h1>
+            <h1 className="text-white font-bold hidden sm:block">{t("title")}</h1>
           </div>
           <button
             onClick={handleExportPdf}
             disabled={isExporting}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
           >
-            {isExporting ? "Generating…" : "📄 Export PDF"}
+            {isExporting ? tc("generating") : tc("exportPdf")}
           </button>
         </div>
       </div>
@@ -314,9 +317,9 @@ export default function FinancialModelPage() {
             <aside className="lg:w-72 xl:w-80 shrink-0">
               <div className="lg:sticky lg:top-[133px] flex flex-col gap-4 max-h-[calc(100vh-153px)] overflow-y-auto pr-1">
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Company</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionCompany")}</h3>
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs text-gray-400">Company Name</label>
+                    <label className="text-xs text-gray-400">{t("labelCompany")}</label>
                     <input
                       value={companyName}
                       onChange={e => setCompanyName(e.target.value)}
@@ -326,15 +329,15 @@ export default function FinancialModelPage() {
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Revenue</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionRevenue")}</h3>
                   <div className="flex flex-col gap-3">
-                    <NumInput label="Year 1 Revenue" value={baseRevenue} onChange={setBaseRevenue} step={50000} />
-                    <PctInput label="Annual Growth Rate %" value={revenueGrowth} onChange={setRevenueGrowth} />
+                    <NumInput label={t("labelYear1Revenue")} value={baseRevenue} onChange={setBaseRevenue} step={50000} />
+                    <PctInput label={t("labelGrowthRate")} value={revenueGrowth} onChange={setRevenueGrowth} />
                   </div>
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Cost Structure (% Revenue)</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionCosts")}</h3>
                   <div className="flex flex-col gap-3">
                     <PctInput label="COGS %" value={cogsRate} onChange={setCogsRate} />
                     <PctInput label="OpEx %" value={opexRate} onChange={setOpexRate} />
@@ -344,16 +347,16 @@ export default function FinancialModelPage() {
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Financing & Tax</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionFinancing")}</h3>
                   <div className="flex flex-col gap-3">
                     <NumInput label="Annual Interest Expense" value={interestExpense} onChange={setInterestExpense} step={5000} />
-                    <PctInput label="Tax Rate %" value={taxRate} onChange={setTaxRate} />
+                    <PctInput label={t("labelTax")} value={taxRate} onChange={setTaxRate} />
                     <NumInput label="Annual Debt Repayment" value={debtRepayment} onChange={setDebtRepayment} step={5000} />
                   </div>
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-3">Opening Balance Sheet</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-3">{t("sectionBalanceSheet")}</h3>
                   <div className="flex flex-col gap-3">
                     <NumInput label="Starting Cash" value={startingCash} onChange={setStartingCash} step={10000} />
                     <NumInput label="Starting PP&E (net)" value={startingPPE} onChange={setStartingPPE} step={50000} />
@@ -362,7 +365,7 @@ export default function FinancialModelPage() {
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-3">Working Capital</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-3">{t("sectionWorkingCapital")}</h3>
                   <div className="flex flex-col gap-3">
                     <DaysInput label="Accounts Receivable Days" value={arDays} onChange={setArDays} />
                     <DaysInput label="Accounts Payable Days" value={apDays} onChange={setApDays} />
@@ -383,7 +386,7 @@ export default function FinancialModelPage() {
 
               {/* Revenue & Profit Chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">5-Year Revenue & Profit Growth</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartRevenue")}</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={chartData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -409,7 +412,7 @@ export default function FinancialModelPage() {
 
               {/* Margins Chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">Margin Trends</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartMargins")}</h2>
                 <ResponsiveContainer width="100%" height={240}>
                   <AreaChart data={marginData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />

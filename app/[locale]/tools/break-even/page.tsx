@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   LineChart,
   Line,
@@ -101,6 +102,9 @@ function KpiCard({
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 export default function BreakEvenPage() {
+  const t = useTranslations("breakEven");
+  const tc = useTranslations("toolCommon");
+
   // Inputs
   const [companyName, setCompanyName] = useState("My Product");
   const [sellingPrice, setSellingPrice] = useState(100);
@@ -192,14 +196,14 @@ export default function BreakEvenPage() {
   const pieData = useMemo(
     () =>
       [
-        { name: "Rent & Utilities", value: fixed.rent },
-        { name: "Payroll", value: fixed.payroll },
-        { name: "Insurance", value: fixed.insurance },
-        { name: "Depreciation", value: fixed.depreciation },
-        { name: "Marketing", value: fixed.marketing },
-        { name: "Other Fixed", value: fixed.other },
+        { name: t("pieLabelRent"), value: fixed.rent },
+        { name: t("pieLabelPayroll"), value: fixed.payroll },
+        { name: t("pieLabelInsurance"), value: fixed.insurance },
+        { name: t("pieLabelDepreciation"), value: fixed.depreciation },
+        { name: t("pieLabelMarketing"), value: fixed.marketing },
+        { name: t("pieLabelOther"), value: fixed.other },
       ].filter((d) => d.value > 0),
-    [fixed]
+    [fixed, t]
   );
 
   // ── PDF export ──────────────────────────────────────────────────────────────
@@ -249,11 +253,11 @@ export default function BreakEvenPage() {
               href="/tools"
               className="text-gray-400 hover:text-white text-sm transition"
             >
-              ← All Tools
+              {tc("allTools")}
             </Link>
             <span className="text-gray-700 hidden sm:block">|</span>
             <h1 className="text-white font-bold hidden sm:block">
-              ⚖️ Break-Even Analysis
+              {t("title")}
             </h1>
           </div>
           <button
@@ -261,7 +265,7 @@ export default function BreakEvenPage() {
             disabled={invalid || isExporting}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
           >
-            {isExporting ? "Generating…" : "📄 Export PDF"}
+            {isExporting ? tc("generating") : tc("exportPdf")}
           </button>
         </div>
       </div>
@@ -276,11 +280,11 @@ export default function BreakEvenPage() {
                 {/* Company */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
-                    General
+                    {t("sectionGeneral")}
                   </h3>
                   <div className="flex flex-col gap-1">
                     <label className="text-xs text-gray-400 font-medium">
-                      Company / Product name
+                      {t("labelCompany")}
                     </label>
                     <input
                       type="text"
@@ -294,43 +298,43 @@ export default function BreakEvenPage() {
                 {/* Fixed costs */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
-                    Fixed Costs (per period)
+                    {t("sectionFixed")}
                   </h3>
                   <div className="flex flex-col gap-3">
                     <NumInput
-                      label="Rent & Utilities"
+                      label={t("labelRent")}
                       value={fixed.rent}
                       onChange={(v) => setFixedKey("rent", v)}
                     />
                     <NumInput
-                      label="Payroll"
+                      label={t("labelPayroll")}
                       value={fixed.payroll}
                       onChange={(v) => setFixedKey("payroll", v)}
                       step={500}
                     />
                     <NumInput
-                      label="Insurance"
+                      label={t("labelInsurance")}
                       value={fixed.insurance}
                       onChange={(v) => setFixedKey("insurance", v)}
                       step={50}
                     />
                     <NumInput
-                      label="Depreciation"
+                      label={t("labelDepreciation")}
                       value={fixed.depreciation}
                       onChange={(v) => setFixedKey("depreciation", v)}
                     />
                     <NumInput
-                      label="Marketing"
+                      label={t("labelMarketing")}
                       value={fixed.marketing}
                       onChange={(v) => setFixedKey("marketing", v)}
                     />
                     <NumInput
-                      label="Other Fixed"
+                      label={t("labelOther")}
                       value={fixed.other}
                       onChange={(v) => setFixedKey("other", v)}
                     />
                     <div className="flex justify-between text-sm pt-2 border-t border-gray-800 mt-1">
-                      <span className="text-gray-400">Total Fixed</span>
+                      <span className="text-gray-400">{t("totalFixed")}</span>
                       <span className="text-white font-bold">
                         £{fmt(calcs.totalFixed)}
                       </span>
@@ -341,23 +345,23 @@ export default function BreakEvenPage() {
                 {/* Revenue & Variable */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
-                    Revenue & Variable
+                    {t("sectionRevenue")}
                   </h3>
                   <div className="flex flex-col gap-3">
                     <NumInput
-                      label="Selling price per unit"
+                      label={t("labelSellingPrice")}
                       value={sellingPrice}
                       onChange={setSellingPrice}
                       step={1}
                     />
                     <NumInput
-                      label="Variable cost per unit"
+                      label={t("labelVariableCost")}
                       value={variableCost}
                       onChange={setVariableCost}
                       step={1}
                     />
                     <NumInput
-                      label="Current / expected units sold"
+                      label={t("labelUnits")}
                       value={currentUnits}
                       onChange={(v) => setCurrentUnits(Math.max(0, Math.round(v)))}
                       prefix=""
@@ -373,41 +377,41 @@ export default function BreakEvenPage() {
               {/* Validation error */}
               {invalid && (
                 <div className="bg-red-900/20 border border-red-700/60 rounded-xl p-4 text-red-400 text-sm">
-                  Selling price must be greater than variable cost per unit to calculate a break-even point.
+                  {t("errorMargin")}
                 </div>
               )}
 
               {/* KPI Cards */}
               <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
                 <KpiCard
-                  label="Break-Even Units"
-                  value={calcs.bepUnits !== null ? `${fmt(calcs.bepUnits)} units` : "N/A"}
+                  label={t("kpiBepUnits")}
+                  value={calcs.bepUnits !== null ? `${fmt(calcs.bepUnits)} ${t("kpiProfitUnits")}` : "N/A"}
                   sub={
                     calcs.bepRevenue !== null
-                      ? `BEP revenue: £${fmt(calcs.bepRevenue)}`
+                      ? `${t("kpiBepRevenue")}: £${fmt(calcs.bepRevenue)}`
                       : "—"
                   }
                 />
                 <KpiCard
-                  label="Contribution Margin"
+                  label={t("kpiCM")}
                   value={`£${fmtM(calcs.cm)}`}
-                  sub={`CM ratio: ${(calcs.cmRatio * 100).toFixed(1)}%`}
+                  sub={`${t("kpiCMRatio")}: ${(calcs.cmRatio * 100).toFixed(1)}%`}
                   color="green"
                 />
                 <KpiCard
-                  label="Current Profit"
+                  label={t("kpiProfit")}
                   value={`£${fmt(calcs.currentProfit)}`}
-                  sub={`At ${fmt(currentUnits)} units`}
+                  sub={`${t("kpiProfitAt")} ${fmt(currentUnits)} ${t("kpiProfitUnits")}`}
                   color={calcs.currentProfit >= 0 ? "green" : "red"}
                 />
                 <KpiCard
-                  label="Margin of Safety"
+                  label={t("kpiMoS")}
                   value={
                     calcs.mosPct !== null ? `${calcs.mosPct.toFixed(1)}%` : "N/A"
                   }
                   sub={
                     calcs.mosUnits !== null
-                      ? `${fmt(calcs.mosUnits)} units above BEP`
+                      ? `${fmt(calcs.mosUnits)} ${t("kpiMoSUnits")}`
                       : "—"
                   }
                   color={
@@ -422,7 +426,7 @@ export default function BreakEvenPage() {
 
               {/* Break-Even Chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">Break-Even Chart</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartTitle")}</h2>
                 <ResponsiveContainer width="100%" height={360}>
                   <LineChart
                     data={chartData}
@@ -437,7 +441,7 @@ export default function BreakEvenPage() {
                       stroke="#374151"
                       tick={{ fill: "#6b7280", fontSize: 11 }}
                       label={{
-                        value: "Units Sold",
+                        value: t("chartAxisUnits"),
                         position: "insideBottom",
                         offset: -10,
                         fill: "#6b7280",
@@ -530,16 +534,16 @@ export default function BreakEvenPage() {
                 {/* Sensitivity Table */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
                   <h2 className="text-white font-bold mb-1">
-                    Sensitivity — Units vs Profit
+                    {t("tableTitle")}
                   </h2>
                   <p className="text-gray-500 text-xs mb-4">
-                    Profit at different sales volumes.
+                    {t("tableDesc")}
                   </p>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-gray-700">
-                          {["Units", "Revenue", "Profit", "Status"].map((h) => (
+                          {[t("colUnits"), t("colRevenue"), t("colProfit"), t("colStatus")].map((h) => (
                             <th
                               key={h}
                               className="text-left text-xs text-gray-400 uppercase tracking-wider py-2 pr-3 font-semibold"
@@ -583,10 +587,10 @@ export default function BreakEvenPage() {
                                 }`}
                               >
                                 {row.profit > 0
-                                  ? "Profit"
+                                  ? t("statusProfit")
                                   : row.profit === 0
-                                  ? "BEP"
-                                  : "Loss"}
+                                  ? t("statusBep")
+                                  : t("statusLoss")}
                               </span>
                             </td>
                           </tr>
@@ -598,7 +602,7 @@ export default function BreakEvenPage() {
 
                 {/* Fixed Cost Breakdown */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                  <h2 className="text-white font-bold mb-4">Fixed Cost Breakdown</h2>
+                  <h2 className="text-white font-bold mb-4">{t("pieTitle")}</h2>
                   <div className="flex justify-center">
                     <ResponsiveContainer width={220} height={220}>
                       <PieChart>

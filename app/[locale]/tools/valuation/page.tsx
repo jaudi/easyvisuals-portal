@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   LineChart, Line, ReferenceLine,
@@ -43,6 +44,8 @@ function NumInput({ label, value, onChange, prefix = "£", step = 1000 }: {
 }
 
 export default function ValuationPage() {
+  const t = useTranslations("valuation");
+  const tc = useTranslations("toolCommon");
   const [companyName, setCompanyName] = useState("My Company");
   const [revenue, setRevenue] = useState(5000000);
   const [ebitda, setEbitda] = useState(1000000);
@@ -138,16 +141,16 @@ export default function ValuationPage() {
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">← All Tools</Link>
+            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">{tc("allTools")}</Link>
             <span className="text-gray-700 hidden sm:block">|</span>
-            <h1 className="text-white font-bold hidden sm:block">🏢 Business Valuation Calculator</h1>
+            <h1 className="text-white font-bold hidden sm:block">{t("title")}</h1>
           </div>
           <button
             onClick={handleExportPdf}
             disabled={isExporting}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
           >
-            {isExporting ? "Generating…" : "📄 Export PDF"}
+            {isExporting ? tc("generating") : tc("exportPdf")}
           </button>
         </div>
       </div>
@@ -160,9 +163,9 @@ export default function ValuationPage() {
               <div className="lg:sticky lg:top-[133px] flex flex-col gap-4">
                 {/* Company */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Company</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionCompany")}</h3>
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs text-gray-400">Company Name</label>
+                    <label className="text-xs text-gray-400">{t("labelCompany")}</label>
                     <input
                       value={companyName}
                       onChange={e => setCompanyName(e.target.value)}
@@ -173,12 +176,12 @@ export default function ValuationPage() {
 
                 {/* Financials */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Current Financials (Annual)</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionFinancials")}</h3>
                   <div className="flex flex-col gap-3">
-                    <NumInput label="Annual Revenue" value={revenue} onChange={setRevenue} step={100000} />
-                    <NumInput label="EBITDA" value={ebitda} onChange={setEbitda} step={50000} />
-                    <NumInput label="Net Income" value={netIncome} onChange={setNetIncome} step={50000} />
-                    <NumInput label="Free Cash Flow (FCF)" value={fcf} onChange={setFcf} step={50000} />
+                    <NumInput label={t("labelRevenue")} value={revenue} onChange={setRevenue} step={100000} />
+                    <NumInput label={t("labelEBITDA")} value={ebitda} onChange={setEbitda} step={50000} />
+                    <NumInput label={t("labelNetIncome")} value={netIncome} onChange={setNetIncome} step={50000} />
+                    <NumInput label={t("labelFCF")} value={fcf} onChange={setFcf} step={50000} />
                   </div>
                   <div className="mt-3 pt-3 border-t border-gray-800 space-y-1 text-xs text-gray-400">
                     <div className="flex justify-between"><span>EBITDA Margin</span><span className="text-white font-semibold">{fmtM(ebitdaMargin)}%</span></div>
@@ -189,7 +192,7 @@ export default function ValuationPage() {
 
                 {/* DCF Assumptions */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">DCF Assumptions</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionDCF")}</h3>
                   <div className="flex flex-col gap-3">
                     <NumInput label="Revenue Growth Rate %" value={growthRate} onChange={setGrowthRate} prefix="%" step={0.5} />
                     <NumInput label="Discount Rate / WACC %" value={discountRate} onChange={setDiscountRate} prefix="%" step={0.5} />
@@ -199,13 +202,13 @@ export default function ValuationPage() {
 
                 {/* Multiples */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Market Multiples</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionMultiples")}</h3>
                   <div className="flex flex-col gap-3">
                     <NumInput label="EV/EBITDA Multiple" value={ebitdaMultiple} onChange={setEbitdaMultiple} prefix="×" step={0.5} />
                     <NumInput label="P/E Ratio" value={peRatio} onChange={setPeRatio} prefix="×" step={0.5} />
                   </div>
                   <div className="mt-3 bg-[#111827] rounded-lg p-3 text-xs text-gray-400">
-                    <div className="font-semibold text-gray-300 mb-1">Typical multiples</div>
+                    <div className="font-semibold text-gray-300 mb-1">{t("typicalMultiples")}</div>
                     <div>EV/EBITDA: 6–12× (SMB), 15–25× (Tech)</div>
                     <div>P/E: 10–20× (mature), 25–50× (growth)</div>
                   </div>
@@ -217,15 +220,15 @@ export default function ValuationPage() {
             <div className="flex-1 min-w-0 flex flex-col gap-6">
               {/* KPI Cards */}
               <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
-                <KpiCard label="Average Valuation" value={`£${fmt(avgValuation)}`} sub="3-method average" color="gold" />
-                <KpiCard label="DCF Valuation" value={`£${fmt(dcfValue)}`} sub={`${discountRate}% WACC`} />
-                <KpiCard label="EV/EBITDA Value" value={`£${fmt(evValue)}`} sub={`${ebitdaMultiple}× multiple`} />
-                <KpiCard label="P/E Valuation" value={`£${fmt(epsValue)}`} sub={`${peRatio}× earnings`} color="green" />
+                <KpiCard label={t("kpiAvg")} value={`£${fmt(avgValuation)}`} sub="3-method average" color="gold" />
+                <KpiCard label={t("kpiDCF")} value={`£${fmt(dcfValue)}`} sub={`${discountRate}% WACC`} />
+                <KpiCard label={t("kpiEV")} value={`£${fmt(evValue)}`} sub={`${ebitdaMultiple}× multiple`} />
+                <KpiCard label={t("kpiPE")} value={`£${fmt(epsValue)}`} sub={`${peRatio}× earnings`} color="green" />
               </div>
 
               {/* Valuation Comparison Chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">Valuation by Method</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartValuation")}</h2>
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={valuationBarData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -251,7 +254,7 @@ export default function ValuationPage() {
 
               {/* DCF Chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">DCF — Projected Free Cash Flows</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartDCF")}</h2>
                 <ResponsiveContainer width="100%" height={260}>
                   <LineChart data={dcfChartData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -275,12 +278,12 @@ export default function ValuationPage() {
 
               {/* DCF Table */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-4">5-Year DCF Breakdown</h2>
+                <h2 className="text-white font-bold mb-4">{t("tableTitle")}</h2>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-gray-700">
-                        {["Year", "Free Cash Flow", "Discounted FCF", "Cumulative PV"].map(h => (
+                        {[t("colYear"), t("colFCF"), t("colDiscountedFCF"), t("colCumulativePV")].map(h => (
                           <th key={h} className="text-left text-xs text-gray-400 uppercase tracking-wider py-2 pr-4 font-semibold">{h}</th>
                         ))}
                       </tr>

@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   LineChart, Line,
@@ -42,6 +43,8 @@ function PctInput({ label, value, onChange }: { label: string; value: number; on
 }
 
 export default function AnnualBudgetPage() {
+  const t = useTranslations("annualBudget");
+  const tc = useTranslations("toolCommon");
   const [companyName, setCompanyName] = useState("My Company");
   const [year, setYear] = useState(new Date().getFullYear());
   const [baseRevenue, setBaseRevenue] = useState(100000);
@@ -129,16 +132,16 @@ export default function AnnualBudgetPage() {
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">← All Tools</Link>
+            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">{tc("allTools")}</Link>
             <span className="text-gray-700 hidden sm:block">|</span>
-            <h1 className="text-white font-bold hidden sm:block">📅 Annual Budget Planner</h1>
+            <h1 className="text-white font-bold hidden sm:block">{t("title")}</h1>
           </div>
           <button
             onClick={handleExportPdf}
             disabled={isExporting}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
           >
-            {isExporting ? "Generating…" : "📄 Export PDF"}
+            {isExporting ? tc("generating") : tc("exportPdf")}
           </button>
         </div>
       </div>
@@ -150,10 +153,10 @@ export default function AnnualBudgetPage() {
             <aside className="lg:w-72 xl:w-80 shrink-0">
               <div className="lg:sticky lg:top-[133px] flex flex-col gap-4">
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Company</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionCompany")}</h3>
                   <div className="flex flex-col gap-3">
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs text-gray-400">Company Name</label>
+                      <label className="text-xs text-gray-400">{t("labelCompany")}</label>
                       <input
                         value={companyName}
                         onChange={e => setCompanyName(e.target.value)}
@@ -161,7 +164,7 @@ export default function AnnualBudgetPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs text-gray-400">Budget Year</label>
+                      <label className="text-xs text-gray-400">{t("labelYear")}</label>
                       <input
                         type="number"
                         value={year}
@@ -173,10 +176,10 @@ export default function AnnualBudgetPage() {
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Revenue</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionRevenue")}</h3>
                   <div className="flex flex-col gap-3">
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs text-gray-400">Monthly Base Revenue</label>
+                      <label className="text-xs text-gray-400">{t("labelBaseRevenue")}</label>
                       <div className="flex items-center bg-[#111827] border border-gray-700 rounded-lg px-3 py-2 focus-within:border-blue-500 transition">
                         <span className="text-gray-500 text-sm mr-1.5 shrink-0">£</span>
                         <input
@@ -196,7 +199,7 @@ export default function AnnualBudgetPage() {
                         onChange={e => setSeasonalityEnabled(e.target.checked)}
                         className="accent-blue-500 w-4 h-4"
                       />
-                      <span className="text-xs text-gray-300">Enable seasonality</span>
+                      <span className="text-xs text-gray-300">{t("labelSeasonality")}</span>
                     </label>
                     {seasonalityEnabled && (
                       <div className="grid grid-cols-3 gap-1.5">
@@ -216,18 +219,18 @@ export default function AnnualBudgetPage() {
                             />
                           </div>
                         ))}
-                        <div className="col-span-3 text-xs text-gray-500 mt-1">1.0 = base, 1.2 = +20%</div>
+                        <div className="col-span-3 text-xs text-gray-500 mt-1">{t("seasonalityNote")}</div>
                       </div>
                     )}
                   </div>
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Cost Structure</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionCosts")}</h3>
                   <div className="flex flex-col gap-3">
-                    <PctInput label="COGS % of Revenue" value={cogsRate} onChange={setCogsRate} />
-                    <PctInput label="OpEx % of Revenue" value={opexRate} onChange={setOpexRate} />
-                    <PctInput label="Tax Rate %" value={taxRate} onChange={setTaxRate} />
+                    <PctInput label={t("labelCOGS")} value={cogsRate} onChange={setCogsRate} />
+                    <PctInput label={t("labelOpEx")} value={opexRate} onChange={setOpexRate} />
+                    <PctInput label={t("labelTax")} value={taxRate} onChange={setTaxRate} />
                   </div>
                 </div>
 
@@ -257,15 +260,15 @@ export default function AnnualBudgetPage() {
             <div className="flex-1 min-w-0 flex flex-col gap-6">
               {/* KPI Cards */}
               <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
-                <KpiCard label="Total Revenue" value={`£${fmt(totals.revenue)}`} sub={`${year}`} color="green" />
-                <KpiCard label="Gross Profit" value={`£${fmt(totals.grossProfit)}`} sub={`${fmtM(avgGrossMargin)}% margin`} />
-                <KpiCard label="EBITDA" value={`£${fmt(totals.ebitda)}`} sub={`${fmtM(avgEbitdaMargin)}% margin`} color={totals.ebitda >= 0 ? "green" : "red"} />
-                <KpiCard label="Net Income" value={`£${fmt(totals.netIncome)}`} sub="Bottom line" color={totals.netIncome >= 0 ? "green" : "red"} />
+                <KpiCard label={t("kpiRevenue")} value={`£${fmt(totals.revenue)}`} sub={`${year}`} color="green" />
+                <KpiCard label={t("kpiGrossProfit")} value={`£${fmt(totals.grossProfit)}`} sub={`${fmtM(avgGrossMargin)}% margin`} />
+                <KpiCard label={t("kpiEBITDA")} value={`£${fmt(totals.ebitda)}`} sub={`${fmtM(avgEbitdaMargin)}% margin`} color={totals.ebitda >= 0 ? "green" : "red"} />
+                <KpiCard label={t("kpiNetIncome")} value={`£${fmt(totals.netIncome)}`} sub="Bottom line" color={totals.netIncome >= 0 ? "green" : "red"} />
               </div>
 
               {/* Revenue & Profit Chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">Monthly Revenue & Profit</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartMonthly")}</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={chartData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -291,7 +294,7 @@ export default function AnnualBudgetPage() {
 
               {/* Margins Chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">Monthly Margins</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartMargins")}</h2>
                 <ResponsiveContainer width="100%" height={220}>
                   <LineChart data={marginData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -310,12 +313,12 @@ export default function AnnualBudgetPage() {
 
               {/* Monthly Table */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-4">Monthly Budget</h2>
+                <h2 className="text-white font-bold mb-4">{t("tableTitle")}</h2>
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs">
                     <thead>
                       <tr className="border-b border-gray-700">
-                        {["Month", "Revenue", "COGS", "Gross Profit", "OpEx", "EBITDA", "Net Income"].map(h => (
+                        {[t("colMonth"), "Revenue", "COGS", "Gross Profit", "OpEx", "EBITDA", "Net Income"].map(h => (
                           <th key={h} className="text-left text-xs text-gray-400 uppercase tracking-wider py-2 pr-4 font-semibold">{h}</th>
                         ))}
                       </tr>
@@ -333,7 +336,7 @@ export default function AnnualBudgetPage() {
                         </tr>
                       ))}
                       <tr className="border-t-2 border-blue-800 bg-blue-900/10 text-xs font-bold">
-                        <td className="py-2 pr-4 text-white">TOTAL</td>
+                        <td className="py-2 pr-4 text-white">{t("rowTotal")}</td>
                         <td className="py-2 pr-4 text-green-400">£{fmt(totals.revenue)}</td>
                         <td className="py-2 pr-4 text-red-400">£{fmt(totals.cogs)}</td>
                         <td className="py-2 pr-4 text-white">£{fmt(totals.grossProfit)}</td>

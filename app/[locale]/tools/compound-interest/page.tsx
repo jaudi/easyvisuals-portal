@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
@@ -49,6 +50,10 @@ function NumInput({ label, value, onChange, min = 0, step = 100, prefix = "£" }
 }
 
 export default function CompoundInterestPage() {
+  const t = useTranslations("compoundInterest");
+  const tc = useTranslations("toolCommon");
+  const presetLabels = [t("presetSP"), t("presetGlobal"), t("presetBonds"), t("presetSavings"), t("presetCustom")];
+
   const [initialCapital, setInitialCapital] = useState(10000);
   const [monthlyContribution, setMonthlyContribution] = useState(500);
   const [years, setYears] = useState(20);
@@ -122,16 +127,16 @@ export default function CompoundInterestPage() {
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">← All Tools</Link>
+            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">{tc("allTools")}</Link>
             <span className="text-gray-700 hidden sm:block">|</span>
-            <h1 className="text-white font-bold hidden sm:block">💹 Compound Interest Calculator</h1>
+            <h1 className="text-white font-bold hidden sm:block">{t("title")}</h1>
           </div>
           <button
             onClick={handleExportPdf}
             disabled={isExporting}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
           >
-            {isExporting ? "Generating…" : "📄 Export PDF"}
+            {isExporting ? tc("generating") : tc("exportPdf")}
           </button>
         </div>
       </div>
@@ -144,12 +149,12 @@ export default function CompoundInterestPage() {
               <div className="lg:sticky lg:top-[133px] flex flex-col gap-4">
                 {/* Capital & Contributions */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Capital & Contributions</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionCapital")}</h3>
                   <div className="flex flex-col gap-3">
-                    <NumInput label="Initial capital" value={initialCapital} onChange={setInitialCapital} step={500} />
-                    <NumInput label="Monthly contribution" value={monthlyContribution} onChange={setMonthlyContribution} step={50} />
+                    <NumInput label={t("labelInitial")} value={initialCapital} onChange={setInitialCapital} step={500} />
+                    <NumInput label={t("labelMonthly")} value={monthlyContribution} onChange={setMonthlyContribution} step={50} />
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs text-gray-400 font-medium">Investment horizon: {years} years</label>
+                      <label className="text-xs text-gray-400 font-medium">{t("labelHorizon")}: {years} years</label>
                       <input
                         type="range"
                         min={1}
@@ -167,7 +172,7 @@ export default function CompoundInterestPage() {
 
                 {/* Return Rate */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Return Rate</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionReturn")}</h3>
                   <div className="flex flex-col gap-3">
                     <div className="grid grid-cols-2 gap-2">
                       {PRESETS.map((p, i) => (
@@ -176,20 +181,20 @@ export default function CompoundInterestPage() {
                           onClick={() => setPreset(i)}
                           className={`py-2 px-3 rounded-lg text-xs font-semibold transition ${preset === i ? "bg-blue-600 text-white" : "bg-[#111827] text-gray-400 border border-gray-700 hover:text-white"}`}
                         >
-                          {p.label}{p.rate !== null ? ` ${p.rate}%` : ""}
+                          {presetLabels[i]}{p.rate !== null ? ` ${p.rate}%` : ""}
                         </button>
                       ))}
                     </div>
                     {PRESETS[preset].rate === null && (
-                      <NumInput label="Custom annual return %" value={customRate} onChange={setCustomRate} prefix="%" step={0.5} />
+                      <NumInput label={t("labelCustomRate")} value={customRate} onChange={setCustomRate} prefix="%" step={0.5} />
                     )}
                     <div className="bg-[#111827] border border-gray-800 rounded-lg p-3 text-xs text-gray-400 leading-relaxed">
-                      <div className="font-semibold text-gray-300 mb-1">Historical benchmarks</div>
-                      <div>🇺🇸 S&P 500 (1928–2024): ~10%/yr</div>
-                      <div>🌍 MSCI World: ~8%/yr</div>
-                      <div>🏦 Gov bonds: ~4%/yr</div>
-                      <div>💶 Savings: ~2%/yr</div>
-                      <div className="text-gray-600 mt-1">Past performance ≠ future results</div>
+                      <div className="font-semibold text-gray-300 mb-1">{t("benchmarksTitle")}</div>
+                      <div>🇺🇸 {t("bench1")}</div>
+                      <div>🌍 {t("bench2")}</div>
+                      <div>🏦 {t("bench3")}</div>
+                      <div>💶 {t("bench4")}</div>
+                      <div className="text-gray-600 mt-1">{t("disclaimer")}</div>
                     </div>
                   </div>
                 </div>
@@ -200,15 +205,15 @@ export default function CompoundInterestPage() {
             <div className="flex-1 min-w-0 flex flex-col gap-6">
               {/* KPI Cards */}
               <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
-                <KpiCard label="Final Portfolio Value" value={`£${fmt(finalValue)}`} sub={`After ${years} years`} />
-                <KpiCard label="Total Invested" value={`£${fmt(totalInvested)}`} sub="Initial + contributions" />
-                <KpiCard label="Interest Earned" value={`£${fmt(totalInterest)}`} sub={`${finalValue > 0 ? ((totalInterest / finalValue) * 100).toFixed(0) : 0}% of final value`} color="green" />
-                <KpiCard label="Return Multiple" value={`${returnMultiple.toFixed(1)}×`} sub={`£1 → £${returnMultiple.toFixed(2)}`} color="gold" />
+                <KpiCard label={t("kpiFinal")} value={`£${fmt(finalValue)}`} sub={`${t("kpiFinalSub").replace("{years}", String(years))}`} />
+                <KpiCard label={t("kpiInvested")} value={`£${fmt(totalInvested)}`} sub={t("kpiInvestedSub")} />
+                <KpiCard label={t("kpiInterest")} value={`£${fmt(totalInterest)}`} sub={`${finalValue > 0 ? ((totalInterest / finalValue) * 100).toFixed(0) : 0}% ${t("kpiInterestSub")}`} color="green" />
+                <KpiCard label={t("kpiMultiple")} value={`${returnMultiple.toFixed(1)}×`} sub={t("kpiMultipleSub").replace("{x}", returnMultiple.toFixed(2))} color="gold" />
               </div>
 
               {/* Growth Chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-5">Portfolio Growth Over Time</h2>
+                <h2 className="text-white font-bold mb-5">{t("chartTitle")}</h2>
                 <ResponsiveContainer width="100%" height={360}>
                   <AreaChart data={chartData} margin={{ top: 10, right: 20, bottom: 20, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -216,7 +221,7 @@ export default function CompoundInterestPage() {
                       dataKey="year"
                       stroke="#374151"
                       tick={{ fill: "#6b7280", fontSize: 11 }}
-                      label={{ value: "Year", position: "insideBottom", offset: -10, fill: "#6b7280", fontSize: 11 }}
+                      label={{ value: t("chartAxisYear"), position: "insideBottom", offset: -10, fill: "#6b7280", fontSize: 11 }}
                     />
                     <YAxis
                       stroke="#374151"
@@ -239,12 +244,12 @@ export default function CompoundInterestPage() {
 
               {/* Year-by-Year Table */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                <h2 className="text-white font-bold mb-4">Year-by-Year Breakdown</h2>
+                <h2 className="text-white font-bold mb-4">{t("tableTitle")}</h2>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-gray-700">
-                        {["Year", "Portfolio Value", "Total Contributed", "Interest Earned"].map(h => (
+                        {[t("colYear"), t("colPortfolio"), t("colContributed"), t("colInterest")].map(h => (
                           <th key={h} className="text-left text-xs text-gray-400 uppercase tracking-wider py-2 pr-4 font-semibold">{h}</th>
                         ))}
                       </tr>
