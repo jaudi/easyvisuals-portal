@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
-import { useTransition } from "react";
+import { useRouter } from "@/i18n/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -37,16 +37,7 @@ export default function Navbar() {
 
   function switchLocale(next: "en" | "es") {
     startTransition(() => {
-      // Strip current locale prefix if present
-      let path = pathname;
-      if (path.startsWith("/es")) {
-        path = path.slice(3) || "/";
-      }
-      if (next === "es") {
-        router.push(`/es${path === "/" ? "" : path}`);
-      } else {
-        router.push(path || "/");
-      }
+      router.replace(pathname, { locale: next });
     });
   }
 
