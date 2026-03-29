@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
@@ -6,6 +7,23 @@ export const metadata: Metadata = {
     "Free financial planning & analysis tools for individuals, finance teams and wealth managers. Personal budget, portfolio analysis, cash flow forecast, DCF valuation and more. No signup.",
   alternates: { canonical: "https://www.financeplots.com" },
 };
+
+const PERSONAL_TOOLS: [string, string, string, string][] = [
+  ["💰", "Personal Budget",    "Monthly income, expense categories, savings rate and spending breakdown.", "/tools/personal-budget"],
+  ["📊", "Portfolio Analysis", "Upload holdings. Analyse returns, risk and asset allocation.",             "/tools/portfolio-analysis"],
+  ["📉", "Stock Comparison",   "Compare two tickers side by side — returns, volatility, key ratios.",      "/tools/stock-comparison"],
+  ["📈", "Stock Analysis",     "Price history, moving averages and cumulative return for any ticker.",     "/tools/stock-analysis"],
+  ["💹", "Compound Interest",  "See how your capital and monthly contributions grow.",                     "/tools/compound-interest"],
+  ["🏠", "Mortgage & Loans",   "Amortisation schedule and mortgage payment calculator.",                  "/tools/lending"],
+];
+
+const PROFESSIONAL_TOOLS: [string, string, string, string][] = [
+  ["🏦", "Financial Model",    "5-year P&L, cash flow and balance sheet with Excel export.",             "/tools/financial-model"],
+  ["📋", "Annual Budget",      "Build and visualise your company budget month by month.",                "/tools/annual-budget"],
+  ["💧", "Cash Flow Forecast", "13-week rolling cash forecast with PDF export.",                         "/tools/cash-flow"],
+  ["⚖️", "Break-Even",         "Fixed costs, variable costs, contribution margin and margin of safety.", "/tools/break-even"],
+  ["💎", "DCF Valuation",      "Discounted cash flow model with terminal value and sensitivity table.",  "/tools/valuation"],
+];
 
 export default function Home() {
   return (
@@ -27,12 +45,12 @@ export default function Home() {
           and wealth managers analysing portfolios — free, instant, no account needed.
         </p>
         <div className="flex gap-4 flex-wrap justify-center mb-16">
-          <a
-            href="/dashboard"
+          <Link
+            href="/tools/financial-planner"
             className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl text-base transition shadow-lg shadow-blue-600/25"
           >
-            Open Tools Free →
-          </a>
+            Start Your Financial Journey →
+          </Link>
           <a
             href="#contact"
             className="border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold px-8 py-4 rounded-xl text-base transition"
@@ -78,14 +96,6 @@ export default function Home() {
               <p className="text-white font-semibold text-sm">5-Year Financial Model</p>
             </div>
           </div>
-          <div className="text-center mt-12">
-            <a
-              href="/dashboard"
-              className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl transition shadow-lg shadow-blue-600/25"
-            >
-              Try All Tools Free →
-            </a>
-          </div>
         </div>
       </section>
 
@@ -100,30 +110,30 @@ export default function Home() {
                 icon: "👤",
                 title: "Individuals",
                 points: [
-                  "Track monthly budget & savings rate",
-                  "Analyse your investment portfolio",
-                  "Compare stocks & monitor markets",
-                  "Plan your mortgage or loan",
+                  { label: "Track monthly budget & savings rate", href: "/tools/personal-budget" },
+                  { label: "Analyse your investment portfolio",   href: "/tools/portfolio-analysis" },
+                  { label: "Compare stocks & monitor markets",    href: "/tools/stock-comparison" },
+                  { label: "Plan your mortgage or loan",         href: "/tools/lending" },
                 ],
               },
               {
                 icon: "🏢",
                 title: "Finance Teams & Companies",
                 points: [
-                  "5-year financial model with Excel export",
-                  "13-week cash flow forecast + PDF",
-                  "Annual budget builder",
-                  "Break-even & DCF valuation",
+                  { label: "5-year financial model with Excel export", href: "/tools/financial-model" },
+                  { label: "13-week cash flow forecast + PDF",         href: "/tools/cash-flow" },
+                  { label: "Annual budget builder",                    href: "/tools/annual-budget" },
+                  { label: "Break-even & DCF valuation",               href: "/tools/break-even" },
                 ],
               },
               {
                 icon: "📈",
                 title: "Wealth Managers",
                 points: [
-                  "Client portfolio performance & risk",
-                  "Asset allocation analysis",
-                  "Commodity & equity market monitoring",
-                  "Exportable reports for clients",
+                  { label: "Client portfolio performance & risk", href: "/tools/portfolio-analysis" },
+                  { label: "Asset allocation analysis",           href: "/tools/portfolio-analysis" },
+                  { label: "Stock & equity market monitoring",    href: "/tools/stock-analysis" },
+                  { label: "Exportable reports for clients",      href: "/tools/portfolio-analysis" },
                 ],
               },
             ].map((item) => (
@@ -132,8 +142,9 @@ export default function Home() {
                 <h3 className="text-white font-bold text-lg mb-4">{item.title}</h3>
                 <ul className="space-y-2">
                   {item.points.map((p) => (
-                    <li key={p} className="flex gap-2 text-gray-400 text-sm">
-                      <span className="text-blue-400 shrink-0 mt-0.5">✓</span>{p}
+                    <li key={p.label} className="flex gap-2 text-sm">
+                      <span className="text-blue-400 shrink-0 mt-0.5">✓</span>
+                      <Link href={p.href} className="text-gray-400 hover:text-blue-300 transition">{p.label}</Link>
                     </li>
                   ))}
                 </ul>
@@ -148,7 +159,37 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">The tools</p>
           <h2 className="text-3xl font-bold text-center mb-3">11 Free FP&amp;A Tools</h2>
-          <p className="text-gray-400 text-center mb-14">Open instantly. No installation. No account.</p>
+          <p className="text-gray-400 text-center mb-10">Open instantly. No installation. No account.</p>
+
+          {/* Featured: Financial Journey Planner */}
+          <div className="flex justify-center mb-10">
+            <Link
+              href="/tools/financial-planner"
+              className="block w-full max-w-2xl bg-gradient-to-br from-blue-900/40 to-purple-900/20 border border-blue-700/40 hover:border-blue-500 rounded-2xl p-7 transition group"
+            >
+              <div className="flex items-start gap-5">
+                <span className="text-5xl shrink-0">🗺️</span>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2 flex-wrap">
+                    <h3 className="text-white font-bold text-xl group-hover:text-blue-300 transition">Financial Journey Planner</h3>
+                    <span className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full font-semibold">Featured</span>
+                  </div>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    A 4-step interactive guide — build your budget, calculate your debt, project your savings with compound interest, and set your asset allocation. Everything connected in one journey.
+                  </p>
+                  <div className="flex gap-4 mt-4 text-xs text-gray-500 flex-wrap">
+                    <span>💰 Budget</span>
+                    <span>→</span>
+                    <span>💳 Debt</span>
+                    <span>→</span>
+                    <span>📈 Compounding</span>
+                    <span>→</span>
+                    <span>🎯 Allocation</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
 
           <div className="grid md:grid-cols-2 gap-10">
 
@@ -162,20 +203,15 @@ export default function Home() {
                 </div>
               </div>
               <ul className="space-y-3">
-                {[
-                  ["💰", "Personal Budget",    "Monthly income, expense categories, savings rate and spending breakdown."],
-                  ["📊", "Portfolio Analysis", "Upload holdings. Analyse returns, risk and asset allocation."],
-                  ["📉", "Stock Comparison",   "Compare two tickers side by side — returns, volatility, key ratios."],
-                  ["📈", "Stock Analysis",     "Price history, moving averages and cumulative return for any ticker."],
-                  ["💹", "Compound Interest",  "See how your capital and monthly contributions grow. Uses historical market benchmarks."],
-                  ["🏠", "Mortgage & Loans",   "Amortisation schedule and mortgage payment calculator."],
-                ].map(([icon, name, desc]) => (
-                  <li key={name as string} className="flex gap-3 items-start bg-[#0d1426] border border-gray-800 rounded-xl p-4 hover:border-blue-700/50 transition group">
-                    <span className="text-xl mt-0.5">{icon}</span>
-                    <div>
-                      <p className="text-white font-semibold text-sm group-hover:text-blue-300 transition">{name as string}</p>
-                      <p className="text-gray-500 text-xs mt-0.5 leading-relaxed">{desc as string}</p>
-                    </div>
+                {PERSONAL_TOOLS.map(([icon, name, desc, href]) => (
+                  <li key={name}>
+                    <Link href={href} className="flex gap-3 items-start bg-[#0d1426] border border-gray-800 rounded-xl p-4 hover:border-blue-700/50 transition group">
+                      <span className="text-xl mt-0.5">{icon}</span>
+                      <div>
+                        <p className="text-white font-semibold text-sm group-hover:text-blue-300 transition">{name}</p>
+                        <p className="text-gray-500 text-xs mt-0.5 leading-relaxed">{desc}</p>
+                      </div>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -191,19 +227,15 @@ export default function Home() {
                 </div>
               </div>
               <ul className="space-y-3">
-                {[
-                  ["🏦", "Financial Model",    "5-year P&L, cash flow and balance sheet with Excel export."],
-                  ["📋", "Annual Budget",      "Build and visualise your company budget month by month."],
-                  ["💧", "Cash Flow Forecast", "13-week rolling cash forecast with PDF export."],
-                  ["⚖️", "Break-Even",         "Fixed costs, variable costs, contribution margin and margin of safety."],
-                  ["💎", "DCF Valuation",      "Discounted cash flow model with terminal value and sensitivity table."],
-                ].map(([icon, name, desc]) => (
-                  <li key={name as string} className="flex gap-3 items-start bg-[#0d1426] border border-gray-800 rounded-xl p-4 hover:border-blue-700/50 transition group">
-                    <span className="text-xl mt-0.5">{icon}</span>
-                    <div>
-                      <p className="text-white font-semibold text-sm group-hover:text-blue-300 transition">{name as string}</p>
-                      <p className="text-gray-500 text-xs mt-0.5 leading-relaxed">{desc as string}</p>
-                    </div>
+                {PROFESSIONAL_TOOLS.map(([icon, name, desc, href]) => (
+                  <li key={name}>
+                    <Link href={href} className="flex gap-3 items-start bg-[#0d1426] border border-gray-800 rounded-xl p-4 hover:border-blue-700/50 transition group">
+                      <span className="text-xl mt-0.5">{icon}</span>
+                      <div>
+                        <p className="text-white font-semibold text-sm group-hover:text-blue-300 transition">{name}</p>
+                        <p className="text-gray-500 text-xs mt-0.5 leading-relaxed">{desc}</p>
+                      </div>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -226,15 +258,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          <div className="text-center mt-12">
-            <a
-              href="/dashboard"
-              className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl transition shadow-lg shadow-blue-600/25"
-            >
-              Open All Tools Free →
-            </a>
-          </div>
         </div>
       </section>
 
@@ -250,7 +273,7 @@ export default function Home() {
               Every tool on FinancePlots is free — including PDF and Excel exports.
               No account, no credit card, no time limit. Finance tools should be accessible to everyone.
             </p>
-            <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <div className="flex flex-wrap justify-center gap-6">
               {[
                 ["✓", "All 11 tools free"],
                 ["✓", "PDF & Excel exports free"],
@@ -262,12 +285,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <a
-              href="/dashboard"
-              className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl transition shadow-lg shadow-blue-600/25"
-            >
-              Open All Tools →
-            </a>
           </div>
         </div>
       </section>
@@ -418,7 +435,7 @@ export default function Home() {
               <p className="text-gray-500 text-xs">FP&amp;A tools for individuals, companies and wealth managers</p>
             </div>
             <div className="flex gap-8 text-sm text-gray-500">
-              <a href="/dashboard" className="hover:text-gray-300 transition">Tools</a>
+              <a href="/tools" className="hover:text-gray-300 transition">Tools</a>
               <a href="/blog" className="hover:text-gray-300 transition">Blog</a>
               <a href="/#contact" className="hover:text-gray-300 transition">Contact</a>
             </div>
