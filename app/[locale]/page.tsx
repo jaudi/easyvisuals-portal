@@ -276,55 +276,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Custom Dashboards ── */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("customLabel")}</p>
-          <h2 className="text-3xl font-bold text-center mb-4">{t("customTitle")}</h2>
-          <p className="text-gray-400 text-center max-w-2xl mx-auto mb-14 leading-relaxed">
-            {t("customDesc")}
-          </p>
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            {[
-              { icon: "📊", title: t("custom1Title"), desc: t("custom1Desc") },
-              { icon: "💰", title: t("custom2Title"), desc: t("custom2Desc") },
-              { icon: "📈", title: t("custom3Title"), desc: t("custom3Desc") },
-            ].map((item) => (
-              <div key={item.title} className="bg-[#0d1426] border border-gray-800 rounded-2xl p-7 hover:border-blue-700/50 transition">
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-white font-bold text-base mb-2">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-          <div className="bg-[#0d1426] border border-gray-800 rounded-2xl p-8 flex flex-col md:flex-row items-center gap-8">
-            <div className="flex-1">
-              <h3 className="text-white font-bold text-xl mb-2">{t("customHowTitle")}</h3>
-              <ol className="space-y-2">
-                {[
-                  t("customStep1"),
-                  t("customStep2"),
-                  t("customStep3"),
-                  t("customStep4"),
-                ].map((step, i) => (
-                  <li key={i} className="flex gap-3 text-gray-400 text-sm">
-                    <span className="text-blue-400 font-bold shrink-0 mt-0.5">{i + 1}.</span>{step}
-                  </li>
-                ))}
-              </ol>
-            </div>
-            <div className="shrink-0">
-              <a
-                href="#contact"
-                className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl transition shadow-lg shadow-blue-600/25 text-sm"
-              >
-                {t("customCta")}
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── Blog teaser ── */}
       <section className="bg-[#0d1426] py-20 px-6">
         <div className="max-w-5xl mx-auto">
