@@ -149,11 +149,12 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-3">{t("toolsTitle")}</h2>
           <p className="text-gray-400 text-center mb-10">{t("toolsSubtitle")}</p>
 
-          {/* Featured: Financial Journey Planner */}
-          <div className="flex justify-center mb-10">
+          {/* Featured: Financial Journey Planners */}
+          <div className="grid md:grid-cols-2 gap-4 mb-10">
+            {/* Individual */}
             <Link
               href="/tools/financial-planner"
-              className="block w-full max-w-2xl bg-gradient-to-br from-blue-900/40 to-purple-900/20 border border-blue-700/40 hover:border-blue-500 rounded-2xl p-7 transition group"
+              className="block bg-gradient-to-br from-blue-900/40 to-purple-900/20 border border-blue-700/40 hover:border-blue-500 rounded-2xl p-7 transition group"
             >
               <div className="flex items-start gap-4 overflow-hidden">
                 <span className="text-4xl shrink-0">🗺️</span>
@@ -173,6 +174,35 @@ export default function Home() {
                     <span>📈 Compounding</span>
                     <span>→</span>
                     <span>🎯 Allocation</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+            {/* Company */}
+            <Link
+              href="/tools/financial-planner-company"
+              className="block bg-gradient-to-br from-green-900/40 to-teal-900/20 border border-green-700/40 hover:border-green-500 rounded-2xl p-7 transition group"
+            >
+              <div className="flex items-start gap-4 overflow-hidden">
+                <span className="text-4xl shrink-0">🏢</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-2 flex-wrap">
+                    <h3 className="text-white font-bold text-lg md:text-xl group-hover:text-green-300 transition">{t("featuredToolTitleCompany")}</h3>
+                    <span className="text-xs bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-full font-semibold">{t("featuredBadge")}</span>
+                  </div>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    {t("featuredToolDescCompany")}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-4 text-xs text-gray-500">
+                    <span>📊 P&amp;L</span>
+                    <span>→</span>
+                    <span>💧 Cash Flow</span>
+                    <span>→</span>
+                    <span>⚖️ Balance Sheet</span>
+                    <span>→</span>
+                    <span>💎 Valuation</span>
+                    <span>→</span>
+                    <span>🚀 Exit</span>
                   </div>
                 </div>
               </div>
