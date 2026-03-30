@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
@@ -11,45 +12,41 @@ import {
 const fmt = (n: number) => n.toLocaleString("en-GB", { maximumFractionDigits: 0 });
 
 const STEPS = [
-  { num: 1, label: "Budget", icon: "💰", desc: "Monthly income & spending" },
-  { num: 2, label: "Debt", icon: "💳", desc: "Outstanding balances" },
-  { num: 3, label: "Compounding", icon: "📈", desc: "Grow your savings" },
-  { num: 4, label: "Allocation", icon: "🎯", desc: "Invest your wealth" },
+  { num: 1, labelKey: "step1Label", icon: "💰", descKey: "step1Desc" },
+  { num: 2, labelKey: "step2Label", icon: "💳", descKey: "step2Desc" },
+  { num: 3, labelKey: "step3Label", icon: "📈", descKey: "step3Desc" },
+  { num: 4, labelKey: "step4Label", icon: "🎯", descKey: "step4Desc" },
 ];
 
 const EXPENSE_CATS = [
-  { key: "housing",       label: "Housing",       color: "#3b82f6", default: 1200 },
-  { key: "transport",     label: "Transport",     color: "#8b5cf6", default: 300  },
-  { key: "food",          label: "Food & Dining", color: "#f59e0b", default: 400  },
-  { key: "utilities",     label: "Utilities",     color: "#22c55e", default: 200  },
-  { key: "health",        label: "Health",        color: "#ec4899", default: 100  },
-  { key: "entertainment", label: "Entertainment", color: "#14b8a6", default: 150  },
-  { key: "other",         label: "Other",         color: "#9ca3af", default: 150  },
+  { key: "housing",       labelKey: "catHousing",       color: "#3b82f6", default: 1200 },
+  { key: "transport",     labelKey: "catTransport",     color: "#8b5cf6", default: 300  },
+  { key: "food",          labelKey: "catFood",          color: "#f59e0b", default: 400  },
+  { key: "utilities",     labelKey: "catUtilities",     color: "#22c55e", default: 200  },
+  { key: "health",        labelKey: "catHealth",        color: "#ec4899", default: 100  },
+  { key: "entertainment", labelKey: "catEntertainment", color: "#14b8a6", default: 150  },
+  { key: "other",         labelKey: "catOther",         color: "#9ca3af", default: 150  },
 ];
 
 const DEBT_ITEMS = [
-  { key: "mortgage",     label: "Mortgage",      rate: 4.5,  term: 25, color: "#3b82f6" },
-  { key: "car",          label: "Car Loan",       rate: 7.0,  term: 5,  color: "#8b5cf6" },
-  { key: "credit_card",  label: "Credit Card",   rate: 22.0, term: 3,  color: "#ef4444" },
-  { key: "student",      label: "Student Loan",  rate: 5.0,  term: 10, color: "#f59e0b" },
-  { key: "personal",     label: "Personal Loan", rate: 12.0, term: 5,  color: "#ec4899" },
+  { key: "mortgage",    labelKey: "debtMortgage",    rate: 4.5,  term: 25, color: "#3b82f6" },
+  { key: "car",         labelKey: "debtCar",         rate: 7.0,  term: 5,  color: "#8b5cf6" },
+  { key: "credit_card", labelKey: "debtCreditCard",  rate: 22.0, term: 3,  color: "#ef4444" },
+  { key: "student",     labelKey: "debtStudent",     rate: 5.0,  term: 10, color: "#f59e0b" },
+  { key: "personal",    labelKey: "debtPersonal",    rate: 12.0, term: 5,  color: "#ec4899" },
 ];
 
 const RATE_PRESETS = [
   { label: "S&P 500", rate: 10 },
   { label: "Global",  rate: 8  },
   { label: "Bonds",   rate: 4  },
-  { label: "Custom",  rate: null },
+  { labelKey: "presetCustom", rate: null },
 ];
 
 const RISK_PROFILES = {
-  conservative: { label: "Conservative", stocks: 30, bonds: 50, cash: 15, alternatives: 5  },
-  moderate:     { label: "Moderate",     stocks: 60, bonds: 30, cash:  7, alternatives: 3  },
-  aggressive:   { label: "Aggressive",   stocks: 85, bonds: 10, cash:  3, alternatives: 2  },
-};
-
-const ALLOC_COLORS: Record<string, string> = {
-  Stocks: "#3b82f6", Bonds: "#22c55e", Cash: "#f59e0b", Alternatives: "#8b5cf6",
+  conservative: { labelKey: "riskConservative", stocks: 30, bonds: 50, cash: 15, alternatives: 5  },
+  moderate:     { labelKey: "riskModerate",     stocks: 60, bonds: 30, cash:  7, alternatives: 3  },
+  aggressive:   { labelKey: "riskAggressive",   stocks: 85, bonds: 10, cash:  3, alternatives: 2  },
 };
 
 function NumInput({ label, value, onChange, prefix = "£", step = 100, note }: {
@@ -82,7 +79,12 @@ function KpiCard({ label, value, sub, colorClass }: { label: string; value: stri
   );
 }
 
+type RiskKey = "conservative" | "moderate" | "aggressive";
+
 export default function FinancialPlannerPage() {
+  const t = useTranslations("financialPlanner");
+  const tc = useTranslations("toolCommon");
+
   const [step, setStep] = useState(1);
 
   // Step 1 — Budget
@@ -103,7 +105,10 @@ export default function FinancialPlannerPage() {
 
   // Step 4 — Allocation
   const [age, setAge] = useState(35);
-  const [risk, setRisk] = useState<"conservative" | "moderate" | "aggressive">("moderate");
+  const [risk, setRisk] = useState<RiskKey>("moderate");
+
+  // ── Translated label lookups ─────────────────────────────────────────────
+  type TKey = Parameters<typeof t>[0];
 
   // ── Step 1 calculations ──────────────────────────────────────────────────
   const totalExpenses = useMemo(() => Object.values(expenses).reduce((a, b) => a + b, 0), [expenses]);
@@ -112,7 +117,7 @@ export default function FinancialPlannerPage() {
 
   const budgetDonutData = EXPENSE_CATS
     .filter(c => expenses[c.key] > 0)
-    .map(c => ({ name: c.label, value: expenses[c.key], color: c.color }));
+    .map(c => ({ name: t(c.labelKey as TKey), value: expenses[c.key], color: c.color }));
 
   // ── Step 2 calculations ──────────────────────────────────────────────────
   const totalDebt = useMemo(() => Object.values(debts).reduce((a, b) => a + b, 0), [debts]);
@@ -127,9 +132,9 @@ export default function FinancialPlannerPage() {
   const debtBarData = DEBT_ITEMS
     .filter(d => (debts[d.key] ?? 0) > 0)
     .map(d => ({
-      name: d.label,
+      name: t(d.labelKey as TKey),
       Balance: debts[d.key],
-      "Est. Interest": Math.round(debts[d.key] * (d.rate / 100) * (d.term / 2)),
+      [t("s2KpiInterest")]: Math.round(debts[d.key] * (d.rate / 100) * (d.term / 2)),
       color: d.color,
     }));
 
@@ -168,11 +173,18 @@ export default function FinancialPlannerPage() {
   const profile = RISK_PROFILES[risk];
   const ageAdj = Math.max(0, Math.min(20, age - 30)) * 0.5;
   const allocData = [
-    { name: "Stocks",       value: Math.round(Math.max(10, profile.stocks - ageAdj)) },
-    { name: "Bonds",        value: Math.round(Math.min(70, profile.bonds + ageAdj * 0.7)) },
-    { name: "Cash",         value: profile.cash },
-    { name: "Alternatives", value: profile.alternatives },
+    { name: t("allocStocks"),       value: Math.round(Math.max(10, profile.stocks - ageAdj)) },
+    { name: t("allocBonds"),        value: Math.round(Math.min(70, profile.bonds + ageAdj * 0.7)) },
+    { name: t("allocCash"),         value: profile.cash },
+    { name: t("allocAlternatives"), value: profile.alternatives },
   ];
+
+  const ALLOC_COLORS: Record<string, string> = {
+    [t("allocStocks")]:       "#3b82f6",
+    [t("allocBonds")]:        "#22c55e",
+    [t("allocCash")]:         "#f59e0b",
+    [t("allocAlternatives")]: "#8b5cf6",
+  };
 
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white">
@@ -180,9 +192,9 @@ export default function FinancialPlannerPage() {
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-4 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 shrink-0">
-            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">← Tools</Link>
+            <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">{tc("allTools")}</Link>
             <span className="text-gray-700 hidden md:block">|</span>
-            <span className="text-white font-bold text-sm hidden md:block">🗺️ Financial Journey</span>
+            <span className="text-white font-bold text-sm hidden md:block">{t("title")}</span>
           </div>
           {/* Step pills */}
           <div className="flex items-center gap-1">
@@ -199,7 +211,7 @@ export default function FinancialPlannerPage() {
                   }`}
                 >
                   <span>{s.icon}</span>
-                  <span className="hidden sm:block">{s.label}</span>
+                  <span className="hidden sm:block">{t(s.labelKey as TKey)}</span>
                 </button>
                 {i < STEPS.length - 1 && <span className="text-gray-700 text-xs">›</span>}
               </div>
@@ -226,16 +238,16 @@ export default function FinancialPlannerPage() {
               <aside className="lg:w-72 xl:w-80 shrink-0">
                 <div className="lg:sticky lg:top-[140px] flex flex-col gap-4">
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-green-400 mb-3">Monthly Income</h3>
-                    <NumInput label="Take-home pay" value={income} onChange={setIncome} step={200} />
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-green-400 mb-3">{t("s1IncomeHeader")}</h3>
+                    <NumInput label={t("s1TakeHome")} value={income} onChange={setIncome} step={200} />
                   </div>
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-3">Monthly Expenses</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-3">{t("s1ExpensesHeader")}</h3>
                     <div className="flex flex-col gap-2.5">
                       {EXPENSE_CATS.map(cat => (
                         <NumInput
                           key={cat.key}
-                          label={cat.label}
+                          label={t(cat.labelKey as TKey)}
                           value={expenses[cat.key]}
                           onChange={v => setExpenses(p => ({ ...p, [cat.key]: v }))}
                           step={50}
@@ -248,19 +260,19 @@ export default function FinancialPlannerPage() {
 
               <div className="flex-1 min-w-0 flex flex-col gap-6">
                 <div className="grid grid-cols-3 gap-3">
-                  <KpiCard label="Monthly Income" value={`£${fmt(income)}`} sub="Take-home pay" colorClass="border-l-green-500" />
-                  <KpiCard label="Monthly Expenses" value={`£${fmt(totalExpenses)}`} sub="All categories" colorClass="border-l-red-500" />
+                  <KpiCard label={t("s1KpiIncome")} value={`£${fmt(income)}`} sub={t("s1TakeHome")} colorClass="border-l-green-500" />
+                  <KpiCard label={t("s1KpiExpenses")} value={`£${fmt(totalExpenses)}`} sub={t("s1AllCategories")} colorClass="border-l-red-500" />
                   <KpiCard
-                    label="Net Savings"
+                    label={t("s1KpiSavings")}
                     value={`£${fmt(Math.abs(netSavings))}`}
-                    sub={`${savingsRate.toFixed(1)}% savings rate`}
+                    sub={t("s1KpiSavingsRate").replace("{x}", savingsRate.toFixed(1))}
                     colorClass={netSavings >= 0 ? "border-l-blue-500" : "border-l-red-500"}
                   />
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                  <h2 className="text-white font-bold mb-1">Where Your Money Goes</h2>
-                  <p className="text-gray-500 text-xs mb-4">Monthly spending breakdown</p>
+                  <h2 className="text-white font-bold mb-1">{t("s1ChartTitle")}</h2>
+                  <p className="text-gray-500 text-xs mb-4">{t("s1ChartSub")}</p>
                   {budgetDonutData.length > 0 ? (
                     <ResponsiveContainer width="100%" height={360}>
                       <PieChart>
@@ -281,24 +293,24 @@ export default function FinancialPlannerPage() {
                       </PieChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="h-[360px] flex items-center justify-center text-gray-500">Enter expenses to see breakdown</div>
+                    <div className="h-[360px] flex items-center justify-center text-gray-500">{t("s1EmptyState")}</div>
                   )}
                 </div>
 
                 {netSavings < 0 && (
                   <div className="bg-red-900/20 border border-red-700/40 rounded-xl p-4 text-sm text-red-300">
-                    ⚠️ Your expenses exceed your income by <strong>£{fmt(Math.abs(netSavings))}/mo</strong>. Consider reducing spending before investing.
+                    ⚠️ {t("s1WarningOverspend").replace("{amount}", `£${fmt(Math.abs(netSavings))}`)}
                   </div>
                 )}
                 {netSavings > 0 && savingsRate >= 20 && (
                   <div className="bg-green-900/20 border border-green-700/40 rounded-xl p-4 text-sm text-green-300">
-                    ✅ Savings rate of <strong>{savingsRate.toFixed(1)}%</strong> — above the recommended 20% target. Great position to build wealth.
+                    ✅ {t("s1SuccessSavings").replace("{x}", savingsRate.toFixed(1))}
                   </div>
                 )}
 
                 <div className="flex justify-end">
                   <button onClick={() => setStep(2)} className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl transition">
-                    Next: Calculate Debt →
+                    {t("s1NextBtn")}
                   </button>
                 </div>
               </div>
@@ -311,12 +323,12 @@ export default function FinancialPlannerPage() {
               <aside className="lg:w-72 xl:w-80 shrink-0">
                 <div className="lg:sticky lg:top-[140px] flex flex-col gap-4">
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-3">Outstanding Balances</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-3">{t("s2BalancesHeader")}</h3>
                     <div className="flex flex-col gap-3">
                       {DEBT_ITEMS.map(d => (
                         <div key={d.key} className="flex flex-col gap-1">
                           <label className="text-xs text-gray-400">
-                            {d.label}
+                            {t(d.labelKey as TKey)}
                             <span className="text-gray-600 ml-1">({d.rate}% APR · {d.term}yr)</span>
                           </label>
                           <div className="flex items-center bg-[#111827] border border-gray-700 rounded-lg px-3 py-2 focus-within:border-blue-500 transition">
@@ -337,13 +349,13 @@ export default function FinancialPlannerPage() {
 
               <div className="flex-1 min-w-0 flex flex-col gap-6">
                 <div className="grid grid-cols-2 gap-3">
-                  <KpiCard label="Total Debt" value={`£${fmt(totalDebt)}`} sub="All balances combined" colorClass="border-l-red-500" />
-                  <KpiCard label="Est. Total Interest" value={`£${fmt(totalInterestCost)}`} sub="Over full repayment term" colorClass="border-l-orange-500" />
+                  <KpiCard label={t("s2KpiDebt")} value={`£${fmt(totalDebt)}`} sub={t("s2KpiDebtSub")} colorClass="border-l-red-500" />
+                  <KpiCard label={t("s2KpiInterest")} value={`£${fmt(totalInterestCost)}`} sub={t("s2KpiInterestSub")} colorClass="border-l-orange-500" />
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                  <h2 className="text-white font-bold mb-1">Debt Breakdown</h2>
-                  <p className="text-gray-500 text-xs mb-4">Balance vs estimated interest cost — sorted by size</p>
+                  <h2 className="text-white font-bold mb-1">{t("s2ChartTitle")}</h2>
+                  <p className="text-gray-500 text-xs mb-4">{t("s2ChartSub")}</p>
                   {debtBarData.length > 0 ? (
                     <ResponsiveContainer width="100%" height={280}>
                       <BarChart data={debtBarData} layout="vertical" margin={{ left: 10, right: 30, top: 10, bottom: 10 }}>
@@ -360,28 +372,28 @@ export default function FinancialPlannerPage() {
                         />
                         <Legend wrapperStyle={{ color: "#9ca3af", fontSize: 12, paddingTop: 8 }} />
                         <Bar dataKey="Balance" fill="#3b82f6" stackId="a" />
-                        <Bar dataKey="Est. Interest" fill="#ef4444" stackId="a" radius={[0, 4, 4, 0]} />
+                        <Bar dataKey={t("s2KpiInterest")} fill="#ef4444" stackId="a" radius={[0, 4, 4, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   ) : (
                     <div className="h-[280px] flex items-center justify-center text-green-400 font-semibold">
-                      🎉 No debts — you&apos;re debt free!
+                      {t("s2DebtFree")}
                     </div>
                   )}
                 </div>
 
                 {highestRateDebt && (
                   <div className="bg-amber-900/20 border border-amber-700/40 rounded-xl p-4 text-sm text-amber-300">
-                    <span className="font-bold">💡 Debt Avalanche tip:</span> Your highest-rate debt is{" "}
-                    <strong>{highestRateDebt.label}</strong> at {highestRateDebt.rate}% APR.
-                    Paying this off first minimises total interest paid.
+                    {t("s2AvalancheTip")
+                      .replace("{debt}", t(highestRateDebt.labelKey as TKey))
+                      .replace("{rate}", String(highestRateDebt.rate))}
                   </div>
                 )}
 
                 <div className="flex justify-between items-center">
-                  <button onClick={() => setStep(1)} className="text-gray-400 hover:text-white text-sm transition">← Back</button>
+                  <button onClick={() => setStep(1)} className="text-gray-400 hover:text-white text-sm transition">{t("btnBack")}</button>
                   <button onClick={() => setStep(3)} className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl transition">
-                    Next: Grow Your Savings →
+                    {t("s2NextBtn")}
                   </button>
                 </div>
               </div>
@@ -394,15 +406,15 @@ export default function FinancialPlannerPage() {
               <aside className="lg:w-72 xl:w-80 shrink-0">
                 <div className="lg:sticky lg:top-[140px] flex flex-col gap-4">
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Your Savings</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("s3SavingsHeader")}</h3>
                     <div className="bg-[#111827] border border-gray-700 rounded-lg p-3 mb-3">
-                      <div className="text-xs text-gray-400 mb-1">Monthly savings (from Step 1)</div>
+                      <div className="text-xs text-gray-400 mb-1">{t("s3MonthlySavingsLabel")}</div>
                       <div className={`text-2xl font-extrabold ${netSavings >= 0 ? "text-green-400" : "text-red-400"}`}>
                         £{fmt(Math.max(0, netSavings))}<span className="text-sm font-normal text-gray-400">/mo</span>
                       </div>
                     </div>
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs text-gray-400">Investment horizon</label>
+                      <label className="text-xs text-gray-400">{t("s3HorizonLabel")}</label>
                       <div className="flex items-center gap-3">
                         <input
                           type="range" min={1} max={40} value={years}
@@ -414,20 +426,20 @@ export default function FinancialPlannerPage() {
                     </div>
                   </div>
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Expected Return</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("s3ReturnHeader")}</h3>
                     <div className="grid grid-cols-2 gap-2 mb-3">
                       {RATE_PRESETS.map((p, i) => (
                         <button
-                          key={p.label}
+                          key={i}
                           onClick={() => setRatePreset(i)}
                           className={`py-2 px-3 rounded-lg text-xs font-semibold transition ${ratePreset === i ? "bg-blue-600 text-white" : "bg-[#111827] text-gray-400 border border-gray-700 hover:text-white"}`}
                         >
-                          {p.label}{p.rate !== null ? ` ${p.rate}%` : ""}
+                          {"labelKey" in p ? t(p.labelKey as TKey) : p.label}{p.rate !== null ? ` ${p.rate}%` : ""}
                         </button>
                       ))}
                     </div>
                     {RATE_PRESETS[ratePreset].rate === null && (
-                      <NumInput label="Custom rate %" value={customRate} onChange={setCustomRate} prefix="%" step={0.5} />
+                      <NumInput label={t("s3CustomRate")} value={customRate} onChange={setCustomRate} prefix="%" step={0.5} />
                     )}
                     <div className="mt-3 bg-[#111827] rounded-lg p-3 text-xs text-gray-500">
                       <div>🇺🇸 S&P 500 (1928–2024): ~10%/yr</div>
@@ -440,15 +452,25 @@ export default function FinancialPlannerPage() {
 
               <div className="flex-1 min-w-0 flex flex-col gap-6">
                 <div className="grid grid-cols-3 gap-3">
-                  <KpiCard label="Monthly Contribution" value={`£${fmt(monthlyContrib)}`} sub="From your budget surplus" colorClass="border-l-blue-500" />
-                  <KpiCard label={`Value after ${years} years`} value={`£${fmt(finalValue)}`} sub={`At ${annualRate}% annual return`} colorClass="border-l-green-500" />
-                  <KpiCard label="Interest Earned" value={`£${fmt(finalInterest)}`} sub={`${finalValue > 0 ? ((finalInterest / finalValue) * 100).toFixed(0) : 0}% of final value`} colorClass="border-l-yellow-400" />
+                  <KpiCard label={t("s3KpiContrib")} value={`£${fmt(monthlyContrib)}`} sub={t("s3KpiContribSub")} colorClass="border-l-blue-500" />
+                  <KpiCard
+                    label={t("s3KpiValue").replace("{years}", String(years))}
+                    value={`£${fmt(finalValue)}`}
+                    sub={t("s3KpiValueSub").replace("{rate}", String(annualRate))}
+                    colorClass="border-l-green-500"
+                  />
+                  <KpiCard
+                    label={t("s3KpiInterest")}
+                    value={`£${fmt(finalInterest)}`}
+                    sub={t("s3KpiInterestSub").replace("{pct}", finalValue > 0 ? ((finalInterest / finalValue) * 100).toFixed(0) : "0")}
+                    colorClass="border-l-yellow-400"
+                  />
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                  <h2 className="text-white font-bold mb-1">Compound Growth Over {years} Years</h2>
+                  <h2 className="text-white font-bold mb-1">{t("s3ChartTitle").replace("{years}", String(years))}</h2>
                   <p className="text-gray-500 text-xs mb-4">
-                    Monthly contributions of <strong className="text-white">£{fmt(monthlyContrib)}</strong> at <strong className="text-white">{annualRate}%</strong> annual return
+                    {t("s3ChartSub").replace("{amount}", `£${fmt(monthlyContrib)}`).replace("{rate}", String(annualRate))}
                   </p>
                   <ResponsiveContainer width="100%" height={340}>
                     <AreaChart data={compoundData} margin={{ top: 10, right: 20, bottom: 20, left: 10 }}>
@@ -456,7 +478,7 @@ export default function FinancialPlannerPage() {
                       <XAxis
                         dataKey="year" stroke="#374151"
                         tick={{ fill: "#6b7280", fontSize: 11 }}
-                        label={{ value: "Year", position: "insideBottom", offset: -10, fill: "#6b7280", fontSize: 11 }}
+                        label={{ value: t("s3YearLabel"), position: "insideBottom", offset: -10, fill: "#6b7280", fontSize: 11 }}
                       />
                       <YAxis
                         stroke="#374151" tick={{ fill: "#6b7280", fontSize: 11 }} width={75}
@@ -474,9 +496,9 @@ export default function FinancialPlannerPage() {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <button onClick={() => setStep(2)} className="text-gray-400 hover:text-white text-sm transition">← Back</button>
+                  <button onClick={() => setStep(2)} className="text-gray-400 hover:text-white text-sm transition">{t("btnBack")}</button>
                   <button onClick={() => setStep(4)} className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl transition">
-                    Next: Asset Allocation →
+                    {t("s3NextBtn")}
                   </button>
                 </div>
               </div>
@@ -489,20 +511,20 @@ export default function FinancialPlannerPage() {
               <aside className="lg:w-72 xl:w-80 shrink-0">
                 <div className="lg:sticky lg:top-[140px] flex flex-col gap-4">
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Your Profile</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("s4ProfileHeader")}</h3>
                     <div className="flex flex-col gap-4">
-                      <NumInput label="Your Age" value={age} onChange={setAge} prefix="" step={1} />
+                      <NumInput label={t("s4AgeLabel")} value={age} onChange={setAge} prefix="" step={1} />
                       <div className="flex flex-col gap-1">
-                        <label className="text-xs text-gray-400">Risk Tolerance</label>
+                        <label className="text-xs text-gray-400">{t("s4RiskLabel")}</label>
                         <div className="flex flex-col gap-2">
-                          {(Object.entries(RISK_PROFILES) as [typeof risk, typeof RISK_PROFILES[typeof risk]][]).map(([key, p]) => (
+                          {(Object.entries(RISK_PROFILES) as [RiskKey, typeof RISK_PROFILES[RiskKey]][]).map(([key, p]) => (
                             <button
                               key={key}
                               onClick={() => setRisk(key)}
                               className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition border ${risk === key ? "bg-blue-600/20 border-blue-500 text-white" : "bg-[#111827] border-gray-700 text-gray-400 hover:text-white"}`}
                             >
-                              <span>{p.label}</span>
-                              <span className="text-xs text-gray-400">{p.stocks}% stocks</span>
+                              <span>{t(p.labelKey as TKey)}</span>
+                              <span className="text-xs text-gray-400">{p.stocks}{t("s4StocksPct")}</span>
                             </button>
                           ))}
                         </div>
@@ -510,21 +532,21 @@ export default function FinancialPlannerPage() {
                     </div>
                   </div>
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Explore With Our Tools</h3>
-                    <p className="text-xs text-gray-500 mb-3">Analyse real stocks & your portfolio</p>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("s4ExploreHeader")}</h3>
+                    <p className="text-xs text-gray-500 mb-3">{t("s4ExploreDesc")}</p>
                     <div className="flex flex-col gap-2">
                       {[
-                        { label: "📊 Portfolio Analysis", href: "/tools/portfolio-analysis" },
-                        { label: "📉 Stock Comparison",   href: "/tools/stock-comparison"   },
-                        { label: "📈 Stock Analysis",     href: "/tools/stock-analysis"     },
-                      ].map(t => (
+                        { label: t("s4LinkPortfolio"), href: "/tools/portfolio-analysis" },
+                        { label: t("s4LinkStockComp"), href: "/tools/stock-comparison"   },
+                        { label: t("s4LinkStockAnal"), href: "/tools/stock-analysis"     },
+                      ].map(tool => (
                         <Link
-                          key={t.href}
-                          href={t.href}
+                          key={tool.href}
+                          href={tool.href}
                           target="_blank"
                           className="block bg-[#111827] border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white text-sm px-4 py-2.5 rounded-lg transition"
                         >
-                          {t.label}
+                          {tool.label}
                         </Link>
                       ))}
                     </div>
@@ -545,9 +567,9 @@ export default function FinancialPlannerPage() {
 
                 {/* Allocation donut */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
-                  <h2 className="text-white font-bold mb-1">Recommended Asset Allocation</h2>
+                  <h2 className="text-white font-bold mb-1">{t("s4AllocTitle")}</h2>
                   <p className="text-gray-500 text-xs mb-4">
-                    {profile.label} profile · Age {age} · adjusted for time horizon
+                    {t("s4AllocSub").replace("{profile}", t(profile.labelKey as TKey)).replace("{age}", String(age))}
                   </p>
                   <ResponsiveContainer width="100%" height={320}>
                     <PieChart>
@@ -571,13 +593,37 @@ export default function FinancialPlannerPage() {
 
                 {/* Final journey summary */}
                 <div className="bg-gradient-to-br from-blue-900/30 via-purple-900/20 to-[#0d1426] border border-blue-700/30 rounded-2xl p-6">
-                  <h2 className="text-white font-bold text-lg mb-5">Your Financial Journey Summary</h2>
+                  <h2 className="text-white font-bold text-lg mb-5">{t("s4SummaryTitle")}</h2>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
                     {[
-                      { icon: "💰", label: "Monthly Surplus", value: `£${fmt(Math.max(0, netSavings))}`, sub: `${savingsRate.toFixed(1)}% savings rate`, color: netSavings >= 0 ? "text-green-400" : "text-red-400" },
-                      { icon: "💳", label: "Total Debt",      value: `£${fmt(totalDebt)}`,               sub: `£${fmt(totalInterestCost)} est. interest`,   color: "text-red-400"   },
-                      { icon: "📈", label: `Wealth in ${years}yr`, value: `£${fmt(finalValue)}`,         sub: `at ${annualRate}% p.a.`,                     color: "text-blue-300"  },
-                      { icon: "🎯", label: "Allocation",      value: `${allocData[0].value}% stocks`,    sub: `${profile.label} profile`,                   color: "text-white"     },
+                      {
+                        icon: "💰",
+                        label: t("s4SumSurplus"),
+                        value: `£${fmt(Math.max(0, netSavings))}`,
+                        sub: t("s4SumSavingsRate").replace("{x}", savingsRate.toFixed(1)),
+                        color: netSavings >= 0 ? "text-green-400" : "text-red-400",
+                      },
+                      {
+                        icon: "💳",
+                        label: t("s4SumDebt"),
+                        value: `£${fmt(totalDebt)}`,
+                        sub: t("s4SumEstInterest").replace("{amount}", `£${fmt(totalInterestCost)}`),
+                        color: "text-red-400",
+                      },
+                      {
+                        icon: "📈",
+                        label: t("s4SumWealth").replace("{years}", String(years)),
+                        value: `£${fmt(finalValue)}`,
+                        sub: t("s4SumAtRate").replace("{rate}", String(annualRate)),
+                        color: "text-blue-300",
+                      },
+                      {
+                        icon: "🎯",
+                        label: t("s4SumAlloc"),
+                        value: `${allocData[0].value}${t("s4StocksPct")}`,
+                        sub: t("s4SumProfile").replace("{profile}", t(profile.labelKey as TKey)),
+                        color: "text-white",
+                      },
                     ].map(card => (
                       <div key={card.label} className="text-center">
                         <div className="text-2xl mb-1">{card.icon}</div>
@@ -590,9 +636,9 @@ export default function FinancialPlannerPage() {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <button onClick={() => setStep(3)} className="text-gray-400 hover:text-white text-sm transition">← Back</button>
+                  <button onClick={() => setStep(3)} className="text-gray-400 hover:text-white text-sm transition">{t("btnBack")}</button>
                   <button onClick={() => setStep(1)} className="text-blue-400 hover:text-blue-300 text-sm font-semibold transition border border-blue-800 px-4 py-2 rounded-lg">
-                    ↺ Start Over
+                    {t("s4StartOver")}
                   </button>
                 </div>
               </div>
