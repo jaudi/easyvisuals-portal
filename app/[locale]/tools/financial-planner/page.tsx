@@ -134,7 +134,7 @@ export default function FinancialPlannerPage() {
     .map(d => ({
       name: t(d.labelKey as TKey),
       Balance: debts[d.key],
-      [t("s2KpiInterest")]: Math.round(debts[d.key] * (d.rate / 100) * (d.term / 2)),
+      estInterest: Math.round(debts[d.key] * (d.rate / 100) * (d.term / 2)),
       color: d.color,
     }));
 
@@ -371,8 +371,8 @@ export default function FinancialPlannerPage() {
                           formatter={(v: unknown) => [`£${fmt(Number(v))}`, undefined]}
                         />
                         <Legend wrapperStyle={{ color: "#9ca3af", fontSize: 12, paddingTop: 8 }} />
-                        <Bar dataKey="Balance" fill="#3b82f6" stackId="a" />
-                        <Bar dataKey={t("s2KpiInterest")} fill="#ef4444" stackId="a" radius={[0, 4, 4, 0]} />
+                        <Bar dataKey="Balance" name={t("s2BalanceLabel")} fill="#3b82f6" stackId="a" />
+                        <Bar dataKey="estInterest" name={t("s2KpiInterest")} fill="#ef4444" stackId="a" radius={[0, 4, 4, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   ) : (

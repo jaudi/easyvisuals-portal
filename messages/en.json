@@ -643,6 +643,7 @@
     "s1SuccessSavings": "Savings rate of {x}% — above the recommended 20% target. Great position to build wealth.",
     "s1NextBtn": "Next: Calculate Debt →",
     "s2BalancesHeader": "Outstanding Balances",
+    "s2BalanceLabel": "Balance",
     "s2KpiDebt": "Total Debt",
     "s2KpiDebtSub": "All balances combined",
     "s2KpiInterest": "Est. Total Interest",

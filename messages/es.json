@@ -643,6 +643,7 @@
     "s1SuccessSavings": "Tasa de ahorro del {x}% — por encima del objetivo recomendado del 20%. Buena posición para crear patrimonio.",
     "s1NextBtn": "Siguiente: Calcular deudas →",
     "s2BalancesHeader": "Saldos pendientes",
+    "s2BalanceLabel": "Saldo",
     "s2KpiDebt": "Deuda total",
     "s2KpiDebtSub": "Todos los saldos combinados",
     "s2KpiInterest": "Intereses estimados",
