@@ -249,7 +249,8 @@
     "allTools": "← Herramientas",
     "exportPdf": "📄 Exportar PDF",
     "generating": "Generando…",
-    "backTools": "← Herramientas"
+    "backTools": "← Herramientas",
+    "disclaimer": "Esta herramienta es solo para fines informativos y de planificación. No constituye asesoramiento financiero, de inversión, fiscal ni legal. Consulta siempre a un profesional cualificado antes de tomar decisiones financieras."
   },
   "breakEven": {
     "title": "⚖️ Análisis del Punto de Equilibrio",

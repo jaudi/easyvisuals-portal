@@ -15,6 +15,7 @@ export default function StockComparisonPage() {
           <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">{tc("allTools")}</Link>
           <span className="text-gray-700">|</span>
           <h1 className="text-white font-bold">📉 {tn("stockComparison")}</h1>
+          <span className="ml-auto text-xs text-gray-600 hidden md:block">{tc("disclaimer")}</span>
         </div>
       </div>
       <div className="flex-1 pt-[109px]">

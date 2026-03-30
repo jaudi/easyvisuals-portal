@@ -305,6 +305,7 @@ export default function ValuationPage() {
           </div>
         </div>
       </div>
+      <p className="text-center text-xs text-gray-600 pb-8 px-4">{tc("disclaimer")}</p>
     </main>
   );
 }
