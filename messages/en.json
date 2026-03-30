@@ -218,10 +218,12 @@
   "tools": {
     "label": "Free tools",
     "title": "Finance Tools",
-    "subtitle": "11 free tools. No signup. No install. Works instantly in your browser.",
-    "featuredTitle": "Financial Journey Planner",
+    "subtitle": "12 free tools. No signup. No install. Works instantly in your browser.",
+    "featuredTitle": "Financial Journey — Individuals",
+    "featuredTitleCompany": "Financial Journey — Companies",
     "featuredBadge": "Featured",
     "featuredDesc": "A 4-step interactive guide — build your budget, calculate your debt, project your savings with compound interest, and set your asset allocation. Everything connected in one journey.",
+    "featuredDescCompany": "A 5-step company financial planner — link your P&L, Cash Flow and Balance Sheet, get a valuation estimate, and build your exit strategy.",
     "stockSectionTitle": "Stock & Market Tools",
     "stockSectionSubtitle": "Live market data powered by Yahoo Finance",
     "fpaSectionTitle": "FP&A & Planning Tools",
@@ -240,7 +242,8 @@
       { "icon": "🏢", "name": "Business Valuation", "desc": "DCF, EV/EBITDA and P/E — three-method blended valuation with 5-year DCF breakdown.", "href": "/tools/valuation" },
       { "icon": "🏦", "name": "Lending Calculator", "desc": "Loan amortisation schedule and mortgage analysis with early repayment strategy.", "href": "/tools/lending" },
       { "icon": "💸", "name": "Personal Budget", "desc": "Monthly income, 8 expense categories, savings rate and spending breakdown.", "href": "/tools/personal-budget" },
-      { "icon": "💹", "name": "Compound Interest", "desc": "See how initial capital and monthly contributions grow. Historical market benchmarks included.", "href": "/tools/compound-interest" }
+      { "icon": "💹", "name": "Compound Interest", "desc": "See how initial capital and monthly contributions grow. Historical market benchmarks included.", "href": "/tools/compound-interest" },
+      { "icon": "🏢", "name": "Financial Journey — Companies", "desc": "Link P&L, Cash Flow, Balance Sheet and Valuation. Get an exit price estimate and exit readiness roadmap.", "href": "/tools/financial-planner-company" }
     ]
   },
   "toolCommon": {
@@ -691,5 +694,236 @@
     "s4SumProfile": "{profile} profile",
     "s4StartOver": "↺ Start Over",
     "btnBack": "← Back"
+  },
+  "companyPlanner": {
+    "backToTools": "← All Tools",
+    "pageTitle": "Financial Journey — Companies",
+    "stepPL": "P&L",
+    "stepCashFlow": "Cash Flow",
+    "stepBalanceSheet": "Balance Sheet",
+    "stepValuation": "Valuation",
+    "stepExitStrategy": "Exit Strategy",
+
+    "sectionCurrency": "Currency",
+    "sectionRevenue": "Revenue",
+    "labelAnnualRevenue": "Annual Revenue",
+    "labelCOGS": "Cost of Goods Sold (COGS)",
+    "sectionOpEx": "Operating Expenses",
+    "labelSalaries": "Salaries & Wages",
+    "labelRent": "Rent & Facilities",
+    "labelMarketing": "Marketing",
+    "labelSoftware": "Software & IT",
+    "labelOtherOpEx": "Other OpEx",
+    "sectionBelowLine": "Below Operating Profit",
+    "labelDA": "Depreciation & Amortisation",
+    "labelInterest": "Interest Expense",
+    "labelTaxRate": "Tax Rate",
+    "noteTaxRate": "Effective rate applied to pre-tax profit",
+
+    "kpiRevenue": "Revenue",
+    "kpiRevenueSub": "Annual top line",
+    "kpiGrossMargin": "Gross Margin",
+    "kpiEBITDA": "EBITDA",
+    "kpiNetProfit": "Net Profit",
+    "kpiNetMarginSub": "net margin",
+    "kpiEBITDAMarginSub": "EBITDA margin",
+    "kpiGrossProfitSub": "gross profit",
+
+    "chartPLWaterfallTitle": "P&L Waterfall",
+    "chartPLWaterfallSub": "Revenue through to Net Profit — each bar shows the running total",
+    "chartTooltipValue": "Value",
+
+    "insightEBITDANeg": "⚠️ EBITDA is negative ({currency}{loss} loss). Review your cost structure — OpEx of {currency}{opex} exceeds Gross Profit of {currency}{grossProfit}.",
+    "insightEBITDAHealthy": "✅ Healthy EBITDA margin of {margin}%. Businesses with margins above 15% typically command premium acquisition multiples.",
+    "insightEBITDALow": "🟡 EBITDA margin of {margin}% — positive but below the 15% threshold where buyers typically apply higher multiples. Consider where costs can be optimised.",
+    "insightEBITDAPosNetLoss": "🟡 EBITDA is positive but the business is loss-making after interest and tax. High interest costs or D&A may be suppressing reported profitability.",
+
+    "nextCashFlow": "Next: Cash Flow →",
+
+    "sectionFromPL": "From P&L",
+    "labelNetProfit": "Net Profit",
+    "labelDAAddBack": "D&A (add back)",
+    "labelEBITDA": "EBITDA",
+    "sectionWorkingCapital": "Working Capital",
+    "labelARDays": "Accounts Receivable Days",
+    "labelAPDays": "Accounts Payable Days",
+    "labelInvDays": "Inventory Days (0 if services)",
+    "sectionCapFinancing": "Capital & Financing",
+    "labelCapEx": "Annual CapEx",
+    "labelDebtRepay": "Debt Repayments",
+
+    "kpiOperatingCF": "Operating CF",
+    "kpiOperatingCFSub": "Net Profit + D&A − ΔWC",
+    "kpiFreeCashFlow": "Free Cash Flow",
+    "kpiFCFSub": "Operating CF − CapEx",
+    "kpiNetCashFlow": "Net Cash Flow",
+    "kpiNetCFSub": "FCF − Debt Repayments",
+    "kpiCashConversion": "Cash Conversion",
+    "kpiCashConversionSub": "FCF as % of EBITDA",
+
+    "chartWCBreakdownTitle": "Working Capital Breakdown",
+    "chartWCBreakdownSub": "Based on your AR / AP / Inventory days and revenue",
+    "labelARBalance": "AR Balance",
+    "labelAPBalance": "AP Balance",
+    "labelInventory": "Inventory",
+    "netWorkingCapital": "Net Working Capital",
+    "netWCFormula": "(AR + Inventory − AP)",
+
+    "chartCFBridgeTitle": "Cash Flow Bridge",
+    "chartCFBridgeSub": "Operating CF, CapEx drag, debt repayments and net position",
+    "chartTooltipAmount": "Amount",
+
+    "insightFCFNeg": "⚠️ Negative Free Cash Flow of {currency}{amount}. The business is consuming cash after CapEx. Review capital allocation or reduce CapEx spend.",
+    "insightCashConvLow": "🟡 Cash conversion of {pct}% — below the 70–80% range that buyers expect. High working capital or CapEx relative to EBITDA drags cash quality.",
+    "insightCashConvStrong": "✅ Strong cash conversion of {pct}%. Good FCF quality is a key driver of acquisition multiples.",
+
+    "btnBack": "← Back",
+    "nextBalanceSheet": "Next: Balance Sheet →",
+
+    "labelARAutoStep2": "AR (auto from Step 2)",
+    "sectionAssets": "Assets",
+    "labelCash": "Cash & Equivalents",
+    "labelOtherCurrentAssets": "Other Current Assets",
+    "labelFixedAssetsNet": "Fixed Assets (Net)",
+    "sectionLiabilities": "Liabilities",
+    "labelSTDebt": "Short-term Debt",
+    "labelLTDebt": "Long-term Debt",
+    "labelOtherLiabilities": "Other Liabilities",
+
+    "kpiTotalAssets": "Total Assets",
+    "kpiTotalAssetsSub": "current",
+    "kpiNetDebt": "Net Debt",
+    "kpiNetDebtSub": "gross debt",
+    "kpiBookEquity": "Book Equity",
+    "kpiBookEquitySub": "Total Assets − Liabilities",
+    "kpiLeverage": "Leverage",
+    "kpiLeverageSub": "Net Debt / EBITDA",
+    "kpiLeverageNA": "N/A",
+
+    "bsSummaryTitle": "Balance Sheet Summary",
+    "bsTotalAssets": "Total Assets",
+    "bsTotalLiabEquity": "Total Liabilities + Equity",
+
+    "chartBSCompositionTitle": "Balance Sheet Composition",
+    "chartBSCompositionSub": "Assets vs Liabilities & Equity breakdown",
+
+    "insightNegEquity": "⚠️ Negative book equity of {currency}{amount}. Total liabilities exceed total assets. This will complicate any sale or refinancing process and requires immediate attention.",
+    "insightLeverageHigh": "⚠️ Leverage of {lev}× is above 3×. This is the typical ceiling for PE-backed acquisitions. Reducing debt would significantly improve exit options.",
+    "insightLeverageGood": "✅ Leverage of {lev}× EBITDA — a conservative capital structure that keeps all exit options open, including PE and trade sale.",
+    "insightLeverageAmber": "🟡 Leverage of {lev}× — approaching the upper end of what most buyers consider manageable. Monitor closely and prioritise debt reduction ahead of any exit.",
+
+    "nextValuation": "Next: Valuation →",
+
+    "sectionInputsSteps13": "Inputs from Steps 1–3",
+    "labelRevenue": "Revenue",
+    "labelFreeCashFlow": "Free Cash Flow",
+    "labelNetDebt": "Net Debt",
+    "sectionMultiples": "Market Multiples",
+    "labelEVEBITDAMult": "EV/EBITDA Multiple",
+    "labelRevMult": "Revenue Multiple",
+    "labelPEMult": "P/E Multiple",
+    "sectionDCF": "DCF Assumptions",
+    "labelWACC": "Discount Rate (WACC)",
+    "noteWACC": "Required return on investment",
+    "labelTermGrowth": "Terminal Growth Rate",
+    "noteTermGrowth": "Long-run FCF growth (must be < WACC)",
+    "noteDCFFCF": "FCF grows at 5% p.a. for 5 years in this model.",
+
+    "kpiEVEBITDAValue": "EV/EBITDA Value",
+    "kpiRevMultValue": "Revenue Mult.",
+    "kpiDCFValue": "DCF Value",
+    "kpiDCFSub": "5-yr DCF, terminal value",
+    "kpiBlendedExit": "Blended Exit",
+    "kpiBlendedSub": "Average of valid methods",
+    "kpiEVEBITDASub": "EBITDA",
+    "kpiRevMultSub": "Revenue",
+
+    "exitRangeTitle": "Exit Price Range (Equity Value)",
+    "exitRangeLow": "Low (min method)",
+    "exitRangeHigh": "High (max method)",
+    "exitRangeBook": "Book equity today",
+    "exitValueCreated": "Value created above book equity: {amount} ({mult}× book value)",
+
+    "chartValuationTitle": "Valuation Methods Comparison",
+    "chartValuationSub": "Equity value (after net debt) for each method",
+    "chartTooltipEquityValue": "Equity Value",
+
+    "insightNegEBITDAValuation": "⚠️ Negative EBITDA means the EV/EBITDA multiple cannot be applied. Focus on reaching EBITDA breakeven before targeting a sale.",
+    "insightBlendedValuation": "ℹ️ Multiples used are illustrative — actual market multiples vary significantly by sector, growth rate and deal size. The blended figure ({currency}{amount}) is a starting reference for exit planning, not a formal valuation.",
+
+    "nextExitStrategy": "Next: Exit Strategy →",
+
+    "glanceTitle": "Your Company at a Glance",
+    "glanceRevenue": "Revenue",
+    "glanceEBITDA": "EBITDA",
+    "glanceEBITDAMargin": "EBITDA Margin",
+    "glanceFCF": "Free Cash Flow",
+    "glanceNetDebt": "Net Debt",
+    "glanceBlendedExit": "Blended Exit",
+
+    "exitOptionsTitle": "Exit Options Analysis",
+    "tradeSaleTitle": "Trade Sale",
+    "tradeSaleWhen": "Best when EBITDA > 0 and revenue > £500k. Strategic buyers pay synergy-adjusted premiums.",
+    "tradeSaleTips": [
+      "Clean up financials 18–24 months before engaging advisors",
+      "Normalise EBITDA — add back owner salary above market rate, one-off costs",
+      "Prepare a Confidential Information Memorandum (CIM)",
+      "Run a competitive process with 3+ strategic buyers to drive price tension"
+    ],
+    "peBuyoutTitle": "Private Equity Buyout",
+    "peBuyoutWhen": "Best when EBITDA > £500k, margin > 15%, leverage < 3×. PE needs debt capacity to fund the deal.",
+    "peBuyoutTips": [
+      "Build a management team that can operate without the founder post-close",
+      "Demonstrate recurring revenue and low customer churn (NRR > 100% is ideal)",
+      "Maintain a 3-year financial track record with clean audit or review",
+      "Simplify the cap table — PE hates complex structures with multiple share classes"
+    ],
+    "mboTitle": "Management Buyout (MBO)",
+    "mboWhen": "Suitable at any size if management has appetite. Works best when FCF is strong enough to service acquisition debt.",
+    "mboTips": [
+      "Arrange debt financing early — typically 3–4× EBITDA from specialist lenders",
+      "Align management incentives with EBITDA growth targets via equity ratchets",
+      "Keep lender covenants achievable — model a downside case before committing",
+      "Engage a specialist MBO solicitor and a deal structuring advisor from day one"
+    ],
+    "organicGrowthTitle": "Organic Growth",
+    "organicGrowthWhen": "Always applicable. Reinvesting FCF rather than exiting — builds value ahead of a future sale at higher multiples.",
+    "organicGrowthTips": [
+      "Reinvest FCF into highest-ROI activities — new markets, products or key hires",
+      "Manage working capital tightly — every day of AR reduction frees cash",
+      "Target 20%+ EBITDA margin before scaling headcount significantly",
+      "Build recurring revenue streams — subscription or retainer models command 2–3× higher multiples"
+    ],
+
+    "scoreBadgeHigh": "High fit",
+    "scoreBadgeMedium": "Medium fit",
+    "scoreBadgeLow": "Low fit",
+
+    "checklistTitle": "Exit Readiness Checklist",
+    "checklistItems": [
+      "EBITDA positive",
+      "EBITDA margin > 15%",
+      "Free Cash Flow positive",
+      "Leverage < 3x",
+      "Revenue > 0",
+      "Net Profit positive"
+    ],
+    "checklistPassed": "Passed:",
+    "checklistOf": "/",
+    "checklistChecks": "checks",
+    "checklistAmber": "· Amber:",
+
+    "keyActionsTitle": "Key Actions to Maximise Exit Price",
+    "actionImproveMargin": "Focus on margin improvement — buyers pay premium multiples for EBITDA margins above 15–20%. Review every cost line before entering a process.",
+    "actionReduceDebt": "Reduce debt before exit — leverage above 3× EBITDA compresses equity value and makes PE debt financing harder. Target sub-2× for maximum proceeds.",
+    "actionImproveCashConversion": "Improve cash conversion — buyers scrutinise the gap between EBITDA and free cash flow. Tighten AR collections and review CapEx spend.",
+    "actionRecapitalise": "Recapitalise the balance sheet — negative equity will complicate any sale, refinancing or due diligence process. Address before engaging advisors.",
+    "actionCleanFinancials": "Maintain 3 years of clean, audited (or reviewed) financials — this is the single most important factor in a smooth exit process.",
+    "actionDocumentContracts": "Document all customer contracts and revenue recognition — recurring, contracted revenue commands the highest multiples in any sale process.",
+
+    "disclaimerTitle": "Disclaimer:",
+    "disclaimerText": "This tool is for illustrative and planning purposes only. The valuations and insights above are indicative estimates based on simplified models. They do not constitute financial advice, a formal valuation or an offer to buy or sell any business. Consult a qualified M&A advisor, corporate finance professional or accountant before making any decisions related to a business sale, acquisition or restructuring.",
+
+    "backToAllTools": "← Back to All Tools"
   }
 }
