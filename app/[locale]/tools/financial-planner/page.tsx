@@ -11,6 +11,8 @@ import {
 
 const fmt = (n: number) => n.toLocaleString("en-GB", { maximumFractionDigits: 0 });
 
+const CURRENCIES = ["£", "$", "€", "¥", "₹"];
+
 const STEPS = [
   { num: 1, labelKey: "step1Label", icon: "💰", descKey: "step1Desc" },
   { num: 2, labelKey: "step2Label", icon: "💳", descKey: "step2Desc" },
@@ -86,6 +88,7 @@ export default function FinancialPlannerPage() {
   const tc = useTranslations("toolCommon");
 
   const [step, setStep] = useState(1);
+  const [currency, setCurrency] = useState("£");
 
   // Step 1 — Budget
   const [income, setIncome] = useState(4000);
@@ -238,8 +241,20 @@ export default function FinancialPlannerPage() {
               <aside className="lg:w-72 xl:w-80 shrink-0">
                 <div className="lg:sticky lg:top-[140px] flex flex-col gap-4">
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("labelCurrency")}</h3>
+                    <div className="flex gap-2 flex-wrap mb-4">
+                      {CURRENCIES.map(c => (
+                        <button
+                          key={c}
+                          onClick={() => setCurrency(c)}
+                          className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${currency === c ? "bg-blue-600 text-white" : "bg-[#111827] text-gray-400 border border-gray-700 hover:text-white"}`}
+                        >
+                          {c}
+                        </button>
+                      ))}
+                    </div>
                     <h3 className="text-xs font-bold uppercase tracking-wider text-green-400 mb-3">{t("s1IncomeHeader")}</h3>
-                    <NumInput label={t("s1TakeHome")} value={income} onChange={setIncome} step={200} />
+                    <NumInput label={t("s1TakeHome")} value={income} onChange={setIncome} step={200} prefix={currency} />
                   </div>
                   <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                     <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-3">{t("s1ExpensesHeader")}</h3>
@@ -251,6 +266,7 @@ export default function FinancialPlannerPage() {
                           value={expenses[cat.key]}
                           onChange={v => setExpenses(p => ({ ...p, [cat.key]: v }))}
                           step={50}
+                          prefix={currency}
                         />
                       ))}
                     </div>
@@ -260,11 +276,11 @@ export default function FinancialPlannerPage() {
 
               <div className="flex-1 min-w-0 flex flex-col gap-6">
                 <div className="grid grid-cols-3 gap-3">
-                  <KpiCard label={t("s1KpiIncome")} value={`£${fmt(income)}`} sub={t("s1TakeHome")} colorClass="border-l-green-500" />
-                  <KpiCard label={t("s1KpiExpenses")} value={`£${fmt(totalExpenses)}`} sub={t("s1AllCategories")} colorClass="border-l-red-500" />
+                  <KpiCard label={t("s1KpiIncome")} value={`${currency}${fmt(income)}`} sub={t("s1TakeHome")} colorClass="border-l-green-500" />
+                  <KpiCard label={t("s1KpiExpenses")} value={`${currency}${fmt(totalExpenses)}`} sub={t("s1AllCategories")} colorClass="border-l-red-500" />
                   <KpiCard
                     label={t("s1KpiSavings")}
-                    value={`£${fmt(Math.abs(netSavings))}`}
+                    value={`${currency}${fmt(Math.abs(netSavings))}`}
                     sub={t("s1KpiSavingsRate").replace("{x}", savingsRate.toFixed(1))}
                     colorClass={netSavings >= 0 ? "border-l-blue-500" : "border-l-red-500"}
                   />
@@ -288,7 +304,7 @@ export default function FinancialPlannerPage() {
                         </Pie>
                         <Tooltip
                           contentStyle={{ backgroundColor: "#111827", border: "1px solid #1e293b", borderRadius: "8px", fontSize: 12 }}
-                          formatter={(v: unknown) => [`£${fmt(Number(v))}`, undefined]}
+                          formatter={(v: unknown) => [`${currency}${fmt(Number(v))}`, undefined]}
                         />
                       </PieChart>
                     </ResponsiveContainer>
@@ -299,7 +315,7 @@ export default function FinancialPlannerPage() {
 
                 {netSavings < 0 && (
                   <div className="bg-red-900/20 border border-red-700/40 rounded-xl p-4 text-sm text-red-300">
-                    ⚠️ {t("s1WarningOverspend").replace("{amount}", `£${fmt(Math.abs(netSavings))}`)}
+                    ⚠️ {t("s1WarningOverspend").replace("{amount}", `${currency}${fmt(Math.abs(netSavings))}`)}
                   </div>
                 )}
                 {netSavings > 0 && savingsRate >= 20 && (
@@ -332,7 +348,7 @@ export default function FinancialPlannerPage() {
                             <span className="text-gray-600 ml-1">({d.rate}% APR · {d.term}yr)</span>
                           </label>
                           <div className="flex items-center bg-[#111827] border border-gray-700 rounded-lg px-3 py-2 focus-within:border-blue-500 transition">
-                            <span className="text-gray-500 text-sm mr-1.5 shrink-0">£</span>
+                            <span className="text-gray-500 text-sm mr-1.5 shrink-0">{currency}</span>
                             <input
                               type="number" min={0} step={1000}
                               value={debts[d.key] ?? 0}
@@ -349,8 +365,8 @@ export default function FinancialPlannerPage() {
 
               <div className="flex-1 min-w-0 flex flex-col gap-6">
                 <div className="grid grid-cols-2 gap-3">
-                  <KpiCard label={t("s2KpiDebt")} value={`£${fmt(totalDebt)}`} sub={t("s2KpiDebtSub")} colorClass="border-l-red-500" />
-                  <KpiCard label={t("s2KpiInterest")} value={`£${fmt(totalInterestCost)}`} sub={t("s2KpiInterestSub")} colorClass="border-l-orange-500" />
+                  <KpiCard label={t("s2KpiDebt")} value={`${currency}${fmt(totalDebt)}`} sub={t("s2KpiDebtSub")} colorClass="border-l-red-500" />
+                  <KpiCard label={t("s2KpiInterest")} value={`${currency}${fmt(totalInterestCost)}`} sub={t("s2KpiInterestSub")} colorClass="border-l-orange-500" />
                 </div>
 
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
@@ -363,12 +379,12 @@ export default function FinancialPlannerPage() {
                         <XAxis
                           type="number" stroke="#374151"
                           tick={{ fill: "#6b7280", fontSize: 11 }}
-                          tickFormatter={v => `£${(v / 1000).toFixed(0)}k`}
+                          tickFormatter={v => `${currency}${(v / 1000).toFixed(0)}k`}
                         />
                         <YAxis type="category" dataKey="name" stroke="#374151" tick={{ fill: "#9ca3af", fontSize: 11 }} width={95} />
                         <Tooltip
                           contentStyle={{ backgroundColor: "#111827", border: "1px solid #1e293b", borderRadius: "8px", fontSize: 12 }}
-                          formatter={(v: unknown) => [`£${fmt(Number(v))}`, undefined]}
+                          formatter={(v: unknown) => [`${currency}${fmt(Number(v))}`, undefined]}
                         />
                         <Legend wrapperStyle={{ color: "#9ca3af", fontSize: 12, paddingTop: 8 }} />
                         <Bar dataKey="Balance" name={t("s2BalanceLabel")} fill="#3b82f6" stackId="a" />
@@ -452,16 +468,16 @@ export default function FinancialPlannerPage() {
 
               <div className="flex-1 min-w-0 flex flex-col gap-6">
                 <div className="grid grid-cols-3 gap-3">
-                  <KpiCard label={t("s3KpiContrib")} value={`£${fmt(monthlyContrib)}`} sub={t("s3KpiContribSub")} colorClass="border-l-blue-500" />
+                  <KpiCard label={t("s3KpiContrib")} value={`${currency}${fmt(monthlyContrib)}`} sub={t("s3KpiContribSub")} colorClass="border-l-blue-500" />
                   <KpiCard
                     label={t("s3KpiValue").replace("{years}", String(years))}
-                    value={`£${fmt(finalValue)}`}
+                    value={`${currency}${fmt(finalValue)}`}
                     sub={t("s3KpiValueSub").replace("{rate}", String(annualRate))}
                     colorClass="border-l-green-500"
                   />
                   <KpiCard
                     label={t("s3KpiInterest")}
-                    value={`£${fmt(finalInterest)}`}
+                    value={`${currency}${fmt(finalInterest)}`}
                     sub={t("s3KpiInterestSub").replace("{pct}", finalValue > 0 ? ((finalInterest / finalValue) * 100).toFixed(0) : "0")}
                     colorClass="border-l-yellow-400"
                   />
@@ -470,7 +486,7 @@ export default function FinancialPlannerPage() {
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
                   <h2 className="text-white font-bold mb-1">{t("s3ChartTitle").replace("{years}", String(years))}</h2>
                   <p className="text-gray-500 text-xs mb-4">
-                    {t("s3ChartSub").replace("{amount}", `£${fmt(monthlyContrib)}`).replace("{rate}", String(annualRate))}
+                    {t("s3ChartSub").replace("{amount}", `${currency}${fmt(monthlyContrib)}`).replace("{rate}", String(annualRate))}
                   </p>
                   <ResponsiveContainer width="100%" height={340}>
                     <AreaChart data={compoundData} margin={{ top: 10, right: 20, bottom: 20, left: 10 }}>
@@ -482,11 +498,11 @@ export default function FinancialPlannerPage() {
                       />
                       <YAxis
                         stroke="#374151" tick={{ fill: "#6b7280", fontSize: 11 }} width={75}
-                        tickFormatter={v => v >= 1000000 ? `£${(v / 1000000).toFixed(1)}M` : `£${(v / 1000).toFixed(0)}k`}
+                        tickFormatter={v => v >= 1000000 ? `${currency}${(v / 1000000).toFixed(1)}M` : `${currency}${(v / 1000).toFixed(0)}k`}
                       />
                       <Tooltip
                         contentStyle={{ backgroundColor: "#111827", border: "1px solid #1e293b", borderRadius: "8px", fontSize: 12 }}
-                        formatter={(v: unknown) => [`£${fmt(Number(v))}`, undefined]}
+                        formatter={(v: unknown) => [`${currency}${fmt(Number(v))}`, undefined]}
                       />
                       <Legend wrapperStyle={{ color: "#9ca3af", fontSize: 12, paddingTop: 16 }} />
                       <Area type="monotone" dataKey="Contributions" stackId="1" stroke="#1d4ed8" fill="#1d4ed8" fillOpacity={0.75} />
@@ -599,15 +615,15 @@ export default function FinancialPlannerPage() {
                       {
                         icon: "💰",
                         label: t("s4SumSurplus"),
-                        value: `£${fmt(Math.max(0, netSavings))}`,
+                        value: `${currency}${fmt(Math.max(0, netSavings))}`,
                         sub: t("s4SumSavingsRate").replace("{x}", savingsRate.toFixed(1)),
                         color: netSavings >= 0 ? "text-green-400" : "text-red-400",
                       },
                       {
                         icon: "💳",
                         label: t("s4SumDebt"),
-                        value: `£${fmt(totalDebt)}`,
-                        sub: t("s4SumEstInterest").replace("{amount}", `£${fmt(totalInterestCost)}`),
+                        value: `${currency}${fmt(totalDebt)}`,
+                        sub: t("s4SumEstInterest").replace("{amount}", `${currency}${fmt(totalInterestCost)}`),
                         color: "text-red-400",
                       },
                       {

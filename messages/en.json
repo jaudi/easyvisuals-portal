@@ -628,6 +628,7 @@
     "allocBonds": "Bonds",
     "allocCash": "Cash",
     "allocAlternatives": "Alternatives",
+    "labelCurrency": "Currency",
     "s1IncomeHeader": "Monthly Income",
     "s1ExpensesHeader": "Monthly Expenses",
     "s1TakeHome": "Take-home pay",

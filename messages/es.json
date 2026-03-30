@@ -628,6 +628,7 @@
     "allocBonds": "Bonos",
     "allocCash": "Efectivo",
     "allocAlternatives": "Alternativos",
+    "labelCurrency": "Divisa",
     "s1IncomeHeader": "Ingresos mensuales",
     "s1ExpensesHeader": "Gastos mensuales",
     "s1TakeHome": "Sueldo neto",
