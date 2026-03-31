@@ -1041,6 +1041,7 @@
     "actionDocumentContracts": "Document all customer contracts and revenue recognition — recurring, contracted revenue commands the highest multiples in any sale process.",
     "disclaimerTitle": "Disclaimer:",
     "disclaimerText": "This tool is for illustrative and planning purposes only. The valuations and insights above are indicative estimates based on simplified models. They do not constitute financial advice, a formal valuation or an offer to buy or sell any business. Consult a qualified M&A advisor, corporate finance professional or accountant before making any decisions related to a business sale, acquisition or restructuring.",
-    "backToAllTools": "← Back to All Tools"
+    "backToAllTools": "← Back to All Tools",
+    "exportPdf": "📄 Export PDF"
   }
 }

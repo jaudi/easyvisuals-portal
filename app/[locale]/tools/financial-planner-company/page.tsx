@@ -93,6 +93,7 @@ export default function FinancialPlannerCompanyPage() {
 
   const [step, setStep] = useState(1);
   const [currency, setCurrency] = useState("£");
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   const STEPS = [
     { num: 1, label: t("stepPL"),            icon: "📊" },
@@ -254,6 +255,54 @@ export default function FinancialPlannerCompanyPage() {
   const peBuyoutScore       = Math.min(100, Math.max(0, (ebitdaMargin > 15 ? 40 : 20) + (leverage < 3 ? 30 : 0) + (ebitda > 200_000 ? 30 : 0)));
   const mboScore            = Math.min(100, Math.max(0, 40 + (ebitda > 0 ? 30 : 0) + (freeCashFlow > 0 ? 30 : 0)));
   const organicGrowthScore  = Math.min(100, Math.max(0, 50 + (freeCashFlow > 0 ? 30 : 0) + (ebitdaMargin > 10 ? 20 : 0)));
+
+  async function handleExportPdf() {
+    setPdfLoading(true);
+    const { pdf } = await import("@react-pdf/renderer");
+    const { CompanyPdf } = await import("./pdf");
+    const blob = await pdf(
+      <CompanyPdf
+        currency={currency}
+        revenue={revenue}
+        grossProfit={grossProfit}
+        grossMargin={grossMargin}
+        ebitda={ebitda}
+        ebitdaMargin={ebitdaMargin}
+        ebit={ebit}
+        netProfit={netProfit}
+        netMargin={netMargin}
+        totalOpex={totalOpex}
+        operatingCF={operatingCF}
+        freeCashFlow={freeCashFlow}
+        netCashFlow={netCashFlow}
+        cashConversion={cashConversion}
+        totalAssets={totalAssets}
+        netDebt={netDebt}
+        bookEquity={bookEquity}
+        leverage={leverage}
+        eqByEbitda={eqByEbitda}
+        eqByRev={eqByRev}
+        eqByPE={eqByPE}
+        dcfEquity={dcfEquity}
+        blendedEquity={blendedEquity}
+        exitLow={exitLow}
+        exitHigh={exitHigh}
+        evEbitdaMult={evEbitdaMult}
+        revMult={revMult}
+        peMult={peMult}
+        exitChecklist={exitChecklist}
+        dynamicActions={dynamicActions}
+        date={new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+      />
+    ).toBlob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "company-financial-report.pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+    setPdfLoading(false);
+  }
 
   const navBar = (
     <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-4 py-3">
@@ -919,9 +968,18 @@ export default function FinancialPlannerCompanyPage() {
 
               <div className="flex justify-between items-center">
                 <button onClick={() => setStep(4)} className="text-gray-400 hover:text-white text-sm transition">{t("btnBack")}</button>
-                <Link href="/tools" className="bg-[#0d1426] border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white font-semibold px-6 py-3 rounded-xl transition text-sm">
-                  {t("backToAllTools")}
-                </Link>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={handleExportPdf}
+                    disabled={pdfLoading}
+                    className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-xl transition text-sm"
+                  >
+                    {pdfLoading ? t("disclaimerTitle") : t("exportPdf")}
+                  </button>
+                  <Link href="/tools" className="bg-[#0d1426] border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white font-semibold px-6 py-3 rounded-xl transition text-sm">
+                    {t("backToAllTools")}
+                  </Link>
+                </div>
               </div>
             </div>
           )}
