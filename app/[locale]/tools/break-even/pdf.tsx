@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: {
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   footerText: { fontSize: 8, color: "#9ca3af" },
+  logoImg: { width: 90, height: 34, objectFit: "contain" },
 });
 
 interface FixedCosts {
@@ -171,7 +172,7 @@ export default function BreakEvenPDF({
           </View>
           <View style={styles.headerRight}>
             <Text style={styles.headerMeta}>Generated {date}</Text>
-            <Text style={[styles.headerMeta, { marginTop: 2 }]}>FinancePlots</Text>
+            <Image style={styles.logoImg} src="https://www.financeplots.com/logo.png" />
           </View>
         </View>
 

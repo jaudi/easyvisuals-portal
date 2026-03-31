@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 
 const S = StyleSheet.create({
   page: { padding: 36, backgroundColor: "#ffffff", fontFamily: "Helvetica", fontSize: 9, color: "#111827" },
@@ -30,6 +30,7 @@ const S = StyleSheet.create({
   tdPurple: { flex: 1, fontSize: 7, color: "#7c3aed" },
   footer: { position: "absolute", bottom: 24, left: 36, right: 36, borderTop: "1px solid #e5e7eb", paddingTop: 5, flexDirection: "row", justifyContent: "space-between" },
   footerText: { fontSize: 7, color: "#9ca3af" },
+  logoImg: { width: 90, height: 34, objectFit: "contain" },
 });
 
 const fmt = (n: number) => n.toLocaleString("en-GB", { maximumFractionDigits: 0 });
@@ -137,7 +138,7 @@ export default function FinancialModelPDF({ companyName, years, bsAndCf, cagr, a
       </View>
       <View style={{ alignItems: "flex-end" }}>
         <Text style={S.headerMeta}>Generated {date}</Text>
-        <Text style={[S.headerMeta, { marginTop: 2 }]}>FinancePlots</Text>
+        <Image style={S.logoImg} src="https://www.financeplots.com/logo.png" />
       </View>
     </View>
   );

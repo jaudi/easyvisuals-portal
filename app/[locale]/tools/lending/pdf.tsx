@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: { padding: 40, backgroundColor: "#ffffff", fontFamily: "Helvetica", fontSize: 10, color: "#111827" },
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   tableCellBold: { flex: 1, fontSize: 8, fontFamily: "Helvetica-Bold", color: "#0a0f1e" },
   footer: { position: "absolute", bottom: 28, left: 40, right: 40, borderTop: "1px solid #e5e7eb", paddingTop: 6, flexDirection: "row", justifyContent: "space-between" },
   footerText: { fontSize: 8, color: "#9ca3af" },
+  logoImg: { width: 90, height: 34, objectFit: "contain" },
 });
 
 const fmt = (n: number) => n.toLocaleString("en-GB", { maximumFractionDigits: 0 });
@@ -54,7 +55,7 @@ export default function LendingPDF({ mode, amount, rate, years, monthlyPayment, 
           </View>
           <View style={{ alignItems: "flex-end" }}>
             <Text style={styles.headerMeta}>Generated {date}</Text>
-            <Text style={[styles.headerMeta, { marginTop: 2 }]}>FinancePlots</Text>
+            <Image style={styles.logoImg} src="https://www.financeplots.com/logo.png" />
           </View>
         </View>
 
