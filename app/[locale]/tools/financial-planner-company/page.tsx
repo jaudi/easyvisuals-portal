@@ -258,6 +258,7 @@ export default function FinancialPlannerCompanyPage() {
 
   async function handleExportPdf() {
     setPdfLoading(true);
+    try {
     const { pdf } = await import("@react-pdf/renderer");
     const { CompanyPdf } = await import("./pdf");
     const blob = await pdf(
@@ -301,7 +302,11 @@ export default function FinancialPlannerCompanyPage() {
     a.download = "company-financial-report.pdf";
     a.click();
     URL.revokeObjectURL(url);
-    setPdfLoading(false);
+    } catch (e) {
+      console.error("PDF generation failed:", e);
+    } finally {
+      setPdfLoading(false);
+    }
   }
 
   const navBar = (
@@ -974,7 +979,7 @@ export default function FinancialPlannerCompanyPage() {
                     disabled={pdfLoading}
                     className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-xl transition text-sm"
                   >
-                    {pdfLoading ? t("disclaimerTitle") : t("exportPdf")}
+                    {pdfLoading ? "Generating…" : t("exportPdf")}
                   </button>
                   <Link href="/tools" className="bg-[#0d1426] border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white font-semibold px-6 py-3 rounded-xl transition text-sm">
                     {t("backToAllTools")}
