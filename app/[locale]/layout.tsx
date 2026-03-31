@@ -31,6 +31,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "FinancePlots" }],
   creator: "FinancePlots",
+  verification: {
+    google: "c929333ae895d960",
+  },
   openGraph: {
     type: "website",
     locale: "en_GB",
