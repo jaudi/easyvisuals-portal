@@ -1,30 +1,65 @@
 import { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://www.financeplots.com";
+const BASE = "https://www.financeplots.com";
 
-  const blogSlugs = [
-    "cash-flow-forecast-guide",
-    "dcf-valuation-guide",
-    "break-even-analysis-guide",
-    "investment-portfolio-analysis",
-    "5-year-financial-model",
-    "annual-budget-guide",
-    "financial-forecasting",
-    "bootstrapping-runway",
-    "uk-pension-savings",
-    "powerbi-vs-streamlit",
+const BLOG_SLUGS = [
+  "financial-forecasting",
+  "bootstrapping-runway",
+  "uk-pension-savings",
+  "powerbi-vs-streamlit",
+  "5-year-financial-model",
+  "annual-budget-guide",
+  "break-even-analysis-guide",
+  "cash-flow-forecast-guide",
+  "dcf-valuation-guide",
+  "investment-portfolio-analysis",
+  "personal-budget-guide",
+];
+
+const TOOL_SLUGS = [
+  "financial-planner",
+  "financial-planner-company",
+  "break-even",
+  "valuation",
+  "cash-flow",
+  "financial-model",
+  "annual-budget",
+  "lending",
+  "personal-budget",
+  "compound-interest",
+  "portfolio-analysis",
+  "stock-analysis",
+  "stock-comparison",
+];
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticPages = [
+    { url: BASE, priority: 1.0, changeFrequency: "weekly" as const },
+    { url: `${BASE}/tools`, priority: 0.9, changeFrequency: "weekly" as const },
+    { url: `${BASE}/blog`, priority: 0.8, changeFrequency: "weekly" as const },
+    { url: `${BASE}/es`, priority: 0.9, changeFrequency: "weekly" as const },
+    { url: `${BASE}/es/tools`, priority: 0.8, changeFrequency: "weekly" as const },
+    { url: `${BASE}/es/blog`, priority: 0.7, changeFrequency: "weekly" as const },
   ];
+
+  const blogPages = BLOG_SLUGS.flatMap((slug) => [
+    { url: `${BASE}/blog/${slug}`, priority: 0.7, changeFrequency: "monthly" as const },
+    { url: `${BASE}/es/blog/${slug}`, priority: 0.6, changeFrequency: "monthly" as const },
+  ]);
+
+  const toolPages = TOOL_SLUGS.flatMap((slug) => [
+    { url: `${BASE}/tools/${slug}`, priority: 0.8, changeFrequency: "monthly" as const },
+    { url: `${BASE}/es/tools/${slug}`, priority: 0.7, changeFrequency: "monthly" as const },
+  ]);
 
   return [
-    { url: base, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
-    { url: `${base}/dashboard`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
-    ...blogSlugs.map((slug) => ({
-      url: `${base}/blog/${slug}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
-  ];
+    ...staticPages,
+    ...blogPages,
+    ...toolPages,
+  ].map((page) => ({
+    url: page.url,
+    lastModified: new Date(),
+    changeFrequency: page.changeFrequency,
+    priority: page.priority,
+  }));
 }
