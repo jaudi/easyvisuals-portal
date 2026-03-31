@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   authors: [{ name: "FinancePlots" }],
   creator: "FinancePlots",
   verification: {
-    google: "c929333ae895d960",
+    google: "qgWMjU9RHxWboWSeXfOMggjqbvxL2i7y9B1oVBJgLfk",
   },
   openGraph: {
     type: "website",
