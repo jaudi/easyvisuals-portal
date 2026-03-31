@@ -18,6 +18,7 @@ const STEPS = [
   { num: 2, labelKey: "step2Label", icon: "💳", descKey: "step2Desc" },
   { num: 3, labelKey: "step3Label", icon: "📈", descKey: "step3Desc" },
   { num: 4, labelKey: "step4Label", icon: "🎯", descKey: "step4Desc" },
+  { num: 5, labelKey: "step5Label", icon: "📋", descKey: "step5Desc" },
 ];
 
 const EXPENSE_CATS = [
@@ -89,6 +90,7 @@ export default function FinancialPlannerPage() {
 
   const [step, setStep] = useState(1);
   const [currency, setCurrency] = useState("£");
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   // Step 1 — Budget
   const [income, setIncome] = useState(4000);
@@ -188,6 +190,134 @@ export default function FinancialPlannerPage() {
     [t("allocCash")]:         "#f59e0b",
     [t("allocAlternatives")]: "#8b5cf6",
   };
+
+  // ── Step 5: Build recommendations ───────────────────────────────────────
+  const recommendations: { icon: string; title: string; body: string; color: "green" | "amber" | "red" }[] = [];
+
+  // 1. Savings rate
+  if (savingsRate < 10) {
+    recommendations.push({
+      icon: "💸",
+      title: "Savings Rate — Needs Attention",
+      body: t("s5RecSavingsLow").replace("{rate}", savingsRate.toFixed(1)),
+      color: "red",
+    });
+  } else if (savingsRate < 20) {
+    recommendations.push({
+      icon: "💰",
+      title: "Savings Rate — Good Start",
+      body: t("s5RecSavingsOk").replace("{rate}", savingsRate.toFixed(1)),
+      color: "amber",
+    });
+  } else {
+    recommendations.push({
+      icon: "🏆",
+      title: "Savings Rate — Excellent",
+      body: t("s5RecSavingsGood").replace("{rate}", savingsRate.toFixed(1)),
+      color: "green",
+    });
+  }
+
+  // 2. Emergency fund (always shown)
+  recommendations.push({
+    icon: "🛡️",
+    title: "Emergency Fund",
+    body: t("s5RecEmergencyFund")
+      .replace("{currency}", currency)
+      .replace("{amount}", fmt(totalExpenses * 3)),
+    color: "amber",
+  });
+
+  // 3. High-rate debt
+  if (highestRateDebt && (highestRateDebt.key === "credit_card" || highestRateDebt.key === "personal") && debts[highestRateDebt.key] > 0) {
+    recommendations.push({
+      icon: "🔥",
+      title: "High-Interest Debt",
+      body: t("s5RecHighDebt")
+        .replace(/{rate}/g, String(highestRateDebt.rate)),
+      color: "red",
+    });
+  }
+
+  // 4. Debt-to-income ratio
+  const annualIncome = income * 12;
+  if (annualIncome > 0) {
+    const dtiRatio = totalDebt / annualIncome;
+    if (dtiRatio > 3) {
+      recommendations.push({
+        icon: "⚠️",
+        title: "Debt-to-Income Ratio",
+        body: t("s5RecDebtHigh").replace("{x}", dtiRatio.toFixed(1)),
+        color: "amber",
+      });
+    } else if (dtiRatio <= 1) {
+      recommendations.push({
+        icon: "✅",
+        title: "Debt-to-Income Ratio",
+        body: t("s5RecDebtLow"),
+        color: "green",
+      });
+    }
+  }
+
+  // 5. Compound growth
+  recommendations.push({
+    icon: "📈",
+    title: "Compound Growth",
+    body: t("s5RecCompound")
+      .replace("{currency}", currency)
+      .replace("{monthly}", fmt(monthlyContrib))
+      .replace("{rate}", String(annualRate))
+      .replace("{years}", String(years))
+      .replace("{currency}", currency)
+      .replace("{final}", fmt(finalValue)),
+    color: "green",
+  });
+
+  // 6. Asset allocation tip
+  const allocTipKey = risk === "aggressive"
+    ? "s5RecAllocAggressive"
+    : risk === "conservative"
+    ? "s5RecAllocConservative"
+    : "s5RecAllocModerate";
+  recommendations.push({
+    icon: "🎯",
+    title: "Asset Allocation",
+    body: t(allocTipKey as Parameters<typeof t>[0]),
+    color: risk === "conservative" ? "amber" : "green",
+  });
+
+  async function handleExportPdf() {
+    setPdfLoading(true);
+    const { pdf } = await import("@react-pdf/renderer");
+    const { PlannerPdf } = await import("./pdf");
+    const blob = await pdf(
+      <PlannerPdf
+        currency={currency}
+        income={income}
+        totalExpenses={totalExpenses}
+        netSavings={netSavings}
+        savingsRate={savingsRate}
+        totalDebt={totalDebt}
+        totalInterestCost={totalInterestCost}
+        finalValue={finalValue}
+        annualRate={annualRate}
+        years={years}
+        monthlyContrib={monthlyContrib}
+        risk={risk}
+        allocData={allocData}
+        recommendations={recommendations}
+        date={new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+      />
+    ).toBlob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "financial-plan.pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+    setPdfLoading(false);
+  }
 
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white">
@@ -653,10 +783,129 @@ export default function FinancialPlannerPage() {
 
                 <div className="flex justify-between items-center">
                   <button onClick={() => setStep(3)} className="text-gray-400 hover:text-white text-sm transition">{t("btnBack")}</button>
-                  <button onClick={() => setStep(1)} className="text-blue-400 hover:text-blue-300 text-sm font-semibold transition border border-blue-800 px-4 py-2 rounded-lg">
-                    {t("s4StartOver")}
+                  <button onClick={() => setStep(5)} className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl transition">
+                    {t("step5Label")} →
                   </button>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── STEP 5: Financial Report ───────────────────────────────────── */}
+          {step === 5 && (
+            <div className="max-w-4xl mx-auto flex flex-col gap-8">
+              <div className="text-center">
+                <h1 className="text-3xl font-extrabold text-white mb-2">{t("s5Title")}</h1>
+                <p className="text-gray-400 text-sm">{t("step5Desc")}</p>
+              </div>
+
+              {/* A — Financial Snapshot */}
+              <div>
+                <h2 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-4">{t("s5SnapshotTitle")}</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <KpiCard
+                    label="Monthly Surplus"
+                    value={`${currency}${fmt(Math.max(0, netSavings))}`}
+                    sub={`${savingsRate.toFixed(1)}% savings rate`}
+                    colorClass={netSavings >= 0 ? "border-l-green-500" : "border-l-red-500"}
+                  />
+                  <KpiCard
+                    label="Savings Rate"
+                    value={`${savingsRate.toFixed(1)}%`}
+                    sub={savingsRate >= 20 ? "Excellent" : savingsRate >= 10 ? "Good start" : "Below target"}
+                    colorClass={savingsRate >= 20 ? "border-l-green-500" : savingsRate >= 10 ? "border-l-yellow-400" : "border-l-red-500"}
+                  />
+                  <KpiCard
+                    label="Total Debt"
+                    value={`${currency}${fmt(totalDebt)}`}
+                    sub={`${currency}${fmt(totalInterestCost)} est. interest`}
+                    colorClass="border-l-red-500"
+                  />
+                  <KpiCard
+                    label="Est. Interest Cost"
+                    value={`${currency}${fmt(totalInterestCost)}`}
+                    sub="Over repayment terms"
+                    colorClass="border-l-orange-500"
+                  />
+                  <KpiCard
+                    label={`Projected Wealth (${years}yr)`}
+                    value={`${currency}${fmt(finalValue)}`}
+                    sub={`At ${annualRate}% p.a.`}
+                    colorClass="border-l-blue-500"
+                  />
+                  <KpiCard
+                    label="Allocation Profile"
+                    value={risk.charAt(0).toUpperCase() + risk.slice(1)}
+                    sub={`${allocData[0].value}% stocks`}
+                    colorClass="border-l-purple-500"
+                  />
+                </div>
+              </div>
+
+              {/* B — Personalised Recommendations */}
+              <div>
+                <h2 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-4">{t("s5RecommTitle")}</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {recommendations.map((rec, i) => {
+                    const borderColor =
+                      rec.color === "green" ? "border-l-green-500" :
+                      rec.color === "red"   ? "border-l-red-500"   :
+                                             "border-l-amber-400";
+                    const badgeBg =
+                      rec.color === "green" ? "bg-green-900/30 text-green-400" :
+                      rec.color === "red"   ? "bg-red-900/30 text-red-400"     :
+                                             "bg-amber-900/30 text-amber-400";
+                    return (
+                      <div key={i} className={`bg-[#0d1426] border border-gray-800 border-l-4 ${borderColor} rounded-xl p-4`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-xl">{rec.icon}</span>
+                          <span className="font-semibold text-white text-sm">{rec.title}</span>
+                          <span className={`ml-auto text-xs font-semibold px-2 py-0.5 rounded-full ${badgeBg}`}>
+                            {rec.color === "green" ? "Good" : rec.color === "red" ? "Action needed" : "Review"}
+                          </span>
+                        </div>
+                        <p className="text-gray-400 text-xs leading-relaxed">{rec.body}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* C — Best Practices Checklist */}
+              <div>
+                <h2 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-4">{t("s5BestPracticesTitle")}</h2>
+                <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
+                  <ul className="flex flex-col gap-2.5">
+                    {(t.raw("s5BestPractices") as string[]).map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
+                        <span className="text-green-400 mt-0.5 shrink-0">✅</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* D — PDF Export */}
+              <div className="flex justify-center">
+                <button
+                  onClick={handleExportPdf}
+                  disabled={pdfLoading}
+                  className="bg-blue-600 hover:bg-blue-500 disabled:opacity-60 text-white font-bold px-10 py-4 rounded-xl text-base transition flex items-center gap-2"
+                >
+                  {pdfLoading ? t("s5Generating") : t("s5ExportPdf")}
+                </button>
+              </div>
+
+              {/* E — Navigation */}
+              <div className="flex justify-between items-center">
+                <button onClick={() => setStep(4)} className="text-gray-400 hover:text-white text-sm transition">{t("btnBack")}</button>
+                <button
+                  onClick={() => setStep(1)}
+                  className="text-blue-400 hover:text-blue-300 text-sm font-semibold transition border border-blue-800 px-4 py-2 rounded-lg"
+                >
+                  ↺ {t("s5StartOver")}
+                </button>
               </div>
             </div>
           )}

@@ -69,19 +69,74 @@
     "howItWorks3": "See live charts and KPIs update in real time",
     "howItWorks4": "Export to PDF or Excel",
     "personalTools": [
-      ["💰", "Personal Budget", "Monthly income, expense categories, savings rate and spending breakdown.", "/tools/personal-budget"],
-      ["📊", "Portfolio Analysis", "Upload holdings. Analyse returns, risk and asset allocation.", "/tools/portfolio-analysis"],
-      ["📉", "Stock Comparison", "Compare two tickers side by side — returns, volatility, key ratios.", "/tools/stock-comparison"],
-      ["📈", "Stock Analysis", "Price history, moving averages and cumulative return for any ticker.", "/tools/stock-analysis"],
-      ["💹", "Compound Interest", "See how your capital and monthly contributions grow.", "/tools/compound-interest"],
-      ["🏠", "Mortgage & Loans", "Amortisation schedule and mortgage payment calculator.", "/tools/lending"]
+      [
+        "💰",
+        "Personal Budget",
+        "Monthly income, expense categories, savings rate and spending breakdown.",
+        "/tools/personal-budget"
+      ],
+      [
+        "📊",
+        "Portfolio Analysis",
+        "Upload holdings. Analyse returns, risk and asset allocation.",
+        "/tools/portfolio-analysis"
+      ],
+      [
+        "📉",
+        "Stock Comparison",
+        "Compare two tickers side by side — returns, volatility, key ratios.",
+        "/tools/stock-comparison"
+      ],
+      [
+        "📈",
+        "Stock Analysis",
+        "Price history, moving averages and cumulative return for any ticker.",
+        "/tools/stock-analysis"
+      ],
+      [
+        "💹",
+        "Compound Interest",
+        "See how your capital and monthly contributions grow.",
+        "/tools/compound-interest"
+      ],
+      [
+        "🏠",
+        "Mortgage & Loans",
+        "Amortisation schedule and mortgage payment calculator.",
+        "/tools/lending"
+      ]
     ],
     "professionalTools": [
-      ["🏦", "Financial Model", "5-year P&L, cash flow and balance sheet with Excel export.", "/tools/financial-model"],
-      ["📋", "Annual Budget", "Build and visualise your company budget month by month.", "/tools/annual-budget"],
-      ["💧", "Cash Flow Forecast", "13-week rolling cash forecast with PDF export.", "/tools/cash-flow"],
-      ["⚖️", "Break-Even", "Fixed costs, variable costs, contribution margin and margin of safety.", "/tools/break-even"],
-      ["💎", "DCF Valuation", "Discounted cash flow model with terminal value and sensitivity table.", "/tools/valuation"]
+      [
+        "🏦",
+        "Financial Model",
+        "5-year P&L, cash flow and balance sheet with Excel export.",
+        "/tools/financial-model"
+      ],
+      [
+        "📋",
+        "Annual Budget",
+        "Build and visualise your company budget month by month.",
+        "/tools/annual-budget"
+      ],
+      [
+        "💧",
+        "Cash Flow Forecast",
+        "13-week rolling cash forecast with PDF export.",
+        "/tools/cash-flow"
+      ],
+      [
+        "⚖️",
+        "Break-Even",
+        "Fixed costs, variable costs, contribution margin and margin of safety.",
+        "/tools/break-even"
+      ],
+      [
+        "💎",
+        "DCF Valuation",
+        "Discounted cash flow model with terminal value and sensitivity table.",
+        "/tools/valuation"
+      ]
     ],
     "freeBadge": "Always Free",
     "freeTitle": "No pricing. No plans. No catch.",
@@ -232,20 +287,80 @@
     "fpaSectionSubtitle": "Browser-native tools with PDF export — no server required",
     "liveBadge": "Live",
     "stockTools": [
-      { "icon": "📊", "name": "Portfolio Analysis", "desc": "Upload your holdings and analyse returns, risk metrics and asset allocation.", "href": "/tools/portfolio-analysis" },
-      { "icon": "📉", "name": "Stock Comparison", "desc": "Compare two tickers side by side — returns, volatility, drawdown and key ratios.", "href": "/tools/stock-comparison" },
-      { "icon": "📈", "name": "Stock Analysis", "desc": "Price history, moving averages, volume and cumulative return for any ticker.", "href": "/tools/stock-analysis" }
+      {
+        "icon": "📊",
+        "name": "Portfolio Analysis",
+        "desc": "Upload your holdings and analyse returns, risk metrics and asset allocation.",
+        "href": "/tools/portfolio-analysis"
+      },
+      {
+        "icon": "📉",
+        "name": "Stock Comparison",
+        "desc": "Compare two tickers side by side — returns, volatility, drawdown and key ratios.",
+        "href": "/tools/stock-comparison"
+      },
+      {
+        "icon": "📈",
+        "name": "Stock Analysis",
+        "desc": "Price history, moving averages, volume and cumulative return for any ticker.",
+        "href": "/tools/stock-analysis"
+      }
     ],
     "fpaTools": [
-      { "icon": "⚖️", "name": "Break-Even Analysis", "desc": "Fixed costs, variable costs, contribution margin, break-even units and margin of safety.", "href": "/tools/break-even" },
-      { "icon": "📈", "name": "5-Year Financial Model", "desc": "Project revenue, costs and profits over 5 years with full income statement and margin analysis.", "href": "/tools/financial-model" },
-      { "icon": "💰", "name": "Annual Budget", "desc": "Monthly P&L with seasonality support, revenue growth and cost structure.", "href": "/tools/annual-budget" },
-      { "icon": "💧", "name": "13-Week Cash Flow Forecast", "desc": "Rolling weekly cash forecast with inflows, outflows, closing balance and negative-week alerts.", "href": "/tools/cash-flow" },
-      { "icon": "🏢", "name": "Business Valuation", "desc": "DCF, EV/EBITDA and P/E — three-method blended valuation with 5-year DCF breakdown.", "href": "/tools/valuation" },
-      { "icon": "🏦", "name": "Lending Calculator", "desc": "Loan amortisation schedule and mortgage analysis with early repayment strategy.", "href": "/tools/lending" },
-      { "icon": "💸", "name": "Personal Budget", "desc": "Monthly income, 8 expense categories, savings rate and spending breakdown.", "href": "/tools/personal-budget" },
-      { "icon": "💹", "name": "Compound Interest", "desc": "See how initial capital and monthly contributions grow. Historical market benchmarks included.", "href": "/tools/compound-interest" },
-      { "icon": "🏢", "name": "Financial Journey — Companies", "desc": "Link P&L, Cash Flow, Balance Sheet and Valuation. Get an exit price estimate and exit readiness roadmap.", "href": "/tools/financial-planner-company" }
+      {
+        "icon": "⚖️",
+        "name": "Break-Even Analysis",
+        "desc": "Fixed costs, variable costs, contribution margin, break-even units and margin of safety.",
+        "href": "/tools/break-even"
+      },
+      {
+        "icon": "📈",
+        "name": "5-Year Financial Model",
+        "desc": "Project revenue, costs and profits over 5 years with full income statement and margin analysis.",
+        "href": "/tools/financial-model"
+      },
+      {
+        "icon": "💰",
+        "name": "Annual Budget",
+        "desc": "Monthly P&L with seasonality support, revenue growth and cost structure.",
+        "href": "/tools/annual-budget"
+      },
+      {
+        "icon": "💧",
+        "name": "13-Week Cash Flow Forecast",
+        "desc": "Rolling weekly cash forecast with inflows, outflows, closing balance and negative-week alerts.",
+        "href": "/tools/cash-flow"
+      },
+      {
+        "icon": "🏢",
+        "name": "Business Valuation",
+        "desc": "DCF, EV/EBITDA and P/E — three-method blended valuation with 5-year DCF breakdown.",
+        "href": "/tools/valuation"
+      },
+      {
+        "icon": "🏦",
+        "name": "Lending Calculator",
+        "desc": "Loan amortisation schedule and mortgage analysis with early repayment strategy.",
+        "href": "/tools/lending"
+      },
+      {
+        "icon": "💸",
+        "name": "Personal Budget",
+        "desc": "Monthly income, 8 expense categories, savings rate and spending breakdown.",
+        "href": "/tools/personal-budget"
+      },
+      {
+        "icon": "💹",
+        "name": "Compound Interest",
+        "desc": "See how initial capital and monthly contributions grow. Historical market benchmarks included.",
+        "href": "/tools/compound-interest"
+      },
+      {
+        "icon": "🏢",
+        "name": "Financial Journey — Companies",
+        "desc": "Link P&L, Cash Flow, Balance Sheet and Valuation. Get an exit price estimate and exit readiness roadmap.",
+        "href": "/tools/financial-planner-company"
+      }
     ]
   },
   "toolCommon": {
@@ -696,7 +811,36 @@
     "s4SumAtRate": "at {rate}% p.a.",
     "s4SumProfile": "{profile} profile",
     "s4StartOver": "↺ Start Over",
-    "btnBack": "← Back"
+    "btnBack": "← Back",
+    "step5Label": "Report",
+    "step5Desc": "Your personalised financial report",
+    "s5Title": "Your Financial Report",
+    "s5SnapshotTitle": "Financial Snapshot",
+    "s5RecommTitle": "Personalised Recommendations",
+    "s5BestPracticesTitle": "Best Practices",
+    "s5ExportPdf": "📄 Export PDF",
+    "s5Generating": "Generating…",
+    "s5StartOver": "Start Over",
+    "s5BestPractices": [
+      "Pay yourself first — automate savings on payday",
+      "Maximise employer pension match before other investments",
+      "Build emergency fund (3-6 months expenses) before investing aggressively",
+      "Pay off high-interest debt (above 10%) before investing",
+      "Diversify across asset classes and geographies",
+      "Review and rebalance your portfolio annually",
+      "Increase your savings rate by 1% each year"
+    ],
+    "s5RecSavingsLow": "Your savings rate is {rate}%. Target at least 20%. Review discretionary spending to find room to save more.",
+    "s5RecSavingsOk": "Savings rate of {rate}% is a good start. Aim for 20% to accelerate wealth building.",
+    "s5RecSavingsGood": "Excellent savings rate of {rate}%. You are on track to build meaningful long-term wealth.",
+    "s5RecEmergencyFund": "Keep 3–6 months of expenses ({currency}{amount}) in a liquid savings account before investing aggressively.",
+    "s5RecHighDebt": "You have high-interest debt at {rate}%. Prioritise paying this off before increasing investments — it is a guaranteed {rate}% return.",
+    "s5RecDebtHigh": "Your total debt is {x}× your annual income. Focus on reducing debt alongside saving.",
+    "s5RecDebtLow": "Low debt-to-income ratio — you are in a strong financial position to invest and grow wealth.",
+    "s5RecCompound": "Investing {currency}{monthly}/month at {rate}% for {years} years projects to {currency}{final}. Time in market is your biggest advantage.",
+    "s5RecAllocAggressive": "High equity allocation suits your risk profile. Rebalance annually and stay the course during market downturns.",
+    "s5RecAllocModerate": "Balanced allocation across equities and bonds. Review annually as your age and circumstances change.",
+    "s5RecAllocConservative": "Conservative allocation protects capital. Consider increasing equity exposure if your investment timeline allows."
   },
   "companyPlanner": {
     "backToTools": "← All Tools",
@@ -706,7 +850,6 @@
     "stepBalanceSheet": "Balance Sheet",
     "stepValuation": "Valuation",
     "stepExitStrategy": "Exit Strategy",
-
     "sectionCurrency": "Currency",
     "sectionRevenue": "Revenue",
     "labelAnnualRevenue": "Annual Revenue",
@@ -722,7 +865,6 @@
     "labelInterest": "Interest Expense",
     "labelTaxRate": "Tax Rate",
     "noteTaxRate": "Effective rate applied to pre-tax profit",
-
     "kpiRevenue": "Revenue",
     "kpiRevenueSub": "Annual top line",
     "kpiGrossMargin": "Gross Margin",
@@ -731,18 +873,14 @@
     "kpiNetMarginSub": "net margin",
     "kpiEBITDAMarginSub": "EBITDA margin",
     "kpiGrossProfitSub": "gross profit",
-
     "chartPLWaterfallTitle": "P&L Waterfall",
     "chartPLWaterfallSub": "Revenue through to Net Profit — each bar shows the running total",
     "chartTooltipValue": "Value",
-
     "insightEBITDANeg": "⚠️ EBITDA is negative ({currency}{loss} loss). Review your cost structure — OpEx of {currency}{opex} exceeds Gross Profit of {currency}{grossProfit}.",
     "insightEBITDAHealthy": "✅ Healthy EBITDA margin of {margin}%. Businesses with margins above 15% typically command premium acquisition multiples.",
     "insightEBITDALow": "🟡 EBITDA margin of {margin}% — positive but below the 15% threshold where buyers typically apply higher multiples. Consider where costs can be optimised.",
     "insightEBITDAPosNetLoss": "🟡 EBITDA is positive but the business is loss-making after interest and tax. High interest costs or D&A may be suppressing reported profitability.",
-
     "nextCashFlow": "Next: Cash Flow →",
-
     "sectionFromPL": "From P&L",
     "labelNetProfit": "Net Profit",
     "labelDAAddBack": "D&A (add back)",
@@ -754,7 +892,6 @@
     "sectionCapFinancing": "Capital & Financing",
     "labelCapEx": "Annual CapEx",
     "labelDebtRepay": "Debt Repayments",
-
     "kpiOperatingCF": "Operating CF",
     "kpiOperatingCFSub": "Net Profit + D&A − ΔWC",
     "kpiFreeCashFlow": "Free Cash Flow",
@@ -763,7 +900,6 @@
     "kpiNetCFSub": "FCF − Debt Repayments",
     "kpiCashConversion": "Cash Conversion",
     "kpiCashConversionSub": "FCF as % of EBITDA",
-
     "chartWCBreakdownTitle": "Working Capital Breakdown",
     "chartWCBreakdownSub": "Based on your AR / AP / Inventory days and revenue",
     "labelARBalance": "AR Balance",
@@ -771,18 +907,14 @@
     "labelInventory": "Inventory",
     "netWorkingCapital": "Net Working Capital",
     "netWCFormula": "(AR + Inventory − AP)",
-
     "chartCFBridgeTitle": "Cash Flow Bridge",
     "chartCFBridgeSub": "Operating CF, CapEx drag, debt repayments and net position",
     "chartTooltipAmount": "Amount",
-
     "insightFCFNeg": "⚠️ Negative Free Cash Flow of {currency}{amount}. The business is consuming cash after CapEx. Review capital allocation or reduce CapEx spend.",
     "insightCashConvLow": "🟡 Cash conversion of {pct}% — below the 70–80% range that buyers expect. High working capital or CapEx relative to EBITDA drags cash quality.",
     "insightCashConvStrong": "✅ Strong cash conversion of {pct}%. Good FCF quality is a key driver of acquisition multiples.",
-
     "btnBack": "← Back",
     "nextBalanceSheet": "Next: Balance Sheet →",
-
     "labelARAutoStep2": "AR (auto from Step 2)",
     "sectionAssets": "Assets",
     "labelCash": "Cash & Equivalents",
@@ -792,7 +924,6 @@
     "labelSTDebt": "Short-term Debt",
     "labelLTDebt": "Long-term Debt",
     "labelOtherLiabilities": "Other Liabilities",
-
     "kpiTotalAssets": "Total Assets",
     "kpiTotalAssetsSub": "current",
     "kpiNetDebt": "Net Debt",
@@ -802,21 +933,16 @@
     "kpiLeverage": "Leverage",
     "kpiLeverageSub": "Net Debt / EBITDA",
     "kpiLeverageNA": "N/A",
-
     "bsSummaryTitle": "Balance Sheet Summary",
     "bsTotalAssets": "Total Assets",
     "bsTotalLiabEquity": "Total Liabilities + Equity",
-
     "chartBSCompositionTitle": "Balance Sheet Composition",
     "chartBSCompositionSub": "Assets vs Liabilities & Equity breakdown",
-
     "insightNegEquity": "⚠️ Negative book equity of {currency}{amount}. Total liabilities exceed total assets. This will complicate any sale or refinancing process and requires immediate attention.",
     "insightLeverageHigh": "⚠️ Leverage of {lev}× is above 3×. This is the typical ceiling for PE-backed acquisitions. Reducing debt would significantly improve exit options.",
     "insightLeverageGood": "✅ Leverage of {lev}× EBITDA — a conservative capital structure that keeps all exit options open, including PE and trade sale.",
     "insightLeverageAmber": "🟡 Leverage of {lev}× — approaching the upper end of what most buyers consider manageable. Monitor closely and prioritise debt reduction ahead of any exit.",
-
     "nextValuation": "Next: Valuation →",
-
     "sectionInputsSteps13": "Inputs from Steps 1–3",
     "labelRevenue": "Revenue",
     "labelFreeCashFlow": "Free Cash Flow",
@@ -831,7 +957,6 @@
     "labelTermGrowth": "Terminal Growth Rate",
     "noteTermGrowth": "Long-run FCF growth (must be < WACC)",
     "noteDCFFCF": "FCF grows at 5% p.a. for 5 years in this model.",
-
     "kpiEVEBITDAValue": "EV/EBITDA Value",
     "kpiRevMultValue": "Revenue Mult.",
     "kpiDCFValue": "DCF Value",
@@ -840,22 +965,17 @@
     "kpiBlendedSub": "Average of valid methods",
     "kpiEVEBITDASub": "EBITDA",
     "kpiRevMultSub": "Revenue",
-
     "exitRangeTitle": "Exit Price Range (Equity Value)",
     "exitRangeLow": "Low (min method)",
     "exitRangeHigh": "High (max method)",
     "exitRangeBook": "Book equity today",
     "exitValueCreated": "Value created above book equity: {amount} ({mult}× book value)",
-
     "chartValuationTitle": "Valuation Methods Comparison",
     "chartValuationSub": "Equity value (after net debt) for each method",
     "chartTooltipEquityValue": "Equity Value",
-
     "insightNegEBITDAValuation": "⚠️ Negative EBITDA means the EV/EBITDA multiple cannot be applied. Focus on reaching EBITDA breakeven before targeting a sale.",
     "insightBlendedValuation": "ℹ️ Multiples used are illustrative — actual market multiples vary significantly by sector, growth rate and deal size. The blended figure ({currency}{amount}) is a starting reference for exit planning, not a formal valuation.",
-
     "nextExitStrategy": "Next: Exit Strategy →",
-
     "glanceTitle": "Your Company at a Glance",
     "glanceRevenue": "Revenue",
     "glanceEBITDA": "EBITDA",
@@ -863,7 +983,6 @@
     "glanceFCF": "Free Cash Flow",
     "glanceNetDebt": "Net Debt",
     "glanceBlendedExit": "Blended Exit",
-
     "exitOptionsTitle": "Exit Options Analysis",
     "tradeSaleTitle": "Trade Sale",
     "tradeSaleWhen": "Best when EBITDA > 0 and revenue > £500k. Strategic buyers pay synergy-adjusted premiums.",
@@ -897,11 +1016,9 @@
       "Target 20%+ EBITDA margin before scaling headcount significantly",
       "Build recurring revenue streams — subscription or retainer models command 2–3× higher multiples"
     ],
-
     "scoreBadgeHigh": "High fit",
     "scoreBadgeMedium": "Medium fit",
     "scoreBadgeLow": "Low fit",
-
     "checklistTitle": "Exit Readiness Checklist",
     "checklistItems": [
       "EBITDA positive",
@@ -915,7 +1032,6 @@
     "checklistOf": "/",
     "checklistChecks": "checks",
     "checklistAmber": "· Amber:",
-
     "keyActionsTitle": "Key Actions to Maximise Exit Price",
     "actionImproveMargin": "Focus on margin improvement — buyers pay premium multiples for EBITDA margins above 15–20%. Review every cost line before entering a process.",
     "actionReduceDebt": "Reduce debt before exit — leverage above 3× EBITDA compresses equity value and makes PE debt financing harder. Target sub-2× for maximum proceeds.",
@@ -923,10 +1039,8 @@
     "actionRecapitalise": "Recapitalise the balance sheet — negative equity will complicate any sale, refinancing or due diligence process. Address before engaging advisors.",
     "actionCleanFinancials": "Maintain 3 years of clean, audited (or reviewed) financials — this is the single most important factor in a smooth exit process.",
     "actionDocumentContracts": "Document all customer contracts and revenue recognition — recurring, contracted revenue commands the highest multiples in any sale process.",
-
     "disclaimerTitle": "Disclaimer:",
     "disclaimerText": "This tool is for illustrative and planning purposes only. The valuations and insights above are indicative estimates based on simplified models. They do not constitute financial advice, a formal valuation or an offer to buy or sell any business. Consult a qualified M&A advisor, corporate finance professional or accountant before making any decisions related to a business sale, acquisition or restructuring.",
-
     "backToAllTools": "← Back to All Tools"
   }
 }

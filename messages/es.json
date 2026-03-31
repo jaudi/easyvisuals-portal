@@ -69,19 +69,74 @@
     "howItWorks3": "Los gráficos e indicadores se actualizan en tiempo real",
     "howItWorks4": "Exporta a PDF o Excel",
     "personalTools": [
-      ["💰", "Presupuesto Personal", "Ingresos mensuales, categorías de gasto, tasa de ahorro y desglose del gasto.", "/tools/personal-budget"],
-      ["📊", "Análisis de Cartera", "Sube tus posiciones. Analiza rentabilidad, riesgo y asignación de activos.", "/tools/portfolio-analysis"],
-      ["📉", "Comparación de Acciones", "Compara dos tickers lado a lado — rentabilidad, volatilidad, ratios clave.", "/tools/stock-comparison"],
-      ["📈", "Análisis de Acciones", "Historial de precios, medias móviles y rentabilidad acumulada para cualquier ticker.", "/tools/stock-analysis"],
-      ["💹", "Interés Compuesto", "Visualiza cómo crece tu capital con aportaciones mensuales.", "/tools/compound-interest"],
-      ["🏠", "Hipotecas y Préstamos", "Cuadro de amortización y calculadora de cuotas hipotecarias.", "/tools/lending"]
+      [
+        "💰",
+        "Presupuesto Personal",
+        "Ingresos mensuales, categorías de gasto, tasa de ahorro y desglose del gasto.",
+        "/tools/personal-budget"
+      ],
+      [
+        "📊",
+        "Análisis de Cartera",
+        "Sube tus posiciones. Analiza rentabilidad, riesgo y asignación de activos.",
+        "/tools/portfolio-analysis"
+      ],
+      [
+        "📉",
+        "Comparación de Acciones",
+        "Compara dos tickers lado a lado — rentabilidad, volatilidad, ratios clave.",
+        "/tools/stock-comparison"
+      ],
+      [
+        "📈",
+        "Análisis de Acciones",
+        "Historial de precios, medias móviles y rentabilidad acumulada para cualquier ticker.",
+        "/tools/stock-analysis"
+      ],
+      [
+        "💹",
+        "Interés Compuesto",
+        "Visualiza cómo crece tu capital con aportaciones mensuales.",
+        "/tools/compound-interest"
+      ],
+      [
+        "🏠",
+        "Hipotecas y Préstamos",
+        "Cuadro de amortización y calculadora de cuotas hipotecarias.",
+        "/tools/lending"
+      ]
     ],
     "professionalTools": [
-      ["🏦", "Modelo Financiero", "P&G, flujo de caja y balance a 5 años con exportación a Excel.", "/tools/financial-model"],
-      ["📋", "Presupuesto Anual", "Crea y visualiza el presupuesto de tu empresa mes a mes.", "/tools/annual-budget"],
-      ["💧", "Previsión de Caja", "Previsión de caja rodante a 13 semanas con exportación a PDF.", "/tools/cash-flow"],
-      ["⚖️", "Punto de Equilibrio", "Costes fijos, costes variables, margen de contribución y margen de seguridad.", "/tools/break-even"],
-      ["💎", "Valoración DCF", "Modelo de flujo de caja descontado con valor terminal y tabla de sensibilidad.", "/tools/valuation"]
+      [
+        "🏦",
+        "Modelo Financiero",
+        "P&G, flujo de caja y balance a 5 años con exportación a Excel.",
+        "/tools/financial-model"
+      ],
+      [
+        "📋",
+        "Presupuesto Anual",
+        "Crea y visualiza el presupuesto de tu empresa mes a mes.",
+        "/tools/annual-budget"
+      ],
+      [
+        "💧",
+        "Previsión de Caja",
+        "Previsión de caja rodante a 13 semanas con exportación a PDF.",
+        "/tools/cash-flow"
+      ],
+      [
+        "⚖️",
+        "Punto de Equilibrio",
+        "Costes fijos, costes variables, margen de contribución y margen de seguridad.",
+        "/tools/break-even"
+      ],
+      [
+        "💎",
+        "Valoración DCF",
+        "Modelo de flujo de caja descontado con valor terminal y tabla de sensibilidad.",
+        "/tools/valuation"
+      ]
     ],
     "freeBadge": "Siempre Gratis",
     "freeTitle": "Sin precios. Sin planes. Sin trampa.",
@@ -232,19 +287,74 @@
     "fpaSectionSubtitle": "Herramientas nativas en el navegador con exportación a PDF — sin servidor",
     "liveBadge": "En Vivo",
     "stockTools": [
-      { "icon": "📊", "name": "Análisis de Cartera", "desc": "Sube tus posiciones y analiza rentabilidad, métricas de riesgo y asignación de activos.", "href": "/tools/portfolio-analysis" },
-      { "icon": "📉", "name": "Comparación de Acciones", "desc": "Compara dos tickers lado a lado — rentabilidad, volatilidad, caída máxima y ratios clave.", "href": "/tools/stock-comparison" },
-      { "icon": "📈", "name": "Análisis de Acciones", "desc": "Historial de precios, medias móviles, volumen y rentabilidad acumulada para cualquier ticker.", "href": "/tools/stock-analysis" }
+      {
+        "icon": "📊",
+        "name": "Análisis de Cartera",
+        "desc": "Sube tus posiciones y analiza rentabilidad, métricas de riesgo y asignación de activos.",
+        "href": "/tools/portfolio-analysis"
+      },
+      {
+        "icon": "📉",
+        "name": "Comparación de Acciones",
+        "desc": "Compara dos tickers lado a lado — rentabilidad, volatilidad, caída máxima y ratios clave.",
+        "href": "/tools/stock-comparison"
+      },
+      {
+        "icon": "📈",
+        "name": "Análisis de Acciones",
+        "desc": "Historial de precios, medias móviles, volumen y rentabilidad acumulada para cualquier ticker.",
+        "href": "/tools/stock-analysis"
+      }
     ],
     "fpaTools": [
-      { "icon": "⚖️", "name": "Análisis del Punto de Equilibrio", "desc": "Costes fijos, costes variables, margen de contribución, unidades de equilibrio y margen de seguridad.", "href": "/tools/break-even" },
-      { "icon": "📈", "name": "Modelo Financiero a 5 Años", "desc": "Proyecta ingresos, costes y beneficios a 5 años con cuenta de resultados completa y análisis de márgenes.", "href": "/tools/financial-model" },
-      { "icon": "💰", "name": "Presupuesto Anual", "desc": "P&G mensual con soporte de estacionalidad, crecimiento de ingresos y estructura de costes.", "href": "/tools/annual-budget" },
-      { "icon": "💧", "name": "Previsión de Caja a 13 Semanas", "desc": "Previsión semanal de caja con entradas, salidas, saldo final y alertas de semanas negativas.", "href": "/tools/cash-flow" },
-      { "icon": "🏢", "name": "Valoración de Empresa", "desc": "DCF, EV/EBITDA y P/E — valoración combinada de tres métodos con desglose DCF a 5 años.", "href": "/tools/valuation" },
-      { "icon": "🏦", "name": "Calculadora de Préstamos", "desc": "Cuadro de amortización y análisis hipotecario con estrategia de amortización anticipada.", "href": "/tools/lending" },
-      { "icon": "💸", "name": "Presupuesto Personal", "desc": "Ingresos mensuales, 8 categorías de gasto, tasa de ahorro y desglose del gasto.", "href": "/tools/personal-budget" },
-      { "icon": "💹", "name": "Interés Compuesto", "desc": "Visualiza cómo crece el capital inicial y las aportaciones mensuales. Con referencias históricas del mercado.", "href": "/tools/compound-interest" }
+      {
+        "icon": "⚖️",
+        "name": "Análisis del Punto de Equilibrio",
+        "desc": "Costes fijos, costes variables, margen de contribución, unidades de equilibrio y margen de seguridad.",
+        "href": "/tools/break-even"
+      },
+      {
+        "icon": "📈",
+        "name": "Modelo Financiero a 5 Años",
+        "desc": "Proyecta ingresos, costes y beneficios a 5 años con cuenta de resultados completa y análisis de márgenes.",
+        "href": "/tools/financial-model"
+      },
+      {
+        "icon": "💰",
+        "name": "Presupuesto Anual",
+        "desc": "P&G mensual con soporte de estacionalidad, crecimiento de ingresos y estructura de costes.",
+        "href": "/tools/annual-budget"
+      },
+      {
+        "icon": "💧",
+        "name": "Previsión de Caja a 13 Semanas",
+        "desc": "Previsión semanal de caja con entradas, salidas, saldo final y alertas de semanas negativas.",
+        "href": "/tools/cash-flow"
+      },
+      {
+        "icon": "🏢",
+        "name": "Valoración de Empresa",
+        "desc": "DCF, EV/EBITDA y P/E — valoración combinada de tres métodos con desglose DCF a 5 años.",
+        "href": "/tools/valuation"
+      },
+      {
+        "icon": "🏦",
+        "name": "Calculadora de Préstamos",
+        "desc": "Cuadro de amortización y análisis hipotecario con estrategia de amortización anticipada.",
+        "href": "/tools/lending"
+      },
+      {
+        "icon": "💸",
+        "name": "Presupuesto Personal",
+        "desc": "Ingresos mensuales, 8 categorías de gasto, tasa de ahorro y desglose del gasto.",
+        "href": "/tools/personal-budget"
+      },
+      {
+        "icon": "💹",
+        "name": "Interés Compuesto",
+        "desc": "Visualiza cómo crece el capital inicial y las aportaciones mensuales. Con referencias históricas del mercado.",
+        "href": "/tools/compound-interest"
+      }
     ]
   },
   "toolCommon": {
@@ -695,7 +805,36 @@
     "s4SumAtRate": "al {rate}% anual",
     "s4SumProfile": "Perfil {profile}",
     "s4StartOver": "↺ Empezar de nuevo",
-    "btnBack": "← Atrás"
+    "btnBack": "← Atrás",
+    "step5Label": "Informe",
+    "step5Desc": "Tu informe financiero personalizado",
+    "s5Title": "Tu Informe Financiero",
+    "s5SnapshotTitle": "Resumen Financiero",
+    "s5RecommTitle": "Recomendaciones Personalizadas",
+    "s5BestPracticesTitle": "Mejores Prácticas",
+    "s5ExportPdf": "📄 Exportar PDF",
+    "s5Generating": "Generando…",
+    "s5StartOver": "Empezar de nuevo",
+    "s5BestPractices": [
+      "Págate a ti primero — automatiza el ahorro el día de cobro",
+      "Maximiza la aportación del empleador al plan de pensiones antes que otras inversiones",
+      "Crea un fondo de emergencia (3-6 meses de gastos) antes de invertir agresivamente",
+      "Paga las deudas de alto interés (más del 10%) antes de invertir",
+      "Diversifica entre clases de activos y geografías",
+      "Revisa y rebalancea tu cartera anualmente",
+      "Aumenta tu tasa de ahorro un 1% cada año"
+    ],
+    "s5RecSavingsLow": "Tu tasa de ahorro es del {rate}%. Apunta a al menos el 20%. Revisa el gasto discrecional para encontrar margen de ahorro.",
+    "s5RecSavingsOk": "Una tasa de ahorro del {rate}% es un buen comienzo. Apunta al 20% para acelerar la creación de patrimonio.",
+    "s5RecSavingsGood": "Excelente tasa de ahorro del {rate}%. Estás en camino de construir un patrimonio sólido a largo plazo.",
+    "s5RecEmergencyFund": "Mantén entre 3 y 6 meses de gastos ({currency}{amount}) en una cuenta de ahorro líquida antes de invertir agresivamente.",
+    "s5RecHighDebt": "Tienes deuda de alto interés al {rate}%. Prioriza pagarla antes de aumentar las inversiones — equivale a un retorno garantizado del {rate}%.",
+    "s5RecDebtHigh": "Tu deuda total es {x}× tus ingresos anuales. Céntrate en reducir la deuda al tiempo que ahorras.",
+    "s5RecDebtLow": "Ratio deuda-ingresos bajo — estás en una posición financiera sólida para invertir y hacer crecer tu patrimonio.",
+    "s5RecCompound": "Invertir {currency}{monthly}/mes al {rate}% durante {years} años proyecta {currency}{final}. El tiempo en el mercado es tu mayor ventaja.",
+    "s5RecAllocAggressive": "Una asignación elevada en renta variable encaja con tu perfil de riesgo. Rebalancea anualmente y mantén el rumbo durante las caídas del mercado.",
+    "s5RecAllocModerate": "Asignación equilibrada entre renta variable y renta fija. Revisa anualmente a medida que cambian tu edad y circunstancias.",
+    "s5RecAllocConservative": "La asignación conservadora protege el capital. Considera aumentar la exposición a renta variable si tu horizonte de inversión lo permite."
   },
   "companyPlanner": {
     "backToTools": "← Herramientas",
@@ -705,7 +844,6 @@
     "stepBalanceSheet": "Balance",
     "stepValuation": "Valoración",
     "stepExitStrategy": "Estrategia de salida",
-
     "sectionCurrency": "Moneda",
     "sectionRevenue": "Ingresos",
     "labelAnnualRevenue": "Ingresos anuales",
@@ -721,7 +859,6 @@
     "labelInterest": "Gastos financieros",
     "labelTaxRate": "Tipo impositivo",
     "noteTaxRate": "Tipo efectivo aplicado al beneficio antes de impuestos",
-
     "kpiRevenue": "Ingresos",
     "kpiRevenueSub": "Cifra de negocio anual",
     "kpiGrossMargin": "Margen bruto",
@@ -730,18 +867,14 @@
     "kpiNetMarginSub": "margen neto",
     "kpiEBITDAMarginSub": "margen EBITDA",
     "kpiGrossProfitSub": "beneficio bruto",
-
     "chartPLWaterfallTitle": "Cascada de la cuenta de resultados",
     "chartPLWaterfallSub": "De ingresos a beneficio neto — cada barra muestra el total acumulado",
     "chartTooltipValue": "Valor",
-
     "insightEBITDANeg": "⚠️ El EBITDA es negativo (pérdida de {currency}{loss}). Revisa tu estructura de costes — los gastos operativos de {currency}{opex} superan el beneficio bruto de {currency}{grossProfit}.",
     "insightEBITDAHealthy": "✅ Margen EBITDA saludable del {margin}%. Las empresas con márgenes superiores al 15% suelen cotizar a múltiplos de adquisición más elevados.",
     "insightEBITDALow": "🟡 Margen EBITDA del {margin}% — positivo pero por debajo del umbral del 15% donde los compradores suelen aplicar múltiplos más altos. Considera dónde se pueden optimizar los costes.",
     "insightEBITDAPosNetLoss": "🟡 El EBITDA es positivo pero la empresa tiene pérdidas después de intereses e impuestos. Los elevados gastos financieros o la depreciación pueden estar reduciendo la rentabilidad declarada.",
-
     "nextCashFlow": "Siguiente: Flujo de caja →",
-
     "sectionFromPL": "De la cuenta de resultados",
     "labelNetProfit": "Beneficio neto",
     "labelDAAddBack": "D&A (ajuste positivo)",
@@ -753,7 +886,6 @@
     "sectionCapFinancing": "Capital y financiación",
     "labelCapEx": "CapEx anual",
     "labelDebtRepay": "Amortización de deuda",
-
     "kpiOperatingCF": "Flujo de caja operativo",
     "kpiOperatingCFSub": "Beneficio neto + D&A − ΔCC",
     "kpiFreeCashFlow": "Flujo de caja libre",
@@ -762,7 +894,6 @@
     "kpiNetCFSub": "FCF − Amortización de deuda",
     "kpiCashConversion": "Conversión de caja",
     "kpiCashConversionSub": "FCF como % del EBITDA",
-
     "chartWCBreakdownTitle": "Desglose del capital circulante",
     "chartWCBreakdownSub": "Basado en los días de cobro / pago / inventario y los ingresos",
     "labelARBalance": "Saldo de cobros",
@@ -770,18 +901,14 @@
     "labelInventory": "Inventario",
     "netWorkingCapital": "Capital circulante neto",
     "netWCFormula": "(Cobros + Inventario − Pagos)",
-
     "chartCFBridgeTitle": "Puente de flujo de caja",
     "chartCFBridgeSub": "FCF operativo, CapEx, amortización de deuda y posición neta",
     "chartTooltipAmount": "Importe",
-
     "insightFCFNeg": "⚠️ Flujo de caja libre negativo de {currency}{amount}. La empresa está consumiendo caja después del CapEx. Revisa la asignación de capital o reduce el gasto en CapEx.",
     "insightCashConvLow": "🟡 Conversión de caja del {pct}% — por debajo del rango del 70–80% que esperan los compradores. El elevado capital circulante o CapEx en relación al EBITDA reduce la calidad del flujo de caja.",
     "insightCashConvStrong": "✅ Fuerte conversión de caja del {pct}%. La buena calidad del FCF es un factor clave en los múltiplos de adquisición.",
-
     "btnBack": "← Atrás",
     "nextBalanceSheet": "Siguiente: Balance →",
-
     "labelARAutoStep2": "Cobros (automático del paso 2)",
     "sectionAssets": "Activos",
     "labelCash": "Efectivo y equivalentes",
@@ -791,7 +918,6 @@
     "labelSTDebt": "Deuda a corto plazo",
     "labelLTDebt": "Deuda a largo plazo",
     "labelOtherLiabilities": "Otros pasivos",
-
     "kpiTotalAssets": "Total activos",
     "kpiTotalAssetsSub": "corrientes",
     "kpiNetDebt": "Deuda neta",
@@ -801,21 +927,16 @@
     "kpiLeverage": "Apalancamiento",
     "kpiLeverageSub": "Deuda neta / EBITDA",
     "kpiLeverageNA": "N/D",
-
     "bsSummaryTitle": "Resumen del balance",
     "bsTotalAssets": "Total activos",
     "bsTotalLiabEquity": "Total pasivos + Patrimonio neto",
-
     "chartBSCompositionTitle": "Composición del balance",
     "chartBSCompositionSub": "Activos frente a pasivos y patrimonio neto",
-
     "insightNegEquity": "⚠️ Patrimonio neto contable negativo de {currency}{amount}. El total de pasivos supera el total de activos. Esto complicará cualquier venta o refinanciación y requiere atención inmediata.",
     "insightLeverageHigh": "⚠️ Un apalancamiento de {lev}× supera las 3×. Este es el límite habitual para adquisiciones respaldadas por capital privado. Reducir la deuda mejoraría significativamente las opciones de salida.",
     "insightLeverageGood": "✅ Apalancamiento de {lev}× sobre EBITDA — una estructura de capital conservadora que mantiene abiertas todas las opciones de salida, incluida la venta a terceros y la compra por capital privado.",
     "insightLeverageAmber": "🟡 Apalancamiento de {lev}× — acercándose al límite superior que la mayoría de los compradores considera manejable. Monitoriza de cerca y prioriza la reducción de deuda antes de cualquier salida.",
-
     "nextValuation": "Siguiente: Valoración →",
-
     "sectionInputsSteps13": "Datos de los pasos 1–3",
     "labelRevenue": "Ingresos",
     "labelFreeCashFlow": "Flujo de caja libre",
@@ -830,7 +951,6 @@
     "labelTermGrowth": "Tasa de crecimiento terminal",
     "noteTermGrowth": "Crecimiento del FCF a largo plazo (debe ser < WACC)",
     "noteDCFFCF": "El FCF crece al 5% anual durante 5 años en este modelo.",
-
     "kpiEVEBITDAValue": "Valor EV/EBITDA",
     "kpiRevMultValue": "Múlt. sobre ingresos",
     "kpiDCFValue": "Valoración DCF",
@@ -839,22 +959,17 @@
     "kpiBlendedSub": "Media de métodos válidos",
     "kpiEVEBITDASub": "EBITDA",
     "kpiRevMultSub": "Ingresos",
-
     "exitRangeTitle": "Rango de precio de salida (valor del patrimonio)",
     "exitRangeLow": "Bajo (método mínimo)",
     "exitRangeHigh": "Alto (método máximo)",
     "exitRangeBook": "Patrimonio neto contable hoy",
     "exitValueCreated": "Valor creado sobre el patrimonio contable: {amount} ({mult}× valor contable)",
-
     "chartValuationTitle": "Comparación de métodos de valoración",
     "chartValuationSub": "Valor del patrimonio (después de deuda neta) por método",
     "chartTooltipEquityValue": "Valor del patrimonio",
-
     "insightNegEBITDAValuation": "⚠️ El EBITDA negativo impide aplicar el múltiplo EV/EBITDA. Céntrate en alcanzar el punto de equilibrio EBITDA antes de plantear una venta.",
     "insightBlendedValuation": "ℹ️ Los múltiplos utilizados son orientativos — los múltiplos reales de mercado varían significativamente según el sector, el crecimiento y el tamaño de la operación. El valor ponderado ({currency}{amount}) es una referencia inicial para la planificación de la salida, no una valoración formal.",
-
     "nextExitStrategy": "Siguiente: Estrategia de salida →",
-
     "glanceTitle": "Tu empresa de un vistazo",
     "glanceRevenue": "Ingresos",
     "glanceEBITDA": "EBITDA",
@@ -862,7 +977,6 @@
     "glanceFCF": "Flujo de caja libre",
     "glanceNetDebt": "Deuda neta",
     "glanceBlendedExit": "Valor ponderado",
-
     "exitOptionsTitle": "Análisis de opciones de salida",
     "tradeSaleTitle": "Venta a terceros",
     "tradeSaleWhen": "Óptima cuando el EBITDA > 0 y los ingresos > £500k. Los compradores estratégicos pagan primas ajustadas por sinergias.",
@@ -896,11 +1010,9 @@
       "Apunta a un margen EBITDA superior al 20% antes de escalar significativamente la plantilla",
       "Desarrolla fuentes de ingresos recurrentes — los modelos de suscripción o retención cotizan a múltiplos 2–3× más altos"
     ],
-
     "scoreBadgeHigh": "Alto",
     "scoreBadgeMedium": "Medio",
     "scoreBadgeLow": "Bajo",
-
     "checklistTitle": "Preparación para la salida",
     "checklistItems": [
       "EBITDA positivo",
@@ -914,7 +1026,6 @@
     "checklistOf": "/",
     "checklistChecks": "controles",
     "checklistAmber": "· Ámbar:",
-
     "keyActionsTitle": "Acciones clave para maximizar el precio de salida",
     "actionImproveMargin": "Céntrate en mejorar el margen — los compradores pagan múltiplos premium por márgenes EBITDA superiores al 15–20%. Revisa cada línea de costes antes de iniciar un proceso.",
     "actionReduceDebt": "Reduce la deuda antes de la salida — un apalancamiento superior a 3× EBITDA comprime el valor del patrimonio y dificulta la financiación mediante deuda del capital privado. Apunta a menos de 2× para maximizar los ingresos.",
@@ -922,10 +1033,8 @@
     "actionRecapitalise": "Recapitaliza el balance — el patrimonio neto negativo complicará cualquier venta, refinanciación o proceso de due diligence. Soluciona esto antes de contactar con asesores.",
     "actionCleanFinancials": "Mantén 3 años de estados financieros limpios y auditados (o revisados) — este es el factor más importante para un proceso de salida fluido.",
     "actionDocumentContracts": "Documenta todos los contratos de clientes y el reconocimiento de ingresos — los ingresos recurrentes y contractuales cotizan a los múltiplos más altos en cualquier proceso de venta.",
-
     "disclaimerTitle": "Aviso legal:",
     "disclaimerText": "Esta herramienta es solo para fines ilustrativos y de planificación. Las valoraciones e información presentadas son estimaciones indicativas basadas en modelos simplificados. No constituyen asesoramiento financiero, una valoración formal ni una oferta de compra o venta de ningún negocio. Consulta a un asesor de fusiones y adquisiciones cualificado, a un profesional de finanzas corporativas o a un contable antes de tomar cualquier decisión relacionada con la venta, adquisición o reestructuración de una empresa.",
-
     "backToAllTools": "← Volver a todas las herramientas"
   }
 }
