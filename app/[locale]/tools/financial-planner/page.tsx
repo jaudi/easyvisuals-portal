@@ -799,6 +799,17 @@ export default function FinancialPlannerPage() {
                 <p className="text-gray-400 text-sm">{t("step5Desc")}</p>
               </div>
 
+              {/* Investment horizon slider */}
+              <div className="bg-[#0d1426] border border-gray-800 rounded-xl px-6 py-4 flex items-center gap-4">
+                <span className="text-xs text-gray-400 shrink-0">{t("s3YearsLabel")}</span>
+                <input
+                  type="range" min={1} max={40} value={years}
+                  onChange={e => setYears(parseInt(e.target.value))}
+                  className="flex-1 accent-blue-500"
+                />
+                <span className="text-white font-bold text-sm shrink-0 w-12">{years}yr</span>
+              </div>
+
               {/* A — Financial Snapshot */}
               <div>
                 <h2 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-4">{t("s5SnapshotTitle")}</h2>
