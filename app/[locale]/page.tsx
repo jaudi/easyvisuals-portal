@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import EmailCapture from "@/components/EmailCapture";
 import CountUp from "@/components/CountUp";
+import OnboardingFlow from "@/components/OnboardingFlow";
 
 export const metadata: Metadata = {
   title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
@@ -126,6 +127,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <OnboardingFlow />
 
       {/* ── Tools ── */}
       <section className="py-20 px-6">
