@@ -63,29 +63,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── See it in action ── */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("seeInActionLabel")}</p>
-          <h2 className="text-3xl font-bold text-center mb-12">{t("seeInActionTitle")}</h2>
-          <div className="flex justify-center">
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-[280px]">
-                <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
-                  <iframe
-                    className="absolute inset-0 w-full h-full rounded-2xl"
-                    src="https://www.youtube.com/embed/MwEDJPlvKG0"
-                    title="Break-Even Analysis"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
-              <p className="text-white font-semibold text-sm">{t("videoCaption")}</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── Who it's for ── */}
       <section className="bg-[#0d1426] py-20 px-6">
