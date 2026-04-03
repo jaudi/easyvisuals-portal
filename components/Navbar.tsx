@@ -53,7 +53,6 @@ export default function Navbar() {
   ];
 
   const MARKET_TOOLS = [
-    { label: `🌐 ${t("marketIndices")}`,     href: "/tools/market-indices"     },
     { label: `📊 ${t("portfolioAnalysis")}`, href: "/tools/portfolio-analysis" },
     { label: `📉 ${t("stockComparison")}`,   href: "/tools/stock-comparison"   },
     { label: `📈 ${t("stockAnalysis")}`,     href: "/tools/stock-analysis"     },
@@ -140,6 +139,15 @@ export default function Navbar() {
               </div>
             )}
           </div>
+
+          <Link
+            href="/tools/market-indices"
+            className={`px-4 py-2 rounded-lg transition font-medium ${
+              pathname?.includes("/market-indices") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
+            }`}
+          >
+            🌐 {t("marketIndices")}
+          </Link>
 
           <Link
             href="/blog"
@@ -235,6 +243,7 @@ export default function Navbar() {
           ))}
 
           <div className="border-t border-gray-800 mt-3 pt-3 flex flex-col gap-1">
+            <Link href="/tools/market-indices" className={`px-4 py-2.5 rounded-lg transition ${pathname?.includes("/market-indices") ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white"}`}>🌐 {t("marketIndices")}</Link>
             <Link href="/blog" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("blog")}</Link>
             <Link href="/glossary" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("glossary")}</Link>
             <Link href="/quiz" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("quiz")}</Link>
