@@ -138,7 +138,7 @@ export default function FinancialModelPDF({ companyName, years, bsAndCf, cagr, a
       </View>
       <View style={{ alignItems: "flex-end" }}>
         <Text style={S.headerMeta}>Generated {date}</Text>
-        <Image style={S.logoImg} src="https://www.financeplots.com/logo.png" />
+        <Image style={S.logoImg} src="https://www.financeplots.com/logo-sm.png" />
       </View>
     </View>
   );

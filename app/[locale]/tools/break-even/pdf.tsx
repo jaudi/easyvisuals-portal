@@ -172,7 +172,7 @@ export default function BreakEvenPDF({
           </View>
           <View style={styles.headerRight}>
             <Text style={styles.headerMeta}>Generated {date}</Text>
-            <Image style={styles.logoImg} src="https://www.financeplots.com/logo.png" />
+            <Image style={styles.logoImg} src="https://www.financeplots.com/logo-sm.png" />
           </View>
         </View>
 

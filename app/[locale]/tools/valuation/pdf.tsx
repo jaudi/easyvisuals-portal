@@ -69,7 +69,7 @@ export default function ValuationPDF({
           </View>
           <View style={{ alignItems: "flex-end" }}>
             <Text style={styles.headerMeta}>Generated {date}</Text>
-            <Image style={styles.logoImg} src="https://www.financeplots.com/logo.png" />
+            <Image style={styles.logoImg} src="https://www.financeplots.com/logo-sm.png" />
           </View>
         </View>
 
