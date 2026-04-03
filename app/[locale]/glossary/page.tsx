@@ -352,12 +352,20 @@ export default async function GlossaryPage({ params }: Props) {
               ? "Aplica estos conceptos con nuestras herramientas gratuitas."
               : "Put these concepts into practice with our free tools."}
           </p>
-          <Link
-            href="/tools"
-            className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl transition shadow-lg shadow-blue-600/25"
-          >
-            {es ? "Ver todas las herramientas →" : "Explore all 13 free tools →"}
-          </Link>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/tools"
+              className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl transition shadow-lg shadow-blue-600/25"
+            >
+              {es ? "Ver todas las herramientas →" : "Explore all tools →"}
+            </Link>
+            <Link
+              href="/quiz"
+              className="inline-block border border-blue-500/50 hover:border-blue-400 text-blue-300 hover:text-blue-200 font-bold px-8 py-4 rounded-xl transition"
+            >
+              {es ? "🧠 Pon a prueba tu conocimiento →" : "🧠 Test your knowledge →"}
+            </Link>
+          </div>
         </div>
 
       </div>

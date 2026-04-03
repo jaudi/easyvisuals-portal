@@ -159,6 +159,15 @@ export default function Navbar() {
             {t("glossary")}
           </Link>
 
+          <Link
+            href="/quiz"
+            className={`px-4 py-2 rounded-lg transition font-medium ${
+              pathname?.includes("/quiz") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
+            }`}
+          >
+            {t("quiz")}
+          </Link>
+
           <Link href="/#contact" className="px-4 py-2 rounded-lg transition font-medium hover:text-white hover:bg-white/5">
             {t("contact")}
           </Link>
@@ -228,6 +237,7 @@ export default function Navbar() {
           <div className="border-t border-gray-800 mt-3 pt-3 flex flex-col gap-1">
             <Link href="/blog" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("blog")}</Link>
             <Link href="/glossary" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("glossary")}</Link>
+            <Link href="/quiz" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("quiz")}</Link>
             <Link href="/#contact" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("contact")}</Link>
           </div>
 
