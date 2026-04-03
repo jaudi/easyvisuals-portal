@@ -30,12 +30,12 @@ const INDICES: Record<string, IndexInfo[]> = {
   "🌍 Europe": [
     { name: "FTSE 100",          symbol: "^FTSE",    flag: "🇬🇧", country: "UK",      exchange: "LSE",          desc: "100 largest companies on the London Stock Exchange.",                       yahooSymbol: "^FTSE"    },
     { name: "DAX 40",            symbol: "^GDAXI",   flag: "🇩🇪", country: "Germany", exchange: "XETRA",        desc: "40 largest German companies. Key indicator of the German economy.",         yahooSymbol: "^GDAXI"   },
-    { name: "CAC 40",            symbol: "^FCHI",    flag: "🇫🇷", country: "France",  exchange: "Euronext Paris","desc": "40 largest French companies listed on Euronext Paris.",                   yahooSymbol: "^FCHI"    },
-    { name: "EURO STOXX 50",     symbol: "^STOXX50E",flag: "🇪🇺", country: "Eurozone","exchange": "Euronext",   desc: "50 leading blue-chip companies across the Eurozone.",                       yahooSymbol: "^STOXX50E"},
+    { name: "CAC 40",            symbol: "^FCHI",    flag: "🇫🇷", country: "France",  exchange: "Euronext Paris",desc: "40 largest French companies listed on Euronext Paris.",                   yahooSymbol: "^FCHI"    },
+    { name: "EURO STOXX 50",     symbol: "^STOXX50E",flag: "🇪🇺", country: "Eurozone",exchange: "Euronext",   desc: "50 leading blue-chip companies across the Eurozone.",                       yahooSymbol: "^STOXX50E"},
     { name: "IBEX 35",           symbol: "^IBEX",    flag: "🇪🇸", country: "Spain",   exchange: "BME",          desc: "35 most liquid Spanish companies on the Madrid exchange.",                  yahooSymbol: "^IBEX"    },
-    { name: "FTSE MIB",          symbol: "FTSEMIB.MI",flag:"🇮🇹", country: "Italy",   exchange: "Borsa Italiana","desc": "40 largest Italian companies by market cap.",                            yahooSymbol: "FTSEMIB.MI"},
-    { name: "SMI",               symbol: "^SSMI",    flag: "🇨🇭", country: "Switzerland","exchange": "SIX",     desc: "20 largest Swiss companies including Nestlé, Novartis and Roche.",         yahooSymbol: "^SSMI"    },
-    { name: "AEX",               symbol: "^AEX",     flag: "🇳🇱", country: "Netherlands","exchange": "Euronext","desc": "25 largest Dutch companies including ASML and Shell.",                   yahooSymbol: "^AEX"     },
+    { name: "FTSE MIB",          symbol: "FTSEMIB.MI",flag:"🇮🇹", country: "Italy",   exchange: "Borsa Italiana",desc: "40 largest Italian companies by market cap.",                            yahooSymbol: "FTSEMIB.MI"},
+    { name: "SMI",               symbol: "^SSMI",    flag: "🇨🇭", country: "Switzerland",exchange: "SIX",     desc: "20 largest Swiss companies including Nestlé, Novartis and Roche.",         yahooSymbol: "^SSMI"    },
+    { name: "AEX",               symbol: "^AEX",     flag: "🇳🇱", country: "Netherlands",exchange: "Euronext",desc: "25 largest Dutch companies including ASML and Shell.",                   yahooSymbol: "^AEX"     },
   ],
   "🌏 Asia-Pacific": [
     { name: "Nikkei 225",        symbol: "^N225",    flag: "🇯🇵", country: "Japan",        exchange: "TSE",        desc: "225 most actively traded Japanese companies. Asia's oldest index.",   yahooSymbol: "^N225"    },

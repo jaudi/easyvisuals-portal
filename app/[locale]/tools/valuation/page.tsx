@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import RelatedTools from "@/components/RelatedTools";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   LineChart, Line,
 } from "recharts";
 
@@ -378,7 +378,7 @@ export default function ValuationPage() {
                     />
                     <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                       {barData.map((entry, i) => (
-                        <rect key={i} fill={entry.fill} />
+                        <Cell key={i} fill={entry.fill} />
                       ))}
                     </Bar>
                   </BarChart>
