@@ -19,7 +19,8 @@
     "compoundInterest": "Compound Interest",
     "portfolioAnalysis": "Portfolio Analysis",
     "stockComparison": "Stock Comparison",
-    "stockAnalysis": "Stock Analysis"
+    "stockAnalysis": "Stock Analysis",
+    "marketIndices": "World Indices"
   },
   "home": {
     "badge": "Free FP&A Tools · No Signup · Works Instantly",
@@ -294,6 +295,12 @@
     "fpaSectionSubtitle": "Browser-native tools with PDF export — no server required",
     "liveBadge": "Live",
     "stockTools": [
+      {
+        "icon": "🌐",
+        "name": "World Market Indices",
+        "desc": "Live prices for 25+ global indices — S&P 500, FTSE 100, Nikkei, DAX, Hang Seng and more.",
+        "href": "/tools/market-indices"
+      },
       {
         "icon": "📊",
         "name": "Portfolio Analysis",

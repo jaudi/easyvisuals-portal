@@ -53,6 +53,7 @@ export default function Navbar() {
   ];
 
   const MARKET_TOOLS = [
+    { label: `🌐 ${t("marketIndices")}`,     href: "/tools/market-indices"     },
     { label: `📊 ${t("portfolioAnalysis")}`, href: "/tools/portfolio-analysis" },
     { label: `📉 ${t("stockComparison")}`,   href: "/tools/stock-comparison"   },
     { label: `📈 ${t("stockAnalysis")}`,     href: "/tools/stock-analysis"     },
