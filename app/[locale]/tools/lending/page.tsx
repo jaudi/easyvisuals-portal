@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import RelatedTools from "@/components/RelatedTools";
 import {
   AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, PieChart, Pie, Cell, Tooltip as PieTooltip,
@@ -159,6 +160,20 @@ export default function LendingPage() {
 
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Lending Calculator",
+          "description": "Calculate loan repayments, total interest, and amortisation schedules. Compare loan options side by side. Free, no signup.",
+          "url": "https://www.financeplots.com/tools/lending",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+          "provider": { "@type": "Organization", "name": "FinancePlots", "url": "https://www.financeplots.com" }
+        })}}
+      />
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -344,6 +359,22 @@ export default function LendingPage() {
           </div>
         </div>
       </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
+        <p className="text-xs font-bold uppercase tracking-wider text-gray-600 mb-3">{tc("alsoTry")}</p>
+        <div className="flex flex-wrap gap-3">
+          {[
+            { label: "💰 Personal Budget", href: "/tools/personal-budget" },
+            { label: "💹 Compound Interest", href: "/tools/compound-interest" },
+            { label: "💧 Cash Flow Forecast", href: "/tools/cash-flow" },
+          ].map(tool => (
+            <Link key={tool.href} href={tool.href}
+              className="text-sm text-gray-400 hover:text-white border border-gray-700 hover:border-blue-500 px-4 py-2 rounded-lg transition">
+              {tool.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+            <RelatedTools current="lending" />
       <p className="text-center text-xs text-gray-600 pb-8 px-4">{tc("disclaimer")}</p>
     </main>
   );

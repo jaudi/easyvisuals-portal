@@ -179,7 +179,13 @@
     "contactDesc": "Questions, custom dashboard requests, or feedback — we reply within 24 hours.",
     "contactCta": "Email us at hello@financeplots.com",
     "footerTagline": "FP&A tools for individuals, companies and wealth managers",
-    "footerCopyright": "© 2026 FinancePlots · Not financial advice"
+    "footerCopyright": "© 2026 FinancePlots · Not financial advice",
+    "stat5Value": "3,200+",
+    "stat5Label": "Reports Generated",
+    "emailLabel": "Stay in the loop",
+    "emailTitle": "Get new tools & guides first",
+    "emailDesc": "New financial tools and FP&A articles — straight to your inbox. No spam, unsubscribe anytime.",
+    "emailPrivacy": "No spam. Unsubscribe anytime."
   },
   "blog": {
     "title": "Blog",
@@ -368,7 +374,8 @@
     "exportPdf": "📄 Export PDF",
     "generating": "Generating…",
     "backTools": "← Tools",
-    "disclaimer": "This tool is for informational and planning purposes only. It does not constitute financial, investment, tax or legal advice. Always consult a qualified professional before making financial decisions."
+    "disclaimer": "This tool is for informational and planning purposes only. It does not constitute financial, investment, tax or legal advice. Always consult a qualified professional before making financial decisions.",
+    "alsoTry": "Also try"
   },
   "breakEven": {
     "title": "⚖️ Break-Even Analysis",
@@ -840,7 +847,24 @@
     "s5RecCompound": "Investing {currency}{monthly}/month at {rate}% for {years} years projects to {currency}{final}. Time in market is your biggest advantage.",
     "s5RecAllocAggressive": "High equity allocation suits your risk profile. Rebalance annually and stay the course during market downturns.",
     "s5RecAllocModerate": "Balanced allocation across equities and bonds. Review annually as your age and circumstances change.",
-    "s5RecAllocConservative": "Conservative allocation protects capital. Consider increasing equity exposure if your investment timeline allows."
+    "s5RecAllocConservative": "Conservative allocation protects capital. Consider increasing equity exposure if your investment timeline allows.",
+    "s5RatingExcellent": "Excellent",
+    "s5RatingGood": "Good start",
+    "s5RatingBelowTarget": "Below target",
+    "s5KpiSavingsRate": "Savings Rate",
+    "s5KpiDebtSub": "Over repayment terms",
+    "s5KpiEstInterest": "Est. Interest Cost",
+    "s5KpiAtRate": "At {rate}% p.a.",
+    "s5KpiAllocProfile": "Allocation Profile",
+    "s5KpiStocksPct": "{pct}% stocks",
+    "s5TitleSavingsLow": "Savings Rate — Needs Attention",
+    "s5TitleSavingsOk": "Savings Rate — Good Start",
+    "s5TitleSavingsGood": "Savings Rate — Excellent",
+    "s5TitleEmergency": "Emergency Fund",
+    "s5TitleHighDebt": "High-Interest Debt Alert",
+    "s5TitleDebtRatio": "Debt-to-Income",
+    "s5TitleCompound": "Compound Growth",
+    "s5TitleAllocation": "Asset Allocation"
   },
   "companyPlanner": {
     "backToTools": "← All Tools",
@@ -1043,5 +1067,13 @@
     "disclaimerText": "This tool is for illustrative and planning purposes only. The valuations and insights above are indicative estimates based on simplified models. They do not constitute financial advice, a formal valuation or an offer to buy or sell any business. Consult a qualified M&A advisor, corporate finance professional or accountant before making any decisions related to a business sale, acquisition or restructuring.",
     "backToAllTools": "← Back to All Tools",
     "exportPdf": "📄 Export PDF"
+  },
+  "emailCapture": {
+    "placeholder": "Your email address",
+    "cta": "Get Updates →",
+    "loading": "Sending…",
+    "successMsg": "✓ You're in! We'll be in touch.",
+    "errorMsg": "Something went wrong. Please try again.",
+    "label": "Stay updated"
   }
 }

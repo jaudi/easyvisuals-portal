@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import RelatedTools from "@/components/RelatedTools";
 
 const TOOL_URL = "https://humble-beauty-production-82c1.up.railway.app/Stock_Analysis?embed=true&embed_options=show_sidebar";
 
@@ -10,6 +11,20 @@ export default function StockAnalysisPage() {
   const tn = useTranslations("nav");
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Stock Analysis Tool",
+          "description": "Analyse individual stocks with live price data, financials, charts, and key metrics. Free, no signup.",
+          "url": "https://www.financeplots.com/tools/stock-analysis",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+          "provider": { "@type": "Organization", "name": "FinancePlots", "url": "https://www.financeplots.com" }
+        })}}
+      />
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center gap-3">
           <Link href="/tools" className="text-gray-400 hover:text-white text-sm transition">{tc("allTools")}</Link>
@@ -26,6 +41,7 @@ export default function StockAnalysisPage() {
           allow="clipboard-write"
         />
       </div>
+      <RelatedTools current="stock-analysis" />
     </main>
   );
 }

@@ -179,7 +179,13 @@
     "contactDesc": "Preguntas, solicitudes de dashboard personalizado o comentarios — respondemos en menos de 24 horas.",
     "contactCta": "Escríbenos a hello@financeplots.com",
     "footerTagline": "Herramientas FP&A para particulares, empresas y gestores de patrimonio",
-    "footerCopyright": "© 2026 FinancePlots · No es asesoramiento financiero"
+    "footerCopyright": "© 2026 FinancePlots · No es asesoramiento financiero",
+    "stat5Value": "3.200+",
+    "stat5Label": "Informes Generados",
+    "emailLabel": "Mantente al día",
+    "emailTitle": "Recibe nuevas herramientas y guías",
+    "emailDesc": "Nuevas herramientas financieras y artículos de FP&A directamente en tu bandeja de entrada. Sin spam, cancela cuando quieras.",
+    "emailPrivacy": "Sin spam. Cancela cuando quieras."
   },
   "blog": {
     "title": "Blog",
@@ -362,7 +368,8 @@
     "exportPdf": "📄 Exportar PDF",
     "generating": "Generando…",
     "backTools": "← Herramientas",
-    "disclaimer": "Esta herramienta es solo para fines informativos y de planificación. No constituye asesoramiento financiero, de inversión, fiscal ni legal. Consulta siempre a un profesional cualificado antes de tomar decisiones financieras."
+    "disclaimer": "Esta herramienta es solo para fines informativos y de planificación. No constituye asesoramiento financiero, de inversión, fiscal ni legal. Consulta siempre a un profesional cualificado antes de tomar decisiones financieras.",
+    "alsoTry": "También puedes usar"
   },
   "breakEven": {
     "title": "⚖️ Análisis del Punto de Equilibrio",
@@ -834,7 +841,24 @@
     "s5RecCompound": "Invertir {currency}{monthly}/mes al {rate}% durante {years} años proyecta {currency}{final}. El tiempo en el mercado es tu mayor ventaja.",
     "s5RecAllocAggressive": "Una asignación elevada en renta variable encaja con tu perfil de riesgo. Rebalancea anualmente y mantén el rumbo durante las caídas del mercado.",
     "s5RecAllocModerate": "Asignación equilibrada entre renta variable y renta fija. Revisa anualmente a medida que cambian tu edad y circunstancias.",
-    "s5RecAllocConservative": "La asignación conservadora protege el capital. Considera aumentar la exposición a renta variable si tu horizonte de inversión lo permite."
+    "s5RecAllocConservative": "La asignación conservadora protege el capital. Considera aumentar la exposición a renta variable si tu horizonte de inversión lo permite.",
+    "s5RatingExcellent": "Excelente",
+    "s5RatingGood": "Buen comienzo",
+    "s5RatingBelowTarget": "Por debajo del objetivo",
+    "s5KpiSavingsRate": "Tasa de Ahorro",
+    "s5KpiDebtSub": "Durante el plazo de amortización",
+    "s5KpiEstInterest": "Coste estimado de intereses",
+    "s5KpiAtRate": "Al {rate}% anual",
+    "s5KpiAllocProfile": "Perfil de asignación",
+    "s5KpiStocksPct": "{pct}% renta variable",
+    "s5TitleSavingsLow": "Tasa de ahorro — Atención",
+    "s5TitleSavingsOk": "Tasa de ahorro — Buen comienzo",
+    "s5TitleSavingsGood": "Tasa de ahorro — Excelente",
+    "s5TitleEmergency": "Fondo de emergencia",
+    "s5TitleHighDebt": "Alerta: deuda de alto interés",
+    "s5TitleDebtRatio": "Ratio deuda-ingresos",
+    "s5TitleCompound": "Crecimiento por interés compuesto",
+    "s5TitleAllocation": "Asignación de activos"
   },
   "companyPlanner": {
     "backToTools": "← Herramientas",
@@ -1037,5 +1061,13 @@
     "disclaimerText": "Esta herramienta es solo para fines ilustrativos y de planificación. Las valoraciones e información presentadas son estimaciones indicativas basadas en modelos simplificados. No constituyen asesoramiento financiero, una valoración formal ni una oferta de compra o venta de ningún negocio. Consulta a un asesor de fusiones y adquisiciones cualificado, a un profesional de finanzas corporativas o a un contable antes de tomar cualquier decisión relacionada con la venta, adquisición o reestructuración de una empresa.",
     "backToAllTools": "← Volver a todas las herramientas",
     "exportPdf": "📄 Exportar PDF"
+  },
+  "emailCapture": {
+    "placeholder": "Tu dirección de email",
+    "cta": "Recibir actualizaciones →",
+    "loading": "Enviando…",
+    "successMsg": "✓ ¡Apuntado! Te avisaremos pronto.",
+    "errorMsg": "Algo salió mal. Inténtalo de nuevo.",
+    "label": "Mantente al día"
   }
 }

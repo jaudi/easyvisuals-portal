@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import RelatedTools from "@/components/RelatedTools";
 import {
   PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
@@ -198,21 +199,21 @@ export default function FinancialPlannerPage() {
   if (savingsRate < 10) {
     recommendations.push({
       icon: "💸",
-      title: "Savings Rate — Needs Attention",
+      title: t("s5TitleSavingsLow"),
       body: t("s5RecSavingsLow").replace("{rate}", savingsRate.toFixed(1)),
       color: "red",
     });
   } else if (savingsRate < 20) {
     recommendations.push({
       icon: "💰",
-      title: "Savings Rate — Good Start",
+      title: t("s5TitleSavingsOk"),
       body: t("s5RecSavingsOk").replace("{rate}", savingsRate.toFixed(1)),
       color: "amber",
     });
   } else {
     recommendations.push({
       icon: "🏆",
-      title: "Savings Rate — Excellent",
+      title: t("s5TitleSavingsGood"),
       body: t("s5RecSavingsGood").replace("{rate}", savingsRate.toFixed(1)),
       color: "green",
     });
@@ -221,7 +222,7 @@ export default function FinancialPlannerPage() {
   // 2. Emergency fund (always shown)
   recommendations.push({
     icon: "🛡️",
-    title: "Emergency Fund",
+    title: t("s5TitleEmergency"),
     body: t("s5RecEmergencyFund")
       .replace("{currency}", currency)
       .replace("{amount}", fmt(totalExpenses * 3)),
@@ -232,7 +233,7 @@ export default function FinancialPlannerPage() {
   if (highestRateDebt && (highestRateDebt.key === "credit_card" || highestRateDebt.key === "personal") && debts[highestRateDebt.key] > 0) {
     recommendations.push({
       icon: "🔥",
-      title: "High-Interest Debt",
+      title: t("s5TitleHighDebt"),
       body: t("s5RecHighDebt")
         .replace(/{rate}/g, String(highestRateDebt.rate)),
       color: "red",
@@ -246,14 +247,14 @@ export default function FinancialPlannerPage() {
     if (dtiRatio > 3) {
       recommendations.push({
         icon: "⚠️",
-        title: "Debt-to-Income Ratio",
+        title: t("s5TitleDebtRatio"),
         body: t("s5RecDebtHigh").replace("{x}", dtiRatio.toFixed(1)),
         color: "amber",
       });
     } else if (dtiRatio <= 1) {
       recommendations.push({
         icon: "✅",
-        title: "Debt-to-Income Ratio",
+        title: t("s5TitleDebtRatio"),
         body: t("s5RecDebtLow"),
         color: "green",
       });
@@ -263,7 +264,7 @@ export default function FinancialPlannerPage() {
   // 5. Compound growth
   recommendations.push({
     icon: "📈",
-    title: "Compound Growth",
+    title: t("s5TitleCompound"),
     body: t("s5RecCompound")
       .replace("{currency}", currency)
       .replace("{monthly}", fmt(monthlyContrib))
@@ -282,7 +283,7 @@ export default function FinancialPlannerPage() {
     : "s5RecAllocModerate";
   recommendations.push({
     icon: "🎯",
-    title: "Asset Allocation",
+    title: t("s5TitleAllocation"),
     body: t(allocTipKey as Parameters<typeof t>[0]),
     color: risk === "conservative" ? "amber" : "green",
   });
@@ -321,6 +322,20 @@ export default function FinancialPlannerPage() {
 
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Personal Financial Planner",
+          "description": "5-step personal financial plan covering income, debt, investments, goals, and personalised recommendations. Free, no signup.",
+          "url": "https://www.financeplots.com/tools/financial-planner",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+          "provider": { "@type": "Organization", "name": "FinancePlots", "url": "https://www.financeplots.com" }
+        })}}
+      />
       {/* Fixed header with stepper */}
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-4 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
@@ -815,39 +830,39 @@ export default function FinancialPlannerPage() {
                 <h2 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-4">{t("s5SnapshotTitle")}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   <KpiCard
-                    label="Monthly Surplus"
+                    label={t("s4SumSurplus")}
                     value={`${currency}${fmt(Math.max(0, netSavings))}`}
-                    sub={`${savingsRate.toFixed(1)}% savings rate`}
+                    sub={t("s4SumSavingsRate").replace("{x}", savingsRate.toFixed(1))}
                     colorClass={netSavings >= 0 ? "border-l-green-500" : "border-l-red-500"}
                   />
                   <KpiCard
-                    label="Savings Rate"
+                    label={t("s5KpiSavingsRate")}
                     value={`${savingsRate.toFixed(1)}%`}
-                    sub={savingsRate >= 20 ? "Excellent" : savingsRate >= 10 ? "Good start" : "Below target"}
+                    sub={savingsRate >= 20 ? t("s5RatingExcellent") : savingsRate >= 10 ? t("s5RatingGood") : t("s5RatingBelowTarget")}
                     colorClass={savingsRate >= 20 ? "border-l-green-500" : savingsRate >= 10 ? "border-l-yellow-400" : "border-l-red-500"}
                   />
                   <KpiCard
-                    label="Total Debt"
+                    label={t("s4SumDebt")}
                     value={`${currency}${fmt(totalDebt)}`}
-                    sub={`${currency}${fmt(totalInterestCost)} est. interest`}
+                    sub={t("s4SumEstInterest").replace("{amount}", `${currency}${fmt(totalInterestCost)}`)}
                     colorClass="border-l-red-500"
                   />
                   <KpiCard
-                    label="Est. Interest Cost"
+                    label={t("s5KpiEstInterest")}
                     value={`${currency}${fmt(totalInterestCost)}`}
-                    sub="Over repayment terms"
+                    sub={t("s5KpiDebtSub")}
                     colorClass="border-l-orange-500"
                   />
                   <KpiCard
-                    label={`Projected Wealth (${years}yr)`}
+                    label={t("s4SumWealth").replace("{years}", String(years))}
                     value={`${currency}${fmt(finalValue)}`}
-                    sub={`At ${annualRate}% p.a.`}
+                    sub={t("s5KpiAtRate").replace("{rate}", String(annualRate))}
                     colorClass="border-l-blue-500"
                   />
                   <KpiCard
-                    label="Allocation Profile"
+                    label={t("s5KpiAllocProfile")}
                     value={risk.charAt(0).toUpperCase() + risk.slice(1)}
-                    sub={`${allocData[0].value}% stocks`}
+                    sub={t("s5KpiStocksPct").replace("{pct}", String(allocData[0].value))}
                     colorClass="border-l-purple-500"
                   />
                 </div>
@@ -923,6 +938,7 @@ export default function FinancialPlannerPage() {
 
         </div>
       </div>
+            <RelatedTools current="financial-planner" />
       <p className="text-center text-xs text-gray-600 pb-8 px-4">{tc("disclaimer")}</p>
     </main>
   );

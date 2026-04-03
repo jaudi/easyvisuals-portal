@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import RelatedTools from "@/components/RelatedTools";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell, Legend,
@@ -351,6 +352,20 @@ export default function FinancialPlannerCompanyPage() {
 
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Financial Planner for Companies",
+          "description": "Comprehensive financial planning for businesses — P&L, cash flow, valuation, and exit price estimation. Free, no signup.",
+          "url": "https://www.financeplots.com/tools/financial-planner-company",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+          "provider": { "@type": "Organization", "name": "FinancePlots", "url": "https://www.financeplots.com" }
+        })}}
+      />
       {navBar}
 
       <div className="pt-[140px] pb-20">
@@ -991,6 +1006,7 @@ export default function FinancialPlannerCompanyPage() {
 
         </div>
       </div>
+      <RelatedTools current="financial-planner-company" />
     </main>
   );
 }

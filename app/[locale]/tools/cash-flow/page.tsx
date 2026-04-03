@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import RelatedTools from "@/components/RelatedTools";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar, ReferenceLine,
@@ -133,6 +134,20 @@ export default function CashFlowPage() {
 
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "13-Week Cash Flow Forecast",
+          "description": "Build a 13-week rolling cash flow forecast to manage liquidity and plan ahead. Free tool, instant PDF export.",
+          "url": "https://www.financeplots.com/tools/cash-flow",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+          "provider": { "@type": "Organization", "name": "FinancePlots", "url": "https://www.financeplots.com" }
+        })}}
+      />
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -383,6 +398,22 @@ export default function CashFlowPage() {
           </div>
         </div>
       </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
+        <p className="text-xs font-bold uppercase tracking-wider text-gray-600 mb-3">{tc("alsoTry")}</p>
+        <div className="flex flex-wrap gap-3">
+          {[
+            { label: "📊 5-Year Financial Model", href: "/tools/financial-model" },
+            { label: "📋 Annual Budget", href: "/tools/annual-budget" },
+            { label: "💎 Business Valuation", href: "/tools/valuation" },
+          ].map(tool => (
+            <Link key={tool.href} href={tool.href}
+              className="text-sm text-gray-400 hover:text-white border border-gray-700 hover:border-blue-500 px-4 py-2 rounded-lg transition">
+              {tool.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+            <RelatedTools current="cash-flow" />
       <p className="text-center text-xs text-gray-600 pb-8 px-4">{tc("disclaimer")}</p>
     </main>
   );
