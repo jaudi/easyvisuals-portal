@@ -6,18 +6,58 @@ import { useTranslations } from "next-intl";
 import RelatedTools from "@/components/RelatedTools";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  LineChart, Line, ReferenceLine,
+  LineChart, Line,
 } from "recharts";
 
-const fmt = (n: number) => n.toLocaleString("en-GB", { maximumFractionDigits: 0 });
+const fmt  = (n: number) => n.toLocaleString("en-GB", { maximumFractionDigits: 0 });
 const fmtM = (n: number) => n.toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const fmtX = (n: number) => n.toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
-function KpiCard({ label, value, sub, color = "blue" }: { label: string; value: string; sub: string; color?: "blue" | "green" | "gold" }) {
-  const border = color === "green" ? "border-l-green-500" : color === "gold" ? "border-l-yellow-400" : "border-l-blue-500";
+// ── Damodaran industry multiples — January 2026 ───────────────────────────────
+interface Industry { id: string; label: string; ebitda: number; evSales: number; pe: number }
+
+const INDUSTRIES: Industry[] = [
+  { id: "software-saas",       label: "Software / SaaS",              ebitda: 24.5, evSales: 11.4, pe: 34.1 },
+  { id: "software-internet",   label: "Software (Internet / Platform)",ebitda: 30.3, evSales:  9.6, pe: 64.8 },
+  { id: "tech-services",       label: "IT & Computer Services",        ebitda: 14.1, evSales:  1.5, pe: 56.5 },
+  { id: "healthcare-it",       label: "Healthcare IT",                 ebitda: 21.3, evSales:  5.3, pe: 37.4 },
+  { id: "healthcare-products", label: "Healthcare Products",           ebitda: 19.8, evSales:  4.8, pe: 42.3 },
+  { id: "pharma",              label: "Pharmaceuticals",               ebitda: 15.3, evSales:  6.2, pe: 24.2 },
+  { id: "semiconductor",       label: "Semiconductor",                 ebitda: 34.8, evSales: 15.7, pe: 37.3 },
+  { id: "electrical-equip",    label: "Electrical Equipment",          ebitda: 24.6, evSales:  4.4, pe: 29.6 },
+  { id: "business-services",   label: "Business & Consumer Services",  ebitda: 14.3, evSales:  2.5, pe: 18.7 },
+  { id: "advertising",         label: "Advertising / Marketing",       ebitda: 12.0, evSales:  2.1, pe: 52.9 },
+  { id: "education",           label: "Education",                     ebitda:  9.3, evSales:  2.0, pe: 18.1 },
+  { id: "entertainment",       label: "Entertainment / Media",         ebitda: 19.4, evSales:  4.3, pe: 42.7 },
+  { id: "restaurant",          label: "Restaurant / Dining",           ebitda: 17.5, evSales:  4.2, pe: 31.9 },
+  { id: "retail-general",      label: "Retail (General)",              ebitda: 17.4, evSales:  2.1, pe: 24.0 },
+  { id: "retail-grocery",      label: "Retail (Grocery / Food)",       ebitda:  8.9, evSales:  0.5, pe: 14.3 },
+  { id: "food-processing",     label: "Food Processing / FMCG",        ebitda: 10.0, evSales:  1.5, pe: 17.2 },
+  { id: "construction",        label: "Engineering & Construction",     ebitda: 17.2, evSales:  1.7, pe: 28.1 },
+  { id: "building-materials",  label: "Building Materials",            ebitda: 11.6, evSales:  2.1, pe: 18.4 },
+  { id: "machinery",           label: "Industrial Machinery",          ebitda: 16.2, evSales:  3.4, pe: 24.1 },
+  { id: "transportation",      label: "Transportation & Logistics",     ebitda: 12.6, evSales:  1.6, pe: 19.8 },
+  { id: "trucking",            label: "Trucking / Freight",            ebitda: 10.4, evSales:  1.7, pe: 46.2 },
+  { id: "real-estate",         label: "Real Estate",                   ebitda: 17.3, evSales:  6.8, pe: 14.3 },
+  { id: "hotel-gaming",        label: "Hotel / Hospitality",           ebitda: 14.9, evSales:  4.3, pe: 29.1 },
+  { id: "telecom",             label: "Telecom Services",              ebitda:  6.5, evSales:  2.6, pe: 26.5 },
+  { id: "oil-gas",             label: "Oil & Gas",                     ebitda:  5.2, evSales:  2.7, pe: 16.1 },
+];
+
+// ── Sub-components ────────────────────────────────────────────────────────────
+
+function KpiCard({ label, value, sub, color = "blue" }: {
+  label: string; value: string; sub: string; color?: "blue" | "green" | "gold" | "purple";
+}) {
+  const border =
+    color === "green"  ? "border-l-green-500" :
+    color === "gold"   ? "border-l-yellow-400" :
+    color === "purple" ? "border-l-purple-500" :
+    "border-l-blue-500";
   return (
     <div className={`bg-[#0d1426] border border-gray-800 border-l-4 ${border} rounded-xl p-4`}>
       <div className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-1">{label}</div>
-      <div className="text-2xl font-extrabold text-white leading-tight">{value}</div>
+      <div className="text-xl font-extrabold text-white leading-tight">{value}</div>
       <div className="text-xs text-gray-500 mt-1">{sub}</div>
     </div>
   );
@@ -44,29 +84,60 @@ function NumInput({ label, value, onChange, prefix = "£", step = 1000 }: {
   );
 }
 
+function BenchmarkRow({ label, industryVal, userVal }: { label: string; industryVal: number; userVal: number }) {
+  const pct = industryVal > 0 ? ((userVal - industryVal) / industryVal) * 100 : 0;
+  const colour = Math.abs(pct) < 15 ? "text-green-400" : pct > 0 ? "text-blue-400" : "text-orange-400";
+  const sign   = pct >= 0 ? "+" : "";
+  return (
+    <div className="flex items-center justify-between py-1.5 border-b border-gray-800/60 last:border-0">
+      <span className="text-xs text-gray-400">{label}</span>
+      <div className="flex items-center gap-3 text-xs">
+        <span className="text-gray-500">Sector: {fmtX(industryVal)}×</span>
+        <span className="text-white font-semibold">You: {fmtX(userVal)}×</span>
+        <span className={`font-bold ${colour}`}>{sign}{fmtM(pct)}%</span>
+      </div>
+    </div>
+  );
+}
+
+// ── Main component ────────────────────────────────────────────────────────────
+
 export default function ValuationPage() {
-  const t = useTranslations("valuation");
+  const t  = useTranslations("valuation");
   const tc = useTranslations("toolCommon");
-  const [companyName, setCompanyName] = useState("My Company");
-  const [revenue, setRevenue] = useState(5000000);
-  const [ebitda, setEbitda] = useState(1000000);
-  const [netIncome, setNetIncome] = useState(700000);
-  const [fcf, setFcf] = useState(800000);
-  const [growthRate, setGrowthRate] = useState(10);
-  const [discountRate, setDiscountRate] = useState(12);
+
+  const [companyName,    setCompanyName]    = useState("My Company");
+  const [industryId,     setIndustryId]     = useState("");
+  const [revenue,        setRevenue]        = useState(5_000_000);
+  const [ebitda,         setEbitda]         = useState(1_000_000);
+  const [netIncome,      setNetIncome]      = useState(700_000);
+  const [fcf,            setFcf]            = useState(800_000);
+  const [growthRate,     setGrowthRate]     = useState(10);
+  const [discountRate,   setDiscountRate]   = useState(12);
   const [terminalGrowth, setTerminalGrowth] = useState(2.5);
   const [ebitdaMultiple, setEbitdaMultiple] = useState(8);
-  const [peRatio, setPeRatio] = useState(15);
-  const [isExporting, setIsExporting] = useState(false);
+  const [evSalesMultiple,setEvSalesMultiple]= useState(2.0);
+  const [peRatio,        setPeRatio]        = useState(15);
+  const [isExporting,    setIsExporting]    = useState(false);
 
-  const { dcfRows, dcfValue, epsValue, evValue, avgValuation } = useMemo(() => {
-    const r = discountRate / 100;
-    const g = growthRate / 100;
+  const selectedIndustry = INDUSTRIES.find(i => i.id === industryId) ?? null;
+
+  // Apply industry multiples
+  const applyIndustry = useCallback((ind: Industry) => {
+    setIndustryId(ind.id);
+    setEbitdaMultiple(parseFloat(ind.ebitda.toFixed(1)));
+    setEvSalesMultiple(parseFloat(ind.evSales.toFixed(1)));
+    setPeRatio(parseFloat(ind.pe.toFixed(1)));
+  }, []);
+
+  const { dcfRows, dcfValue, epsValue, evValue, evSalesValue, avgValuation } = useMemo(() => {
+    const r  = discountRate   / 100;
+    const g  = growthRate     / 100;
     const tg = terminalGrowth / 100;
 
     let cumPV = 0;
     let projectedFCF = fcf;
-    const dcfRows = [];
+    const dcfRows: { year: number; fcf: number; discountedFCF: number; cumulativePV: number }[] = [];
 
     for (let yr = 1; yr <= 5; yr++) {
       projectedFCF = projectedFCF * (1 + g);
@@ -76,24 +147,26 @@ export default function ValuationPage() {
     }
 
     const terminalValue = (projectedFCF * (1 + tg)) / (r - tg);
-    const pvTerminal = terminalValue / Math.pow(1 + r, 5);
-    const dcfValue = Math.round(cumPV + pvTerminal);
-    const epsValue = Math.round(netIncome * peRatio);
-    const evValue = Math.round(ebitda * ebitdaMultiple);
-    const avgValuation = Math.round((dcfValue + epsValue + evValue) / 3);
+    const pvTerminal    = terminalValue / Math.pow(1 + r, 5);
+    const dcfValue      = Math.round(cumPV + pvTerminal);
+    const epsValue      = Math.round(netIncome * peRatio);
+    const evValue       = Math.round(ebitda * ebitdaMultiple);
+    const evSalesValue  = Math.round(revenue * evSalesMultiple);
+    const avgValuation  = Math.round((dcfValue + epsValue + evValue + evSalesValue) / 4);
 
-    return { dcfRows, dcfValue, epsValue, evValue, avgValuation };
-  }, [fcf, growthRate, discountRate, terminalGrowth, netIncome, peRatio, ebitda, ebitdaMultiple]);
+    return { dcfRows, dcfValue, epsValue, evValue, evSalesValue, avgValuation };
+  }, [fcf, growthRate, discountRate, terminalGrowth, netIncome, peRatio, ebitda, ebitdaMultiple, revenue, evSalesMultiple]);
 
-  const ebitdaMargin = revenue > 0 ? (ebitda / revenue) * 100 : 0;
-  const netMargin = revenue > 0 ? (netIncome / revenue) * 100 : 0;
-  const fcfMargin = revenue > 0 ? (fcf / revenue) * 100 : 0;
+  const ebitdaMargin = revenue > 0 ? (ebitda   / revenue) * 100 : 0;
+  const netMargin    = revenue > 0 ? (netIncome / revenue) * 100 : 0;
+  const fcfMargin    = revenue > 0 ? (fcf       / revenue) * 100 : 0;
 
-  const valuationBarData = [
-    { name: "DCF", value: dcfValue, fill: "#3b82f6" },
-    { name: "EV/EBITDA", value: evValue, fill: "#8b5cf6" },
-    { name: "P/E", value: epsValue, fill: "#22c55e" },
-    { name: "Average", value: avgValuation, fill: "#f59e0b" },
+  const barData = [
+    { name: "DCF",       value: dcfValue,     fill: "#3b82f6" },
+    { name: "EV/EBITDA", value: evValue,      fill: "#8b5cf6" },
+    { name: "EV/Revenue",value: evSalesValue, fill: "#ec4899" },
+    { name: "P/E",       value: epsValue,     fill: "#22c55e" },
+    { name: "Average",   value: avgValuation, fill: "#f59e0b" },
   ];
 
   const dcfChartData = dcfRows.map(r => ({
@@ -127,7 +200,7 @@ export default function ValuationPage() {
         />
       ).toBlob();
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a   = document.createElement("a");
       a.href = url;
       a.download = "business-valuation.pdf";
       a.click();
@@ -145,14 +218,16 @@ export default function ValuationPage() {
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
           "name": "Business Valuation Calculator",
-          "description": "Estimate your business value using DCF, revenue multiples, and EBITDA multiples. Free, instant PDF export, no signup.",
+          "description": "Estimate your business value using DCF, EV/EBITDA, EV/Revenue, and P/E multiples benchmarked against Damodaran industry data. Free, instant PDF export.",
           "url": "https://www.financeplots.com/tools/valuation",
           "applicationCategory": "FinanceApplication",
           "operatingSystem": "Web",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
-          "provider": { "@type": "Organization", "name": "FinancePlots", "url": "https://www.financeplots.com" }
+          "provider": { "@type": "Organization", "name": "FinancePlots", "url": "https://www.financeplots.com" },
         })}}
       />
+
+      {/* Top bar */}
       <div className="fixed top-[65px] left-0 right-0 z-40 bg-[#0d1426]/95 backdrop-blur border-b border-gray-800 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -173,9 +248,11 @@ export default function ValuationPage() {
       <div className="pt-[133px] pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row gap-6">
-            {/* Sidebar */}
+
+            {/* ── Sidebar ── */}
             <aside className="lg:w-72 xl:w-80 shrink-0">
               <div className="lg:sticky lg:top-[133px] flex flex-col gap-4">
+
                 {/* Company */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionCompany")}</h3>
@@ -189,29 +266,61 @@ export default function ValuationPage() {
                   </div>
                 </div>
 
+                {/* Industry selector */}
+                <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">Industry Benchmarks</h3>
+                  <p className="text-xs text-gray-500 mb-3">Select your sector to auto-fill Damodaran multiples</p>
+                  <select
+                    value={industryId}
+                    onChange={e => {
+                      const ind = INDUSTRIES.find(i => i.id === e.target.value);
+                      if (ind) applyIndustry(ind);
+                      else setIndustryId("");
+                    }}
+                    className="w-full bg-[#111827] border border-gray-700 focus:border-blue-500 text-white text-sm rounded-lg px-3 py-2 outline-none transition"
+                  >
+                    <option value="">— Select industry —</option>
+                    {INDUSTRIES.map(ind => (
+                      <option key={ind.id} value={ind.id}>{ind.label}</option>
+                    ))}
+                  </select>
+
+                  {selectedIndustry && (
+                    <div className="mt-3 space-y-1">
+                      <BenchmarkRow label="EV/EBITDA" industryVal={selectedIndustry.ebitda} userVal={ebitdaMultiple} />
+                      <BenchmarkRow label="EV/Revenue" industryVal={selectedIndustry.evSales} userVal={evSalesMultiple} />
+                      <BenchmarkRow label="P/E (Fwd)" industryVal={selectedIndustry.pe} userVal={peRatio} />
+                    </div>
+                  )}
+
+                  <p className="text-xs text-gray-600 mt-3">
+                    Source: <a href="https://pages.stern.nyu.edu/~adamodar/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-400 transition">Damodaran NYU</a>, Jan 2026
+                  </p>
+                </div>
+
                 {/* Financials */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionFinancials")}</h3>
                   <div className="flex flex-col gap-3">
-                    <NumInput label={t("labelRevenue")} value={revenue} onChange={setRevenue} step={100000} />
-                    <NumInput label={t("labelEBITDA")} value={ebitda} onChange={setEbitda} step={50000} />
-                    <NumInput label={t("labelNetIncome")} value={netIncome} onChange={setNetIncome} step={50000} />
-                    <NumInput label={t("labelFCF")} value={fcf} onChange={setFcf} step={50000} />
+                    <NumInput label={t("labelRevenue")}   value={revenue}    onChange={setRevenue}    step={100_000} />
+                    <NumInput label={t("labelEBITDA")}    value={ebitda}     onChange={setEbitda}     step={50_000}  />
+                    <NumInput label={t("labelNetIncome")} value={netIncome}  onChange={setNetIncome}  step={50_000}  />
+                    <NumInput label={t("labelFCF")}       value={fcf}        onChange={setFcf}        step={50_000}  />
                   </div>
                   <div className="mt-3 pt-3 border-t border-gray-800 space-y-1 text-xs text-gray-400">
                     <div className="flex justify-between"><span>EBITDA Margin</span><span className="text-white font-semibold">{fmtM(ebitdaMargin)}%</span></div>
-                    <div className="flex justify-between"><span>Net Margin</span><span className="text-white font-semibold">{fmtM(netMargin)}%</span></div>
-                    <div className="flex justify-between"><span>FCF Margin</span><span className="text-white font-semibold">{fmtM(fcfMargin)}%</span></div>
+                    <div className="flex justify-between"><span>Net Margin</span>   <span className="text-white font-semibold">{fmtM(netMargin)}%</span></div>
+                    <div className="flex justify-between"><span>FCF Margin</span>   <span className="text-white font-semibold">{fmtM(fcfMargin)}%</span></div>
                   </div>
                 </div>
 
-                {/* DCF Assumptions */}
+                {/* DCF assumptions */}
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionDCF")}</h3>
                   <div className="flex flex-col gap-3">
-                    <NumInput label="Revenue Growth Rate %" value={growthRate} onChange={setGrowthRate} prefix="%" step={0.5} />
-                    <NumInput label="Discount Rate / WACC %" value={discountRate} onChange={setDiscountRate} prefix="%" step={0.5} />
-                    <NumInput label="Terminal Growth Rate %" value={terminalGrowth} onChange={setTerminalGrowth} prefix="%" step={0.1} />
+                    <NumInput label="Revenue Growth Rate %" value={growthRate}     onChange={setGrowthRate}     prefix="%" step={0.5} />
+                    <NumInput label="Discount Rate / WACC %" value={discountRate}  onChange={setDiscountRate}   prefix="%" step={0.5} />
+                    <NumInput label="Terminal Growth Rate %"  value={terminalGrowth} onChange={setTerminalGrowth} prefix="%" step={0.1} />
                   </div>
                 </div>
 
@@ -219,55 +328,99 @@ export default function ValuationPage() {
                 <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">{t("sectionMultiples")}</h3>
                   <div className="flex flex-col gap-3">
-                    <NumInput label="EV/EBITDA Multiple" value={ebitdaMultiple} onChange={setEbitdaMultiple} prefix="×" step={0.5} />
-                    <NumInput label="P/E Ratio" value={peRatio} onChange={setPeRatio} prefix="×" step={0.5} />
+                    <NumInput label="EV/EBITDA Multiple" value={ebitdaMultiple}  onChange={setEbitdaMultiple}  prefix="×" step={0.5} />
+                    <NumInput label="EV/Revenue Multiple" value={evSalesMultiple} onChange={setEvSalesMultiple} prefix="×" step={0.1} />
+                    <NumInput label="P/E Ratio"           value={peRatio}         onChange={setPeRatio}         prefix="×" step={0.5} />
                   </div>
-                  <div className="mt-3 bg-[#111827] rounded-lg p-3 text-xs text-gray-400">
-                    <div className="font-semibold text-gray-300 mb-1">{t("typicalMultiples")}</div>
-                    <div>EV/EBITDA: 6–12× (SMB), 15–25× (Tech)</div>
-                    <div>P/E: 10–20× (mature), 25–50× (growth)</div>
-                  </div>
+                  {!selectedIndustry && (
+                    <div className="mt-3 bg-[#111827] rounded-lg p-3 text-xs text-gray-500">
+                      Select an industry above to auto-fill sector benchmarks.
+                    </div>
+                  )}
                 </div>
+
               </div>
             </aside>
 
-            {/* Main Content */}
+            {/* ── Main Content ── */}
             <div className="flex-1 min-w-0 flex flex-col gap-6">
-              {/* KPI Cards */}
-              <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
-                <KpiCard label={t("kpiAvg")} value={`£${fmt(avgValuation)}`} sub="3-method average" color="gold" />
-                <KpiCard label={t("kpiDCF")} value={`£${fmt(dcfValue)}`} sub={`${discountRate}% WACC`} />
-                <KpiCard label={t("kpiEV")} value={`£${fmt(evValue)}`} sub={`${ebitdaMultiple}× multiple`} />
-                <KpiCard label={t("kpiPE")} value={`£${fmt(epsValue)}`} sub={`${peRatio}× earnings`} color="green" />
+
+              {/* KPI Cards — 4 methods + average */}
+              <div className="grid grid-cols-2 xl:grid-cols-5 gap-3">
+                <KpiCard
+                  label="Average Valuation"
+                  value={`£${fmt(avgValuation)}`}
+                  sub="4-method average"
+                  color="gold"
+                />
+                <KpiCard label="DCF"        value={`£${fmt(dcfValue)}`}     sub={`${discountRate}% WACC`}       color="blue"   />
+                <KpiCard label="EV/EBITDA"  value={`£${fmt(evValue)}`}      sub={`${fmtX(ebitdaMultiple)}×`}   color="purple" />
+                <KpiCard label="EV/Revenue" value={`£${fmt(evSalesValue)}`} sub={`${fmtX(evSalesMultiple)}×`}  color="blue"   />
+                <KpiCard label="P/E"        value={`£${fmt(epsValue)}`}     sub={`${fmtX(peRatio)}× earnings`} color="green"  />
               </div>
 
-              {/* Valuation Comparison Chart */}
+              {/* Valuation comparison chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
                 <h2 className="text-white font-bold mb-5">{t("chartValuation")}</h2>
                 <ResponsiveContainer width="100%" height={280}>
-                  <BarChart data={valuationBarData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
+                  <BarChart data={barData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="name" stroke="#374151" tick={{ fill: "#6b7280", fontSize: 12 }} />
+                    <XAxis dataKey="name" stroke="#374151" tick={{ fill: "#6b7280", fontSize: 11 }} />
                     <YAxis
                       stroke="#374151"
                       tick={{ fill: "#6b7280", fontSize: 11 }}
-                      tickFormatter={v => v >= 1000000 ? `£${(v / 1000000).toFixed(1)}M` : `£${(v / 1000).toFixed(0)}k`}
+                      tickFormatter={v => v >= 1_000_000 ? `£${(v / 1_000_000).toFixed(1)}M` : `£${(v / 1000).toFixed(0)}k`}
                       width={75}
                     />
                     <Tooltip
                       contentStyle={{ backgroundColor: "#111827", border: "1px solid #1e293b", borderRadius: "8px", color: "#f1f5f9", fontSize: 12 }}
                       formatter={(value: unknown) => [`£${fmt(Number(value))}`, "Valuation"]}
                     />
-                    <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]}>
-                      {valuationBarData.map((entry, index) => (
-                        <rect key={`bar-${index}`} fill={entry.fill} />
+                    <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                      {barData.map((entry, i) => (
+                        <rect key={i} fill={entry.fill} />
                       ))}
                     </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
 
-              {/* DCF Chart */}
+              {/* Valuation range insight */}
+              {(() => {
+                const vals = [dcfValue, evValue, evSalesValue, epsValue].filter(v => v > 0);
+                const lo = Math.min(...vals);
+                const hi = Math.max(...vals);
+                const spread = hi > 0 ? ((hi - lo) / hi) * 100 : 0;
+                const verdict =
+                  spread < 20 ? { text: "Strong consensus across methods — high confidence in this range.", color: "text-green-400" } :
+                  spread < 50 ? { text: "Moderate dispersion — DCF assumptions or multiples may need review.", color: "text-yellow-400" } :
+                  { text: "Wide spread between methods — review growth rate, WACC, and chosen multiples carefully.", color: "text-orange-400" };
+                return (
+                  <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
+                    <h2 className="text-white font-bold mb-4">Valuation Range</h2>
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="flex-1 text-center bg-[#111827] rounded-xl p-4">
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">Low</div>
+                        <div className="text-2xl font-extrabold text-white">£{fmt(lo)}</div>
+                      </div>
+                      <div className="text-gray-600 text-xl">—</div>
+                      <div className="flex-1 text-center bg-[#111827] rounded-xl p-4">
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">High</div>
+                        <div className="text-2xl font-extrabold text-white">£{fmt(hi)}</div>
+                      </div>
+                      <div className="text-gray-600 text-xl">—</div>
+                      <div className="flex-1 text-center bg-blue-600/10 border border-blue-600/30 rounded-xl p-4">
+                        <div className="text-xs text-blue-400 uppercase tracking-wider mb-1">Mid (Average)</div>
+                        <div className="text-2xl font-extrabold text-white">£{fmt(avgValuation)}</div>
+                      </div>
+                    </div>
+                    <p className={`text-sm font-semibold ${verdict.color}`}>{verdict.text}</p>
+                    <p className="text-xs text-gray-500 mt-1">Method spread: {fmtM(spread)}%</p>
+                  </div>
+                );
+              })()}
+
+              {/* DCF chart */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
                 <h2 className="text-white font-bold mb-5">{t("chartDCF")}</h2>
                 <ResponsiveContainer width="100%" height={260}>
@@ -277,7 +430,7 @@ export default function ValuationPage() {
                     <YAxis
                       stroke="#374151"
                       tick={{ fill: "#6b7280", fontSize: 11 }}
-                      tickFormatter={v => v >= 1000000 ? `£${(v / 1000000).toFixed(1)}M` : `£${(v / 1000).toFixed(0)}k`}
+                      tickFormatter={v => v >= 1_000_000 ? `£${(v / 1_000_000).toFixed(1)}M` : `£${(v / 1000).toFixed(0)}k`}
                       width={75}
                     />
                     <Tooltip
@@ -285,13 +438,13 @@ export default function ValuationPage() {
                       formatter={(value: unknown) => [`£${fmt(Number(value))}`, undefined]}
                     />
                     <Legend wrapperStyle={{ color: "#9ca3af", fontSize: 12, paddingTop: 8 }} />
-                    <Line type="monotone" dataKey="Free Cash Flow" stroke="#3b82f6" strokeWidth={2} dot={{ fill: "#3b82f6", r: 4 }} />
-                    <Line type="monotone" dataKey="Discounted FCF" stroke="#22c55e" strokeWidth={2} strokeDasharray="5 5" dot={{ fill: "#22c55e", r: 4 }} />
+                    <Line type="monotone" dataKey="Free Cash Flow"  stroke="#3b82f6" strokeWidth={2} dot={{ fill: "#3b82f6", r: 4 }} />
+                    <Line type="monotone" dataKey="Discounted FCF"  stroke="#22c55e" strokeWidth={2} strokeDasharray="5 5" dot={{ fill: "#22c55e", r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
 
-              {/* DCF Table */}
+              {/* DCF table */}
               <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-6">
                 <h2 className="text-white font-bold mb-4">{t("tableTitle")}</h2>
                 <div className="overflow-x-auto">
@@ -316,26 +469,13 @@ export default function ValuationPage() {
                   </table>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
-        <p className="text-xs font-bold uppercase tracking-wider text-gray-600 mb-3">{tc("alsoTry")}</p>
-        <div className="flex flex-wrap gap-3">
-          {[
-            { label: "📊 5-Year Financial Model", href: "/tools/financial-model" },
-            { label: "💧 Cash Flow Forecast", href: "/tools/cash-flow" },
-            { label: "⚖️ Break-Even Analysis", href: "/tools/break-even" },
-          ].map(tool => (
-            <Link key={tool.href} href={tool.href}
-              className="text-sm text-gray-400 hover:text-white border border-gray-700 hover:border-blue-500 px-4 py-2 rounded-lg transition">
-              {tool.label}
-            </Link>
-          ))}
-        </div>
-      </div>
-            <RelatedTools current="valuation" />
+
+      <RelatedTools current="valuation" />
       <p className="text-center text-xs text-gray-600 pb-8 px-4">{tc("disclaimer")}</p>
     </main>
   );
