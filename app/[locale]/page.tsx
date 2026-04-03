@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import EmailCapture from "@/components/EmailCapture";
 import CountUp from "@/components/CountUp";
 import OnboardingFlow from "@/components/OnboardingFlow";
 
@@ -345,17 +344,6 @@ export default function Home() {
               </a>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ── Email capture ── */}
-      <section className="py-16 px-6 bg-[#0d1426] border-t border-gray-800">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-3">{t("emailLabel")}</p>
-          <h2 className="text-2xl font-bold mb-3">{t("emailTitle")}</h2>
-          <p className="text-gray-400 text-sm mb-6">{t("emailDesc")}</p>
-          <EmailCapture />
-          <p className="text-gray-600 text-xs mt-4">{t("emailPrivacy")}</p>
         </div>
       </section>
 
