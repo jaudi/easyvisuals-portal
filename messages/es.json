@@ -21,7 +21,9 @@
     "portfolioAnalysis": "Análisis de Cartera",
     "stockComparison": "Comparación de Acciones",
     "stockAnalysis": "Análisis de Acciones",
-    "marketIndices": "Índices Mundiales"
+    "marketIndices": "Índices Mundiales",
+    "utilitiesSectionLabel": "Utilidades",
+    "screenRecorder": "Grabador de Pantalla"
   },
   "home": {
     "badge": "Herramientas FP&A Gratuitas · Sin Registro · Funciona Al Instante",

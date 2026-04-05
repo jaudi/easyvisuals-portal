@@ -21,7 +21,9 @@
     "portfolioAnalysis": "Portfolio Analysis",
     "stockComparison": "Stock Comparison",
     "stockAnalysis": "Stock Analysis",
-    "marketIndices": "World Indices"
+    "marketIndices": "World Indices",
+    "utilitiesSectionLabel": "Utilities",
+    "screenRecorder": "Screen Recorder"
   },
   "home": {
     "badge": "Free FP&A Tools · No Signup · Works Instantly",

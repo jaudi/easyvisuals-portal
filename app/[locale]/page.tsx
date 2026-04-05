@@ -35,12 +35,12 @@ export default function Home() {
           {t("heroSubtitle")}
         </p>
         <div className="flex gap-4 flex-wrap justify-center mb-16">
-          <Link
-            href="/tools/financial-planner"
+          <a
+            href="#get-started"
             className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl text-base transition shadow-lg shadow-blue-600/25"
           >
             {t("ctaPrimary")}
-          </Link>
+          </a>
           <a
             href="#contact"
             className="border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold px-8 py-4 rounded-xl text-base transition"
@@ -127,7 +127,7 @@ export default function Home() {
         </div>
       </section>
 
-      <OnboardingFlow />
+      <div id="get-started"><OnboardingFlow /></div>
 
       {/* ── Tools ── */}
       <section className="py-20 px-6">

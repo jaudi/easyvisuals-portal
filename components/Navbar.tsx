@@ -58,6 +58,10 @@ export default function Navbar() {
     { label: `📈 ${t("stockAnalysis")}`,     href: "/tools/stock-analysis"     },
   ];
 
+  const UTILITY_TOOLS = [
+    { label: `🎥 ${t("screenRecorder")}`, href: "/tools/screen-recorder" },
+  ];
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0f1e]/95 backdrop-blur border-b border-gray-800">
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-[65px]">
@@ -116,6 +120,20 @@ export default function Navbar() {
                   {/* Market */}
                   <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-3 py-1 mt-2">{t("marketSectionLabel")}</p>
                   {MARKET_TOOLS.map(tool => (
+                    <Link
+                      key={tool.href}
+                      href={tool.href}
+                      className={`flex items-center px-3 py-2 rounded-lg text-sm transition ${
+                        pathname === tool.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      {tool.label}
+                    </Link>
+                  ))}
+
+                  {/* Utilities */}
+                  <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-3 py-1 mt-2">{t("utilitiesSectionLabel")}</p>
+                  {UTILITY_TOOLS.map(tool => (
                     <Link
                       key={tool.href}
                       href={tool.href}
@@ -237,6 +255,13 @@ export default function Navbar() {
 
           <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-4 py-1 mt-2">{t("marketSectionLabel")}</p>
           {MARKET_TOOLS.map(tool => (
+            <Link key={tool.href} href={tool.href} className={`px-4 py-2.5 rounded-lg transition ${pathname === tool.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white"}`}>
+              {tool.label}
+            </Link>
+          ))}
+
+          <p className="text-xs text-gray-600 font-bold uppercase tracking-wider px-4 py-1 mt-2">{t("utilitiesSectionLabel")}</p>
+          {UTILITY_TOOLS.map(tool => (
             <Link key={tool.href} href={tool.href} className={`px-4 py-2.5 rounded-lg transition ${pathname === tool.href ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white"}`}>
               {tool.label}
             </Link>
