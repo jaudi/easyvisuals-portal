@@ -164,16 +164,6 @@ export default function ArticleFinanceDashboardProblem() {
             The irony of the finance data visualisation market is that the teams spending the least — using purpose-built, focused tools for specific financial decisions — are often getting more value than the teams running six-figure BI implementations. Not because they are doing less, but because they asked the right question first.
           </p>
 
-          <div className="bg-blue-900/20 border border-blue-700/40 rounded-xl p-6 mt-10">
-            <p className="text-blue-300 font-semibold mb-2">Try it yourself</p>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              FinancePlots offers free, purpose-built financial tools — break-even analysis, cash flow forecasting, 5-year financial models, business valuation, and more. No licence fees, no per-user pricing. Each tool answers one specific financial question, well.
-            </p>
-            <Link href="/tools" className="inline-block mt-4 text-sm font-semibold text-blue-400 hover:text-blue-300 transition">
-              Explore the tools →
-            </Link>
-          </div>
-
         </div>
 
         <ShareButtons
