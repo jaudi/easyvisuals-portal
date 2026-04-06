@@ -16,6 +16,8 @@ const TAG_COLORS: Record<string, string> = {
   "Finanzas para Startups": "text-orange-400",
   "Analysis": "text-gray-400",
   "Análisis": "text-gray-400",
+  "Opinion": "text-red-400",
+  "Opinión": "text-red-400",
 };
 
 export default function BlogPage() {

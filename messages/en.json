@@ -280,6 +280,13 @@
         "date": "March 2026",
         "description": "An honest comparison of two popular analytics tools — pros, cons, and when to use each.",
         "tag": "Analysis"
+      },
+      {
+        "slug": "finance-dashboard-problem",
+        "title": "Why Do Finance Teams Spend Thousands on Dashboards Nobody Reads?",
+        "date": "April 2026",
+        "description": "Most financial dashboards are beautiful, expensive, and completely ignored. Here's why visual tools fail finance teams — and what actually works.",
+        "tag": "Opinion"
       }
     ]
   },

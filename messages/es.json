@@ -280,6 +280,13 @@
         "date": "Marzo 2026",
         "description": "Una comparación honesta de dos herramientas de análisis populares — ventajas, desventajas y cuándo usar cada una.",
         "tag": "Análisis"
+      },
+      {
+        "slug": "finance-dashboard-problem",
+        "title": "¿Por Qué los Equipos de Finanzas Gastan Miles en Dashboards que Nadie Lee?",
+        "date": "Abril 2026",
+        "description": "La mayoría de los dashboards financieros son bonitos, caros y completamente ignorados. Por qué las herramientas visuales fallan a los equipos de finanzas.",
+        "tag": "Opinión"
       }
     ]
   },
