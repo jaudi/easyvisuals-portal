@@ -122,7 +122,7 @@ export default function ToolsPage() {
         </div>
 
         {/* FP&A */}
-        <div>
+        <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
             <span className="text-xl">🧮</span>
             <div>
@@ -132,6 +132,41 @@ export default function ToolsPage() {
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             {fpaTools.map(tool => <ToolCard key={tool.name} tool={tool} />)}
+          </div>
+        </div>
+
+        {/* Fundraising */}
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <span className="text-xl">🎯</span>
+            <div>
+              <h2 className="text-white font-bold text-lg">Fundraising</h2>
+              <p className="text-gray-500 text-xs">Raise capital with confidence</p>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            <Link
+              href="/tools/pitch-deck"
+              className="bg-[#0d1426] border border-gray-800 hover:border-blue-600/60 rounded-2xl p-6 transition group block"
+            >
+              <div className="flex items-start gap-4">
+                <span className="text-3xl shrink-0">🎯</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <h2 className="text-white font-bold text-base group-hover:text-blue-300 transition">
+                      Pitch Deck Builder
+                    </h2>
+                    <span className="text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full font-semibold">
+                      Live
+                    </span>
+                  </div>
+                  <p className="text-gray-500 text-sm leading-relaxed">
+                    9-slide investor pitch deck — cover, problem, solution, market size, business
+                    model, traction, financials, team and the ask. Download as editable PowerPoint (.pptx).
+                  </p>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
