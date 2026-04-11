@@ -72,60 +72,6 @@ export default function Home() {
       </section>
 
 
-      {/* ── Who it's for ── */}
-      <section className="bg-[#0d1426] py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("whoLabel")}</p>
-          <h2 className="text-3xl font-bold text-center mb-12">{t("whoTitle")}</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: "👤",
-                title: t("persona1Title"),
-                points: [
-                  { label: t("persona1p1"), href: "/tools/personal-budget" },
-                  { label: t("persona1p2"), href: "/tools/portfolio-analysis" },
-                  { label: t("persona1p3"), href: "/tools/stock-comparison" },
-                  { label: t("persona1p4"), href: "/tools/lending" },
-                ],
-              },
-              {
-                icon: "🏢",
-                title: t("persona2Title"),
-                points: [
-                  { label: t("persona2p1"), href: "/tools/financial-model" },
-                  { label: t("persona2p2"), href: "/tools/cash-flow" },
-                  { label: t("persona2p3"), href: "/tools/annual-budget" },
-                  { label: t("persona2p4"), href: "/tools/break-even" },
-                ],
-              },
-              {
-                icon: "📈",
-                title: t("persona3Title"),
-                points: [
-                  { label: t("persona3p1"), href: "/tools/portfolio-analysis" },
-                  { label: t("persona3p2"), href: "/tools/portfolio-analysis" },
-                  { label: t("persona3p3"), href: "/tools/stock-analysis" },
-                  { label: t("persona3p4"), href: "/tools/portfolio-analysis" },
-                ],
-              },
-            ].map((item) => (
-              <div key={item.title} className="bg-[#111827] border border-gray-800 rounded-2xl p-7 hover:border-blue-700/50 transition">
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-white font-bold text-lg mb-4">{item.title}</h3>
-                <ul className="space-y-2">
-                  {item.points.map((p) => (
-                    <li key={p.label} className="flex gap-2 text-sm">
-                      <span className="text-blue-400 shrink-0 mt-0.5">✓</span>
-                      <Link href={p.href} className="text-gray-400 hover:text-blue-300 transition">{p.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <div id="get-started"><OnboardingFlow /></div>
 
