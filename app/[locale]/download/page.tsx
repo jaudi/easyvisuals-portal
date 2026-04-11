@@ -73,9 +73,7 @@ export default function DownloadPage() {
         <div className="flex flex-col sm:flex-row gap-4 items-center">
           {/* Main download CTA — points to GitHub Releases once live */}
           <a
-            href="https://github.com/jaudi/financeplots-desktop/releases/latest"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/api/download"
             className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl text-base transition shadow-lg shadow-blue-600/25 flex items-center gap-3"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -146,9 +144,7 @@ export default function DownloadPage() {
             Free to download and use. No account required.
           </p>
           <a
-            href="https://github.com/jaudi/financeplots-desktop/releases/latest"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/api/download"
             className="block w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl text-base transition shadow-lg shadow-blue-600/25"
           >
             Download Now
