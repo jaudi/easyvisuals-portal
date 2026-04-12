@@ -55,10 +55,6 @@ export default function LearnPage() {
             Learn Plots for<br />
             <span className="text-blue-400">Finance Professionals</span>
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Two structured tracks — Power BI and Streamlit. Each with interactive simulators,
-            real code, and quizzes. Built for finance directors, analysts and FP&A teams.
-          </p>
 
           <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-500">
             <span className="flex items-center gap-2"><span className="text-green-400 font-bold">80</span> lessons</span>
