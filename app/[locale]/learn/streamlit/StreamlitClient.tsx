@@ -799,7 +799,7 @@ if df.empty:
 
 col1, col2, col3 = st.columns(3)
 col1.metric("Sector",    info.get("sector","N/A"))
-col2.metric("Mkt Cap",   f"${info.get('marketCap',0)/1e9:.1f}B")
+col2.metric("Mkt Cap",   f"\${info.get('marketCap',0)/1e9:.1f}B")
 col3.metric("P/E",       f"{info.get('trailingPE',0):.1f}×")
 
 fig = px.line(df, x="Date", y="Close", title=f"{ticker} — Closing Price")
