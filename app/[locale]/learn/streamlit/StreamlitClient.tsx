@@ -1492,7 +1492,7 @@ export default function StreamlitClient() {
             </div>
           </div>
 
-          <QuizWidget quiz={lesson.quiz} onCorrect={() => markComplete(lesson.id)} />
+          <QuizWidget key={lesson.id} quiz={lesson.quiz} onCorrect={() => markComplete(lesson.id)} />
 
           <div className="flex items-center justify-between pt-2">
             <button onClick={() => lessonIdx > 0 ? goLesson(moduleIdx, lessonIdx - 1) : moduleIdx > 0 && goLesson(moduleIdx - 1, MODULES[moduleIdx - 1].lessons.length - 1)}

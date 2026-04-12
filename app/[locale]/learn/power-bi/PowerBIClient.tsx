@@ -1337,6 +1337,7 @@ export default function PowerBIClient() {
 
           {/* Quiz */}
           <QuizWidget
+            key={lesson.id}
             quiz={lesson.quiz}
             onCorrect={() => markComplete(lesson.id)}
           />
