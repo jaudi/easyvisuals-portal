@@ -41,6 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/learn`, priority: 0.9, changeFrequency: "monthly" as const },
     { url: `${BASE}/learn/power-bi`, priority: 0.8, changeFrequency: "monthly" as const },
     { url: `${BASE}/learn/streamlit`, priority: 0.8, changeFrequency: "monthly" as const },
+    { url: `${BASE}/learn/claude-finance`, priority: 0.8, changeFrequency: "monthly" as const },
     { url: `${BASE}/es`, priority: 0.9, changeFrequency: "weekly" as const },
     { url: `${BASE}/es/tools`, priority: 0.8, changeFrequency: "weekly" as const },
     { url: `${BASE}/es/blog`, priority: 0.7, changeFrequency: "weekly" as const },

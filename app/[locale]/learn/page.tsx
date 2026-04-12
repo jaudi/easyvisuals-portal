@@ -39,6 +39,21 @@ const TRACKS = [
       { icon: "🚀", name: "Deployment",  count: 10, desc: "Railway, Docker, secrets, CI/CD" },
     ],
   },
+  {
+    href: "/learn/claude-finance",
+    icon: "🤖",
+    label: "Claude & Finance",
+    tagline: "Use AI to analyse, model and automate finance",
+    color: "from-purple-600/20 to-purple-500/5 border-purple-500/30",
+    accent: "text-purple-400",
+    badge: "bg-purple-500/10 text-purple-300 border-purple-500/20",
+    modules: [
+      { icon: "💬", name: "Prompting",   count: 10, desc: "Context blocks, role prompts, constraints, templates" },
+      { icon: "📊", name: "Analysis",    count: 10, desc: "P&L review, variances, ratios, commentary writing" },
+      { icon: "📐", name: "Excel & Modelling", count: 10, desc: "Formulas, DAX, data cleaning, model structure" },
+      { icon: "⚙️", name: "API & Automation", count: 10, desc: "Claude API, Python, report generators, chatbots" },
+    ],
+  },
 ];
 
 export default function LearnPage() {
@@ -57,16 +72,16 @@ export default function LearnPage() {
           </h1>
 
           <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-500">
-            <span className="flex items-center gap-2"><span className="text-green-400 font-bold">80</span> lessons</span>
+            <span className="flex items-center gap-2"><span className="text-green-400 font-bold">120</span> lessons</span>
             <span className="w-1 h-1 rounded-full bg-gray-700" />
-            <span className="flex items-center gap-2"><span className="text-green-400 font-bold">2</span> tracks</span>
+            <span className="flex items-center gap-2"><span className="text-green-400 font-bold">3</span> tracks</span>
             <span className="w-1 h-1 rounded-full bg-gray-700" />
             <span>Free forever</span>
           </div>
         </div>
 
         {/* Tracks */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {TRACKS.map(track => (
             <Link
               key={track.href}
