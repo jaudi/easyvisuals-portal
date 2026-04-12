@@ -20,6 +20,8 @@ const TAG_COLORS: Record<string, string> = {
   "Opinión": "text-red-400",
   "Tutorial": "text-teal-400",
   "Tutorial (es)": "text-teal-400",
+  "Guide": "text-purple-400",
+  "Guía": "text-purple-400",
 };
 
 export default function BlogPage() {

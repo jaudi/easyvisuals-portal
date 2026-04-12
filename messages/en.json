@@ -294,6 +294,13 @@
         "date": "April 2026",
         "description": "You don't need to be a Python expert to build Streamlit finance apps. These 10 concepts cover 90% of real-world Streamlit development.",
         "tag": "Tutorial"
+      },
+      {
+        "slug": "claude-products-guide",
+        "title": "Claude.ai vs Claude Code vs Claude API: Which One Do You Need?",
+        "date": "April 2026",
+        "description": "Claude comes in several forms — chat, desktop, Code, and API. A plain-English guide for finance professionals on which version to use and when.",
+        "tag": "Guide"
       }
     ]
   },

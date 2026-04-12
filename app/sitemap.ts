@@ -15,6 +15,7 @@ const BLOG_SLUGS = [
   "investment-portfolio-analysis",
   "personal-budget-guide",
   "python-for-streamlit",
+  "claude-products-guide",
 ];
 
 const TOOL_SLUGS = [
