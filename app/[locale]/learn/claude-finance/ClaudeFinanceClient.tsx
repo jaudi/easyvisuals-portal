@@ -1495,6 +1495,496 @@ run_monthly_pipeline("april_data.csv", "april_report.txt")`,
       },
     ],
   },
+  {
+    id: "mcp",
+    icon: "🔌",
+    name: "Skills & MCP",
+    desc: "Extend Claude with tools, data connections and custom capabilities",
+    lessons: [
+      {
+        id: "mcp-1",
+        title: "What Are Claude Skills",
+        concept: "Claude Skills (also called tools or tool use) are custom capabilities you give Claude so it can take actions beyond generating text — like reading a file, querying a database, calling an API, or running a calculation. In the chat interface, Anthropic provides built-in skills like web search. When you use the API, you define your own skills that Claude can call during a conversation.",
+        tip: "Think of skills as functions Claude can choose to call when it decides they are needed. You define what the function does — Claude decides when to use it based on the user's request.",
+        code: `# The concept of skills / tool use
+
+# Without skills: Claude can only generate text
+# "What is the current EUR/GBP rate?" → Claude guesses or says it doesn't know
+
+# With a currency skill: Claude calls your function
+# "What is the current EUR/GBP rate?" → Claude calls get_exchange_rate("EUR", "GBP")
+#                                      → Your function fetches the live rate
+#                                      → Claude uses the real number in its response
+
+# Skills let Claude:
+# - Read live data (stock prices, FX rates, your database)
+# - Write data (save a report, update a spreadsheet)
+# - Run calculations (your custom financial models)
+# - Call external APIs (your ERP, CRM, accounting software)
+# - Execute code (Python calculations, data transformations)`,
+        codeLabel: "Skills concept overview",
+        sim: {
+          type: "TipsSim",
+          tips: [
+            "Skills = functions Claude can call. You write the function, Claude decides when to use it",
+            "Claude sees a description of each skill and chooses the right one based on the user's message",
+            "Skills run on your infrastructure — Claude never directly accesses your data, it calls your function",
+            "You can give Claude multiple skills and it will chain them together as needed",
+            "Built-in Claude.ai skills: web search, file reading, code execution. API skills: whatever you build",
+          ],
+        },
+        quiz: { question: "What is a Claude skill?", options: ["A special Claude model with extra training", "A custom function Claude can call to take actions beyond generating text", "A Claude subscription feature", "A type of prompt template"], answer: 1 },
+      },
+      {
+        id: "mcp-2",
+        title: "Defining a Custom Skill",
+        concept: "To give Claude a custom skill via the API, you define it as a JSON schema describing the function name, what it does, and what parameters it takes. Claude reads this description and decides when to call the skill. Your code then executes the actual function and returns the result to Claude, which incorporates it into its response.",
+        tip: "Write the skill description as if explaining it to a smart colleague — clear, specific, and including when it should and shouldn't be used. Claude's decision to call the skill depends entirely on how well you describe it.",
+        code: `import anthropic
+import json
+
+client = anthropic.Anthropic()
+
+# 1. Define the skill schema
+tools = [
+    {
+        "name": "get_pl_summary",
+        "description": "Retrieves the P&L summary for a given month and year from the finance database. Use this when the user asks about revenue, costs, margin or EBITDA for a specific period.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "month": {"type": "integer", "description": "Month number (1-12)"},
+                "year":  {"type": "integer", "description": "4-digit year e.g. 2024"}
+            },
+            "required": ["month", "year"]
+        }
+    }
+]
+
+# 2. Your actual function (fetches real data)
+def get_pl_summary(month: int, year: int) -> dict:
+    # In production: query your database or ERP
+    return {"revenue": 1240000, "ebitda": 186000, "gm_pct": 60.0,
+            "month": month, "year": year}
+
+# 3. Call Claude with the tool
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    tools=tools,
+    messages=[{"role": "user", "content": "What was our EBITDA in March 2024?"}]
+)
+print(response.stop_reason)  # "tool_use" if Claude wants to call the skill`,
+        codeLabel: "Custom skill definition",
+        sim: {
+          type: "StepsSim",
+          steps: [
+            "Define the skill as a JSON schema with name, description, and input parameters",
+            "Write the actual Python function that does the work (database query, API call, calculation)",
+            "Pass the skill definitions to Claude via the tools parameter in the API call",
+            "Check if stop_reason is 'tool_use' — Claude is asking you to run the function",
+            "Execute the function with Claude's chosen parameters and return the result",
+            "Call Claude again with the function result — it will incorporate it into the final response",
+          ],
+        },
+        quiz: { question: "What does Claude do when it decides to use a skill?", options: ["It executes the function itself", "It returns a tool_use stop reason with the function name and parameters it wants called", "It asks the user for permission", "It generates a code snippet"], answer: 1 },
+      },
+      {
+        id: "mcp-3",
+        title: "Handling Tool Calls",
+        concept: "When Claude decides to call a skill, it stops generating and returns a tool_use block containing the function name and parameters. Your code runs the function, then sends the result back to Claude in a tool_result message. Claude then continues generating the final response incorporating the real data. This back-and-forth is called the tool use loop.",
+        tip: "Always handle the case where Claude's chosen parameters are invalid — validate inputs before running the function and return a clear error message in the tool_result if something is wrong.",
+        code: `import anthropic, json
+
+client = anthropic.Anthropic()
+
+def run_tool(name: str, params: dict) -> str:
+    if name == "get_pl_summary":
+        data = get_pl_summary(**params)
+        return json.dumps(data)
+    return json.dumps({"error": f"Unknown tool: {name}"})
+
+def chat_with_tools(user_message: str, tools: list) -> str:
+    messages = [{"role": "user", "content": user_message}]
+
+    while True:
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1024,
+            tools=tools,
+            messages=messages
+        )
+
+        if response.stop_reason == "end_turn":
+            # Claude finished — extract text response
+            return next(b.text for b in response.content if hasattr(b, "text"))
+
+        if response.stop_reason == "tool_use":
+            # Claude wants to call a tool
+            messages.append({"role": "assistant", "content": response.content})
+            tool_results = []
+            for block in response.content:
+                if block.type == "tool_use":
+                    result = run_tool(block.name, block.input)
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": result
+                    })
+            messages.append({"role": "user", "content": tool_results})`,
+        codeLabel: "Tool use loop",
+        sim: {
+          type: "StepsSim",
+          steps: [
+            "Send user message to Claude with tools defined",
+            "Claude returns stop_reason='tool_use' with the function name and parameters",
+            "Your code runs the function with Claude's parameters",
+            "Send the result back to Claude as a tool_result message",
+            "Claude continues and may call another tool or return the final answer",
+            "Loop until stop_reason='end_turn' — Claude is done",
+          ],
+        },
+        quiz: { question: "What does stop_reason='tool_use' mean?", options: ["An error occurred", "Claude wants you to run a function and return the result to it", "Claude has finished responding", "The API rate limit was hit"], answer: 1 },
+      },
+      {
+        id: "mcp-4",
+        title: "What Is MCP",
+        concept: "MCP (Model Context Protocol) is an open standard created by Anthropic that defines how AI models connect to external data sources and tools. Instead of writing custom API integrations for every data source, you build or install an MCP server — and any MCP-compatible AI client (Claude Desktop, Claude Code, custom apps) can connect to it. It's like a USB standard for AI data connections.",
+        tip: "MCP is the infrastructure layer — it handles the connection protocol. Skills/tools are what Claude can do through that connection. Think of MCP as the wire and skills as the electricity flowing through it.",
+        code: `# MCP in plain English
+
+# BEFORE MCP (bespoke integrations):
+# - Claude API app <--custom code--> your database
+# - Claude API app <--custom code--> your ERP
+# - Claude API app <--custom code--> your Excel files
+# Each integration is built from scratch
+
+# WITH MCP (standardised protocol):
+# - Claude Desktop <--MCP--> database MCP server
+# - Claude Desktop <--MCP--> ERP MCP server
+# - Claude Desktop <--MCP--> filesystem MCP server
+# Any MCP client connects to any MCP server
+
+# Key components:
+# MCP Host    = the AI app (Claude Desktop, your app)
+# MCP Client  = connection manager inside the host
+# MCP Server  = the thing that exposes your data/tools
+# Transport   = how they communicate (stdio, HTTP/SSE)`,
+        codeLabel: "MCP architecture overview",
+        sim: {
+          type: "TipsSim",
+          tips: [
+            "MCP is a protocol — like HTTP for web pages, but for AI-to-data connections",
+            "MCP Server = exposes your data or tools. MCP Client = the AI app consuming them",
+            "Pre-built MCP servers exist for: file systems, databases, GitHub, Slack, Google Drive, and more",
+            "You can build a custom MCP server in Python or TypeScript to connect Claude to any data source",
+            "MCP-compatible clients include: Claude Desktop, Claude Code, and any app using the MCP SDK",
+          ],
+        },
+        quiz: { question: "What problem does MCP solve?", options: ["It makes Claude faster", "It standardises how AI models connect to external data and tools, eliminating bespoke integrations", "It improves Claude's accuracy", "It reduces API costs"], answer: 1 },
+      },
+      {
+        id: "mcp-5",
+        title: "MCP in Claude Desktop",
+        concept: "Claude Desktop is the easiest way to experience MCP. You configure MCP servers in a JSON config file and Claude Desktop connects to them automatically. Once connected, Claude can read your local files, query databases, search the web, or call any tool the MCP server exposes — all without writing any API code yourself.",
+        tip: "Start with the official filesystem MCP server — it lets Claude read and write files on your machine. This alone transforms Claude Desktop into a powerful local data analyst.",
+        code: `// Claude Desktop config file
+// Location: ~/Library/Application Support/Claude/claude_desktop_config.json (Mac)
+// Location: %APPDATA%/Claude/claude_desktop_config.json (Windows)
+
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/yourname/Documents/Finance"
+      ]
+    },
+    "sqlite": {
+      "command": "uvx",
+      "args": ["mcp-server-sqlite", "--db-path", "/path/to/finance.db"]
+    }
+  }
+}
+
+// After saving this file and restarting Claude Desktop:
+// Claude can now read your Finance folder and query your SQLite database
+// Just ask: "Read the Q1 budget file and summarise the key numbers"`,
+        codeLabel: "Claude Desktop MCP config",
+        sim: {
+          type: "StepsSim",
+          steps: [
+            "Install Claude Desktop from claude.ai/download",
+            "Open the config file: %APPDATA%/Claude/claude_desktop_config.json on Windows",
+            "Add MCP server entries — filesystem, database, or any published MCP server",
+            "Save the config and restart Claude Desktop",
+            "Claude now has access to the connected data sources — just ask it questions about them",
+            "Test with: 'List the files in my Finance folder' or 'Query the database for this month's revenue'",
+          ],
+        },
+        quiz: { question: "How do you connect an MCP server to Claude Desktop?", options: ["Download a plugin", "Add the server configuration to claude_desktop_config.json and restart", "Write API integration code", "Email Anthropic"], answer: 1 },
+      },
+      {
+        id: "mcp-6",
+        title: "Build Your First MCP Server",
+        concept: "Building a custom MCP server in Python takes about 30 lines of code using the official MCP SDK. You define tools (functions Claude can call) and resources (data Claude can read), and the SDK handles all the protocol communication. A simple finance MCP server can expose your P&L data, budget files, or live calculations to Claude.",
+        tip: "Start with read-only tools — functions that return data. Add write tools (saving reports, updating cells) only once your read tools are working correctly.",
+        code: `# Install: pip install mcp
+
+from mcp.server import Server
+from mcp.server.stdio import stdio_server
+from mcp import types
+import json
+
+app = Server("finance-server")
+
+# Mock data — replace with your real database or file
+PL_DATA = {
+    "2024-04": {"revenue": 1240000, "ebitda": 186000, "gm_pct": 60.0},
+    "2024-05": {"revenue": 1180000, "ebitda": 142000, "gm_pct": 59.2},
+}
+
+@app.list_tools()
+async def list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name="get_monthly_pl",
+            description="Get P&L data for a specific month. Use format YYYY-MM.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "period": {"type": "string", "description": "Period in YYYY-MM format"}
+                },
+                "required": ["period"]
+            }
+        )
+    ]
+
+@app.call_tool()
+async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
+    if name == "get_monthly_pl":
+        period = arguments["period"]
+        data = PL_DATA.get(period, {"error": "Period not found"})
+        return [types.TextContent(type="text", text=json.dumps(data, indent=2))]
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(stdio_server(app))`,
+        codeLabel: "Simple finance MCP server",
+        sim: {
+          type: "CodeSim",
+          label: "Claude asking your MCP server",
+          code: `User: What was our EBITDA margin in April 2024?
+
+[Claude calls get_monthly_pl with period="2024-04"]
+
+MCP Server returns:
+{
+  "revenue": 1240000,
+  "ebitda": 186000,
+  "gm_pct": 60.0
+}
+
+Claude: April 2024 EBITDA was £186,000, representing a 15%
+margin on revenue of £1.24M. Gross margin held at 60%.`,
+        },
+        quiz: { question: "What are the two main things you define in an MCP server?", options: ["Models and prompts", "Tools (functions Claude can call) and resources (data Claude can read)", "Clients and hosts", "APIs and webhooks"], answer: 1 },
+      },
+      {
+        id: "mcp-7",
+        title: "MCP for Finance Data",
+        concept: "For finance professionals, the most valuable MCP servers connect Claude to your actual financial data — Excel files, CSV exports, accounting software databases, or ERP systems. Once connected, Claude becomes a conversational interface to your finance data: you ask questions in plain English and Claude queries the right source, calculates the answer, and explains it.",
+        tip: "Build one MCP tool per data domain: one for P&L, one for cash flow, one for budget. Keep tools focused — Claude performs better when each tool has a single clear purpose.",
+        code: `# Finance MCP server with multiple tools
+
+import pandas as pd
+from mcp.server import Server
+from mcp import types
+import json
+
+app = Server("finance-data-server")
+
+@app.list_tools()
+async def list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name="read_budget_file",
+            description="Reads the annual budget Excel file and returns data for a given department or all departments.",
+            inputSchema={"type": "object", "properties": {
+                "department": {"type": "string", "description": "Department name, or 'all' for total"}
+            }, "required": ["department"]}
+        ),
+        types.Tool(
+            name="get_variance_report",
+            description="Calculates actual vs budget variance for a given month.",
+            inputSchema={"type": "object", "properties": {
+                "month": {"type": "integer"},
+                "year":  {"type": "integer"}
+            }, "required": ["month", "year"]}
+        ),
+        types.Tool(
+            name="calculate_runway",
+            description="Calculates cash runway in months given current cash and monthly burn rate.",
+            inputSchema={"type": "object", "properties": {
+                "cash_balance": {"type": "number"},
+                "monthly_burn": {"type": "number"}
+            }, "required": ["cash_balance", "monthly_burn"]}
+        ),
+    ]`,
+        codeLabel: "Multi-tool finance MCP server",
+        sim: {
+          type: "PromptSim",
+          prompt: "We have £340K in the bank and we're burning £42K per month. How long is our runway and what happens if burn increases by 20%?",
+          response: "[Claude calls calculate_runway with cash_balance=340000, monthly_burn=42000]\n\nAt your current burn rate of £42K/month, you have approximately 8.1 months of runway (£340K ÷ £42K).\n\nIf burn increases by 20% to £50.4K/month, runway falls to 6.7 months — a reduction of 1.4 months.\n\nAt 8 months you should be raising or cutting costs now. The standard rule is to start a fundraise or restructuring process when you have 6 months of runway remaining — which at current burn is approximately 2 months from today.\n\nRecommendation: model three scenarios — hold burn flat, reduce by 15%, and the 20% increase — to stress test your options before the board meeting."
+        },
+        quiz: { question: "What is the best way to structure finance tools in an MCP server?", options: ["One large tool that does everything", "One tool per data domain with a single clear purpose each", "As many tools as possible", "Mirror your database table structure exactly"], answer: 1 },
+      },
+      {
+        id: "mcp-8",
+        title: "MCP Resources",
+        concept: "In addition to tools (functions Claude calls), MCP servers can expose resources — static or dynamic data that Claude can read directly, like a file, a database table, or a document. Resources work like URLs: Claude requests them by URI and gets the content back. This is ideal for exposing reference data like your chart of accounts, budget templates, or company policies.",
+        tip: "Use resources for reference data that doesn't change often (chart of accounts, budget headers). Use tools for live queries (this month's actuals, current cash balance).",
+        code: `from mcp.server import Server
+from mcp import types
+
+app = Server("finance-resources-server")
+
+CHART_OF_ACCOUNTS = """
+1000 - Cash and Cash Equivalents
+1100 - Accounts Receivable
+2000 - Revenue
+2100 - Product Revenue
+2200 - Service Revenue
+3000 - Cost of Goods Sold
+4000 - Operating Expenses
+4100 - Sales & Marketing
+4200 - Research & Development
+4300 - General & Administrative
+5000 - EBITDA
+"""
+
+@app.list_resources()
+async def list_resources() -> list[types.Resource]:
+    return [
+        types.Resource(
+            uri="finance://chart-of-accounts",
+            name="Chart of Accounts",
+            description="Company chart of accounts with account codes",
+            mimeType="text/plain"
+        ),
+        types.Resource(
+            uri="finance://budget-assumptions",
+            name="FY2025 Budget Assumptions",
+            description="Key assumptions behind the FY2025 budget model",
+            mimeType="text/plain"
+        ),
+    ]
+
+@app.read_resource()
+async def read_resource(uri: str) -> str:
+    if uri == "finance://chart-of-accounts":
+        return CHART_OF_ACCOUNTS
+    return "Resource not found"`,
+        codeLabel: "MCP resources example",
+        sim: {
+          type: "TipsSim",
+          tips: [
+            "Resources are like files — Claude reads them when it needs reference information",
+            "Tools are like functions — Claude calls them to get live data or perform actions",
+            "Use resources for: chart of accounts, budget templates, company policies, glossaries",
+            "Use tools for: live queries, calculations, data writes, API calls",
+            "Claude will automatically read relevant resources when answering questions about your business",
+          ],
+        },
+        quiz: { question: "When should you use MCP resources instead of tools?", options: ["Always — resources are better", "For reference data that doesn't change often, like a chart of accounts", "For live database queries", "For calculations"], answer: 1 },
+      },
+      {
+        id: "mcp-9",
+        title: "Skills vs MCP — When to Use Each",
+        concept: "Skills (API tool use) and MCP are both ways to extend Claude with external capabilities, but they serve different use cases. API tool use is best for building your own application where you control the full stack. MCP is best for connecting Claude Desktop or other MCP clients to your data without building a full application. They can also be combined.",
+        tip: "If you are building a product that others will use, use the API with tool definitions. If you are connecting Claude Desktop to your own data for personal or team use, build an MCP server.",
+        code: `# Decision guide: Skills (API) vs MCP
+
+# USE API TOOL USE when:
+# - You are building an application for others to use
+# - You need full control over the conversation flow
+# - You are embedding Claude into an existing product
+# - You need authentication / multi-user support
+# Example: a finance chatbot on your company intranet
+
+# USE MCP when:
+# - You want to connect Claude Desktop to your data
+# - You want other MCP-compatible tools to reuse the connection
+# - You are building for personal or small team use
+# - You want a plug-and-play integration with minimal code
+# Example: connecting Claude Desktop to your finance database
+
+# USE BOTH when:
+# - Your MCP server is used by Claude Desktop (your team)
+# - Your API app uses the same underlying data layer
+# - You want maximum flexibility and reuse
+# Example: MCP server for the finance team + API app for clients`,
+        codeLabel: "Skills vs MCP decision guide",
+        sim: {
+          type: "StepsSim",
+          steps: [
+            "Building a product for others → use the Claude API with tool definitions",
+            "Connecting Claude Desktop to your data → build an MCP server",
+            "Need authentication and user accounts → Claude API (MCP has no auth layer by default)",
+            "Want Claude Code or Claude Desktop to access your data → MCP server",
+            "Need both personal use and a product → build an MCP server, wrap it in an API app",
+            "Not sure → start with the API and migrate to MCP if you need Claude Desktop integration",
+          ],
+        },
+        quiz: { question: "What is the key deciding factor between API tool use and MCP?", options: ["Cost", "Whether you're building a product for others (API) or connecting Claude Desktop to your data (MCP)", "Speed", "The programming language"], answer: 1 },
+      },
+      {
+        id: "mcp-10",
+        title: "Finance MCP Ecosystem",
+        concept: "A finance MCP ecosystem connects all your data sources to Claude through a set of coordinated MCP servers. Claude becomes your conversational CFO dashboard — you ask questions across your P&L, cash position, budget, and market data without switching between tools. This is the end state of AI-augmented finance operations.",
+        tip: "Build incrementally: start with one MCP server for your most-used data source. Add servers one at a time as you validate each one. A working single-server setup beats a broken multi-server plan.",
+        code: `# Full finance MCP ecosystem config (Claude Desktop)
+{
+  "mcpServers": {
+    "finance-db": {
+      "command": "python",
+      "args": ["/finance/mcp_servers/finance_db_server.py"],
+      "description": "Live P&L, cash flow and budget data"
+    },
+    "documents": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem",
+               "/Finance/Documents"],
+      "description": "Board packs, contracts, reports"
+    },
+    "market-data": {
+      "command": "python",
+      "args": ["/finance/mcp_servers/market_data_server.py"],
+      "description": "FX rates, stock prices, indices"
+    },
+    "models": {
+      "command": "python",
+      "args": ["/finance/mcp_servers/excel_models_server.py"],
+      "description": "Financial models and budget templates"
+    }
+  }
+}
+# Result: ask Claude anything about your business
+# "What's our runway at current burn vs the budget?"
+# "Summarise the board pack from last quarter"
+# "What's the EUR/GBP impact on our Q3 revenue?"`,
+        codeLabel: "Full finance MCP ecosystem config",
+        sim: {
+          type: "PromptSim",
+          prompt: "Compare our actual EBITDA margin this month to the budget, and tell me what the EUR/GBP rate movement means for our Q3 export revenue.",
+          response: "[Claude calls finance-db → get_monthly_actuals, get_budget_target]\n[Claude calls market-data → get_fx_rate('EUR', 'GBP')]\n\nActual EBITDA this month: £142K (11.4% margin) vs budget of £168K (13.5%) — a 2.1pp shortfall driven by the S&M overspend we flagged last week.\n\nOn FX: EUR/GBP is currently at 0.847, compared to the 0.862 assumption in your Q3 budget. For your £380K of EUR-denominated export revenue, this 1.5% rate movement reduces the GBP equivalent by approximately £5,700 — not material enough to flag separately but worth noting in the Q3 commentary if the rate stays here.\n\nCombined impact: EBITDA miss plus FX headwind puts Q3 tracking approximately £31K below plan on a run-rate basis."
+        },
+        quiz: { question: "What is the recommended approach to building a finance MCP ecosystem?", options: ["Build all servers at once for maximum capability", "Start with one server for your most-used data source, add incrementally", "Use only pre-built MCP servers", "Build the most complex server first"], answer: 1 },
+      },
+    ],
+  },
 ];
 
 // ── Helper: flatten all lessons ───────────────────────────────────────────────

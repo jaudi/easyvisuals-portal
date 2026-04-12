@@ -52,6 +52,7 @@ const TRACKS = [
       { icon: "📊", name: "Analysis",    count: 10, desc: "P&L review, variances, ratios, commentary writing" },
       { icon: "📐", name: "Excel & Modelling", count: 10, desc: "Formulas, DAX, data cleaning, model structure" },
       { icon: "⚙️", name: "API & Automation", count: 10, desc: "Claude API, Python, report generators, chatbots" },
+      { icon: "🔌", name: "Skills & MCP",     count: 10, desc: "Tool use, MCP servers, finance data connections" },
     ],
   },
 ];
@@ -72,7 +73,7 @@ export default function LearnPage() {
           </h1>
 
           <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-500">
-            <span className="flex items-center gap-2"><span className="text-green-400 font-bold">120</span> lessons</span>
+            <span className="flex items-center gap-2"><span className="text-green-400 font-bold">130</span> lessons</span>
             <span className="w-1 h-1 rounded-full bg-gray-700" />
             <span className="flex items-center gap-2"><span className="text-green-400 font-bold">3</span> tracks</span>
             <span className="w-1 h-1 rounded-full bg-gray-700" />
