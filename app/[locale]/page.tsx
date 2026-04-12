@@ -62,12 +62,6 @@ export default function Home() {
               <div className="text-gray-500 text-xs uppercase tracking-wider mt-1">{label}</div>
             </div>
           ))}
-          <div>
-            <div className="text-3xl font-extrabold text-white">
-              <CountUp to={3200} suffix="+" />
-            </div>
-            <div className="text-gray-500 text-xs uppercase tracking-wider mt-1">{t("stat5Label")}</div>
-          </div>
         </div>
       </section>
 
