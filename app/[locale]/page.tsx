@@ -243,32 +243,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Free Forever banner ── */}
-      <section className="bg-[#0d1426] py-16 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="bg-blue-600/5 border border-blue-700/30 rounded-2xl p-10">
-            <span className="inline-block text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full px-4 py-1.5 mb-6">
-              {t("freeBadge")}
-            </span>
-            <h2 className="text-3xl font-bold mb-4">{t("freeTitle")}</h2>
-            <p className="text-gray-400 text-base max-w-xl mx-auto mb-8 leading-relaxed">
-              {t("freeDesc")}
-            </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              {[
-                t("freeCheck1"),
-                t("freeCheck2"),
-                t("freeCheck3"),
-                t("freeCheck4"),
-              ].map((text) => (
-                <div key={text} className="flex items-center gap-2 text-gray-300 text-sm">
-                  <span className="text-green-400 font-bold">✓</span>{text}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── Blog teaser ── */}
       <section className="bg-[#0d1426] py-20 px-6">
