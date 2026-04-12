@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import CountUp from "@/components/CountUp";
-import OnboardingFlow from "@/components/OnboardingFlow";
 
 export const metadata: Metadata = {
   title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
@@ -35,12 +34,12 @@ export default function Home() {
           {t("heroSubtitle")}
         </p>
         <div className="flex gap-4 flex-wrap justify-center mb-16">
-          <a
-            href="#get-started"
+          <Link
+            href="/tools"
             className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl text-base transition shadow-lg shadow-blue-600/25"
           >
             {t("ctaPrimary")}
-          </a>
+          </Link>
           <a
             href="#contact"
             className="border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold px-8 py-4 rounded-xl text-base transition"
@@ -66,8 +65,6 @@ export default function Home() {
       </section>
 
 
-
-      <div id="get-started"><OnboardingFlow /></div>
 
       {/* ── Tools ── */}
       <section className="py-20 px-6">
