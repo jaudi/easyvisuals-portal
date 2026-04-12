@@ -397,6 +397,79 @@ print(message.content[0].text)`}
             ))}
           </div>
 
+          {/* Pricing clarity */}
+          <h2 className="text-2xl font-bold text-white mt-10 mb-3">
+            {es ? "Una Cosa Importante Sobre el Precio" : "One Important Thing About Pricing"}
+          </h2>
+          <p>
+            {es
+              ? "Esta es la confusión más común entre profesionales de finanzas que empiezan con Claude:"
+              : "This is the most common confusion among finance professionals starting with Claude:"}
+          </p>
+
+          <div className="bg-[#0d1426] border border-gray-800 rounded-2xl p-6 not-prose space-y-4">
+            <div className="flex gap-4 items-start border-b border-gray-800 pb-4">
+              <span className="text-2xl shrink-0">❌</span>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">
+                  {es ? "Claude Pro no incluye acceso a la API" : "Claude Pro does not include API access"}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {es
+                    ? "Claude Pro ($20/mes) es una suscripción para la interfaz de chat. No puedes usar tu suscripción Pro para ejecutar scripts de Python, automatizaciones o llamadas API. Son dos productos de facturación completamente separados."
+                    : "Claude Pro ($20/month) is a subscription to the chat interface. You cannot use your Pro subscription to run Python scripts, automations, or API calls. They are two completely separate billing products."}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-4 items-start border-b border-gray-800 pb-4">
+              <span className="text-2xl shrink-0">✅</span>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">
+                  {es ? "La API siempre es de pago por uso" : "The API is always pay-per-token"}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {es
+                    ? "No existe suscripción plana para el acceso a la API — ni para empresas ni para equipos. Pagas por lo que consumes. Para un informe mensual de P&L el coste es céntimos. Para miles de documentos al mes, puede ser decenas de libras. Configuras la facturación en console.anthropic.com."
+                    : "There is no flat subscription for API access — not for companies, not for teams. You pay for what you use. For a monthly P&L report the cost is pennies. For thousands of documents per month, it may be tens of pounds. You set up billing at console.anthropic.com."}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-4 items-start">
+              <span className="text-2xl shrink-0">ℹ️</span>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">
+                  {es ? "Claude para Equipos / Enterprise es solo para el chat" : "Claude for Teams / Enterprise is still just the chat interface"}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {es
+                    ? "Claude for Teams ($25–30/mes por usuario) añade espacios de trabajo compartidos, controles de administración y límites de uso más altos — pero sigue siendo la interfaz de chat, no acceso a la API. Si tu empresa quiere automatizaciones, necesita configurar facturación de API por separado."
+                    : "Claude for Teams ($25–30/month per user) adds shared workspaces, admin controls, and higher usage limits — but it is still the chat interface, not API access. If your company wants automations, it needs to set up API billing separately."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-[#0d1426] border border-gray-800 rounded-xl p-5 not-prose">
+            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-3">
+              {es ? "Regla práctica" : "Practical rule"}
+            </p>
+            <ul className="space-y-2 text-sm text-gray-300">
+              {(es ? [
+                "Análisis, comentarios, fórmulas de Excel → Claude Pro es suficiente",
+                "Automatizaciones, scripts, informes mensuales sin intervención → necesitas la API",
+                "Ambas cosas → necesitas Claude Pro ($20/mes) Y créditos de API por separado",
+              ] : [
+                "Analysis, commentary, Excel formulas → Claude Pro is enough",
+                "Automations, scripts, unattended monthly reports → you need the API",
+                "Both → you need Claude Pro ($20/mo) AND separate API credits",
+              ]).map(item => (
+                <li key={item} className="flex gap-2 items-start">
+                  <span className="text-purple-400 shrink-0">→</span>{item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Closing */}
           <h2 className="text-2xl font-bold text-white mt-10 mb-3">
             {es ? "Empieza Simple, Escala Después" : "Start Simple, Scale Later"}
