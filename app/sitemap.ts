@@ -14,6 +14,7 @@ const BLOG_SLUGS = [
   "dcf-valuation-guide",
   "investment-portfolio-analysis",
   "personal-budget-guide",
+  "python-for-streamlit",
 ];
 
 const TOOL_SLUGS = [

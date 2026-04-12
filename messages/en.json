@@ -287,6 +287,13 @@
         "date": "April 2026",
         "description": "Most financial dashboards are beautiful, expensive, and completely ignored. Here's why visual tools fail finance teams — and what actually works.",
         "tag": "Opinion"
+      },
+      {
+        "slug": "python-for-streamlit",
+        "title": "Python Basics for Streamlit: What You Actually Need to Know",
+        "date": "April 2026",
+        "description": "You don't need to be a Python expert to build Streamlit finance apps. These 10 concepts cover 90% of real-world Streamlit development.",
+        "tag": "Tutorial"
       }
     ]
   },
