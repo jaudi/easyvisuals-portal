@@ -168,6 +168,15 @@ export default function Navbar() {
           </Link>
 
           <Link
+            href="/learn"
+            className={`px-4 py-2 rounded-lg transition font-medium ${
+              pathname?.includes("/learn") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
+            }`}
+          >
+            Learn
+          </Link>
+
+          <Link
             href="/quiz"
             className={`px-4 py-2 rounded-lg transition font-medium ${
               pathname?.includes("/quiz") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
@@ -264,6 +273,7 @@ export default function Navbar() {
             <Link href="/tools/market-indices" className={`px-4 py-2.5 rounded-lg transition ${pathname?.includes("/market-indices") ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white"}`}>🌐 {t("marketIndices")}</Link>
             <Link href="/blog" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("blog")}</Link>
             <Link href="/glossary" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("glossary")}</Link>
+            <Link href="/learn" className={`px-4 py-2.5 rounded-lg transition ${pathname?.includes("/learn") ? "text-white bg-blue-600/15" : "text-gray-300 hover:text-white"}`}>Learn</Link>
             <Link href="/quiz" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">{t("quiz")}</Link>
             <Link href="/map" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">🗺️ Map</Link>
             <Link href="/download" className="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white transition">Desktop</Link>
