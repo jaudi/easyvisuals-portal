@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import CountUp from "@/components/CountUp";
+import MarketPulse from "@/components/MarketPulse";
 
 export const metadata: Metadata = {
   title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
@@ -65,6 +66,9 @@ export default function Home() {
       </section>
 
 
+
+      {/* ── Market Pulse ── */}
+      <MarketPulse />
 
       {/* ── Tools ── */}
       <section className="py-20 px-6">
