@@ -66,6 +66,23 @@ export default function Home() {
 
 
 
+      {/* ── Promo video ── */}
+      <section className="px-6 pb-20">
+        <div className="max-w-sm mx-auto">
+          <div className="relative aspect-[9/16] rounded-2xl overflow-hidden border border-blue-700/30 shadow-2xl shadow-blue-600/10 bg-[#0d1426]">
+            <video
+              src="/financeplots-top-tools.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ── Market Pulse ── */}
       <MarketPulse />
 
