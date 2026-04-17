@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import CountUp from "@/components/CountUp";
 import MarketPulse from "@/components/MarketPulse";
 
 export const metadata: Metadata = {
@@ -52,9 +51,9 @@ export default function Home() {
         {/* Stats bar */}
         <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
           {[
-            ["11", t("stat1Label")],
+            ["16", t("stat1Label")],
             ["2",  t("stat2Label")],
-            ["10", t("stat3Label")],
+            ["14", t("stat3Label")],
             ["0",  t("stat4Label")],
           ].map(([num, label]) => (
             <div key={label}>

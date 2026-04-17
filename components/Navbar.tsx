@@ -168,6 +168,24 @@ export default function Navbar() {
           </Link>
 
           <Link
+            href="/glossary"
+            className={`px-4 py-2 rounded-lg transition font-medium ${
+              pathname?.includes("/glossary") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
+            }`}
+          >
+            {t("glossary")}
+          </Link>
+
+          <Link
+            href="/quiz"
+            className={`px-4 py-2 rounded-lg transition font-medium ${
+              pathname?.includes("/quiz") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
+            }`}
+          >
+            {t("quiz")}
+          </Link>
+
+          <Link
             href="/map"
             className={`px-4 py-2 rounded-lg transition font-medium ${
               pathname?.includes("/map") ? "text-white bg-blue-600/10" : "hover:text-white hover:bg-white/5"
