@@ -313,6 +313,12 @@
       },
       {
         "icon": "📊",
+        "name": "Panel Macro EE.UU.",
+        "desc": "Indicadores macroeconómicos clave de EE.UU. — PIB, IPC, desempleo, tipos de la Fed y bono 10 años. Datos de FRED.",
+        "href": "/tools/macro-dashboard"
+      },
+      {
+        "icon": "📊",
         "name": "Análisis de Cartera",
         "desc": "Sube tus posiciones y analiza rentabilidad, métricas de riesgo y asignación de activos.",
         "href": "/tools/portfolio-analysis"

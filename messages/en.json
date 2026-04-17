@@ -327,6 +327,12 @@
       },
       {
         "icon": "📊",
+        "name": "US Macro Dashboard",
+        "desc": "Key US macroeconomic indicators — GDP, CPI, unemployment, Fed Funds and 10Y Treasury. Sourced from FRED.",
+        "href": "/tools/macro-dashboard"
+      },
+      {
+        "icon": "📊",
         "name": "Portfolio Analysis",
         "desc": "Upload your holdings and analyse returns, risk metrics and asset allocation.",
         "href": "/tools/portfolio-analysis"
