@@ -56,6 +56,7 @@ export default function Navbar() {
     { label: `📊 ${t("portfolioAnalysis")}`, href: "/tools/portfolio-analysis" },
     { label: `📉 ${t("stockComparison")}`,   href: "/tools/stock-comparison"   },
     { label: `📈 ${t("stockAnalysis")}`,     href: "/tools/stock-analysis"     },
+    { label: `📊 ${t("macroDashboard")}`,    href: "/tools/macro-dashboard"    },
   ];
 
   return (
