@@ -22,7 +22,7 @@ export default function AboutPage() {
           </h1>
 
           <p className="text-gray-700 text-lg leading-relaxed text-left md:text-center">
-            I&apos;m a senior finance professional and <strong>ACCA member</strong> with <strong>20+ years</strong> of experience across biotech, higher education and financial services — including FP&amp;A roles at Optellum, Neuro-Bio and Psioxus, and a Power BI reporting build at the University of Oxford Engineering Department. I&apos;m triple-qualified (ACCA, CFA UK IMC, EFPA EFA), hold a Masters in Corporate Finance &amp; Law from ESADE and a Law degree from Universidad Complutense de Madrid, and I spend my spare time building the free tools behind FinancePlots — combining hands-on FP&amp;A, Power BI and Python to help other finance people get to the answer faster.
+            I&apos;m a senior finance professional and <strong>ACCA member</strong> with <strong>20+ years</strong> of experience across biotech, higher education and financial services — including FP&amp;A leadership, Board and VC reporting, Power BI variance reporting built from scratch, and 12-year DCF modelling for funding rounds. I&apos;m triple-qualified (ACCA, CFA UK IMC, EFPA EFA), hold a Masters in Corporate Finance &amp; Law from ESADE and a Law degree from Universidad Complutense de Madrid, and I spend my spare time building the free tools behind FinancePlots — combining hands-on FP&amp;A, Power BI and Python to help other finance people get to the answer faster.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mt-10">
