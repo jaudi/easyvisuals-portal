@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About — Javier Audibert | FinancePlots",
   description:
-    "Javier Audibert Larrañaga, ACCA — 20+ years in finance across biotech, higher education and financial services. Finance Business Partner, FP&A and Power BI specialist behind FinancePlots.",
+    "Javier Audibert, ACCA — 20+ years in finance across biotech, higher education and financial services. Finance Business Partner, FP&A and Power BI specialist behind FinancePlots.",
   alternates: { canonical: "https://www.financeplots.com/about" },
 };
 
@@ -97,6 +97,7 @@ const EDUCATION = [
   { title: "ACCA Member", org: "Association of Chartered Certified Accountants", year: "2023" },
   { title: "Investment Management Certificate (IMC)", org: "CFA UK", year: "2013" },
   { title: "Masters in Corporate Finance & Law", org: "ESADE Business School, Madrid", year: "2011" },
+  { title: "European Financial Advisor (EFA)", org: "EFPA — European Financial Planning Association", year: "2007" },
   { title: "BA in Law", org: "Universidad Complutense de Madrid", year: "2001" },
   { title: "Python Programming for Data Science — Parts 1 & 2", org: "Claude AI-assisted curriculum", year: "" },
 ];
@@ -147,8 +148,8 @@ const ACHIEVEMENTS = [
   },
   {
     icon: "🎓",
-    title: "Dual qualification",
-    desc: "ACCA member and CFA UK (IMC) — combining accountancy rigour with an investment management perspective.",
+    title: "Triple-qualified",
+    desc: "ACCA, CFA UK (IMC) and EFPA European Financial Advisor (EFA) — combining accountancy rigour with investment management and financial planning perspectives.",
   },
 ];
 
@@ -163,7 +164,7 @@ export default function AboutPage() {
             About
           </span>
           <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight text-gray-900">
-            Javier Audibert <span className="text-blue-600">Larrañaga</span>
+            Javier <span className="text-blue-600">Audibert</span>
           </h1>
           <p className="text-gray-700 text-lg md:text-xl mb-4 font-semibold">
             ACCA · Finance Business Partner · FP&A · Power BI
