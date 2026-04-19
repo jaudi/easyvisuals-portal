@@ -347,6 +347,7 @@ export default function Home() {
             <div className="flex gap-8 text-sm text-gray-500">
               <a href="/tools" className="hover:text-gray-300 transition">Tools</a>
               <a href="/blog" className="hover:text-gray-300 transition">Blog</a>
+              <a href="/about" className="hover:text-gray-300 transition">About</a>
               <a href="/#contact" className="hover:text-gray-300 transition">Contact</a>
             </div>
           </div>
