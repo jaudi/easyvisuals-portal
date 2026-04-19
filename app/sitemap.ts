@@ -17,6 +17,7 @@ const BLOG_SLUGS = [
   "powerbi-vs-streamlit",
   "python-for-streamlit",
   "uk-pension-savings",
+  "value-vs-growth-investing",
 ];
 
 const TOOL_SLUGS = [
@@ -51,6 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/glossary`, priority: 0.6, changeFrequency: "monthly" as const },
     { url: `${BASE}/quiz`, priority: 0.5, changeFrequency: "monthly" as const },
     { url: `${BASE}/download`, priority: 0.7, changeFrequency: "monthly" as const },
+    { url: `${BASE}/about`, priority: 0.6, changeFrequency: "yearly" as const },
     { url: `${BASE}/es`, priority: 0.9, changeFrequency: "weekly" as const },
     { url: `${BASE}/es/tools`, priority: 0.8, changeFrequency: "weekly" as const },
     { url: `${BASE}/es/blog`, priority: 0.7, changeFrequency: "weekly" as const },

@@ -206,6 +206,13 @@
     },
     "articles": [
       {
+        "slug": "value-vs-growth-investing",
+        "title": "Value vs Growth: Un Siglo de Ciclos, la Fed, Bitcoin y el Oro",
+        "date": "Abril 2026",
+        "description": "Del value de los años 20 a las décadas de growth con tipos cero, el giro de 2022, el factor investing, y por qué la próxima reunión de la Fed mueve tu cartera más que tú mismo.",
+        "tag": "Opinión"
+      },
+      {
         "slug": "personal-budget-guide",
         "title": "Cómo Crear un Presupuesto Personal que Realmente Funcione",
         "date": "Marzo 2026",

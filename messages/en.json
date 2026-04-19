@@ -206,6 +206,13 @@
     },
     "articles": [
       {
+        "slug": "value-vs-growth-investing",
+        "title": "Value vs Growth: A Century of Cycles, the Fed, Bitcoin and Gold",
+        "date": "April 2026",
+        "description": "From 1920s value to the ZIRP growth decades, the 2022 pivot, factor investing, and why the next Fed meeting moves your portfolio more than you do.",
+        "tag": "Opinion"
+      },
+      {
         "slug": "personal-budget-guide",
         "title": "How to Build a Personal Budget That Actually Works",
         "date": "March 2026",
