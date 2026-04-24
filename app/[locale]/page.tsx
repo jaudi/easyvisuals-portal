@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import MarketPulse from "@/components/MarketPulse";
 
 export const metadata: Metadata = {
   title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
@@ -40,12 +39,6 @@ export default function Home() {
           >
             {t("ctaPrimary")}
           </Link>
-          <a
-            href="#contact"
-            className="border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold px-8 py-4 rounded-xl text-base transition"
-          >
-            {t("ctaSecondary")}
-          </a>
         </div>
 
         {/* Stats bar */}
@@ -54,7 +47,6 @@ export default function Home() {
             ["16", t("stat1Label")],
             ["2",  t("stat2Label")],
             ["14", t("stat3Label")],
-            ["0",  t("stat4Label")],
           ].map(([num, label]) => (
             <div key={label}>
               <div className="text-3xl font-extrabold text-white">{num}</div>
@@ -82,9 +74,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ── Market Pulse ── */}
-      <MarketPulse />
 
       {/* ── Tools ── */}
       <section className="py-20 px-6">
