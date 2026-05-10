@@ -204,6 +204,13 @@
     },
     "articles": [
       {
+        "slug": "us-10y-yield-equity-risk-premium",
+        "title": "El 10 años americano, la prima de riesgo y un mundo ahogado en deuda",
+        "date": "Mayo 2026",
+        "description": "El bono del Tesoro americano a 10 años es el ancla del precio de cualquier activo del planeta. Con la deuda desarrollada en máximos de posguerra y la ERP cerca de cero, el cimiento de las finanzas se está moviendo.",
+        "tag": "Opinión"
+      },
+      {
         "slug": "value-vs-growth-investing",
         "title": "Value vs Growth: Un Siglo de Ciclos, la Fed, Bitcoin y el Oro",
         "date": "Abril 2026",

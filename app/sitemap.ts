@@ -17,6 +17,7 @@ const BLOG_SLUGS = [
   "powerbi-vs-streamlit",
   "python-for-streamlit",
   "uk-pension-savings",
+  "us-10y-yield-equity-risk-premium",
   "value-vs-growth-investing",
 ];
 
