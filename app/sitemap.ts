@@ -16,6 +16,7 @@ const BLOG_SLUGS = [
   "personal-budget-guide",
   "powerbi-vs-streamlit",
   "python-for-streamlit",
+  "real-assets-balance-sheets-opportunities",
   "uk-pension-savings",
   "us-10y-yield-equity-risk-premium",
   "value-vs-growth-investing",

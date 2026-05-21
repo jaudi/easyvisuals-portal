@@ -177,7 +177,7 @@
     "blogArticle3Title": "Valoración DCF Explicada: Cómo Valorar una Empresa",
     "blogArticle3Tag": "Valoración",
     "readArticle": "Leer artículo →",
-    "viewAllArticles": "Ver los 16 artículos →",
+    "viewAllArticles": "Ver los 17 artículos →",
     "bookLabel": "Del fundador de FinancePlots",
     "bookTitle": "Your Money Rules",
     "bookDesc": "Un libro práctico de finanzas personales para ayudarte a tomar el control de tu dinero, construir mejores hábitos y tomar decisiones financieras más inteligentes.",
@@ -207,6 +207,13 @@
       "Analysis": "Análisis"
     },
     "articles": [
+      {
+        "slug": "real-assets-balance-sheets-opportunities",
+        "title": "Activos reales, balances y dónde se esconden las oportunidades",
+        "date": "Mayo 2026",
+        "description": "Si el contrarian value es la única ventaja en un mundo con ERP cero, ¿cómo se encuentra? Leyéndote el balance. Los cinco lugares donde los activos reales se esconden a coste histórico, las pantallas que los encuentran y los sectores que cotizan muy por debajo del coste de reposición.",
+        "tag": "Opinión"
+      },
       {
         "slug": "us-10y-yield-equity-risk-premium",
         "title": "El 10 años americano, la prima de riesgo y un mundo ahogado en deuda",

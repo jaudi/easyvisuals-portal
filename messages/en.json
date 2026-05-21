@@ -177,7 +177,7 @@
     "blogArticle3Title": "DCF Valuation Explained: How to Value a Business",
     "blogArticle3Tag": "Valuation",
     "readArticle": "Read article →",
-    "viewAllArticles": "View all 16 articles →",
+    "viewAllArticles": "View all 17 articles →",
     "bookLabel": "By the FinancePlots founder",
     "bookTitle": "Your Money Rules",
     "bookDesc": "A practical personal finance book to help you take control of your money, build better habits, and make smarter financial decisions.",
@@ -207,6 +207,13 @@
       "Analysis": "Analysis"
     },
     "articles": [
+      {
+        "slug": "real-assets-balance-sheets-opportunities",
+        "title": "Real Assets, Balance Sheets and Where the Opportunities Are Hiding",
+        "date": "May 2026",
+        "description": "If contrarian value is the only edge in a zero-ERP world, how do you find it? Read the balance sheet. The five places real assets hide at historical cost, the screens that surface them, and the sectors trading well below replacement value.",
+        "tag": "Opinion"
+      },
       {
         "slug": "us-10y-yield-equity-risk-premium",
         "title": "The 10-Year, the Equity Risk Premium and a World Drowning in Debt",
