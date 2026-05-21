@@ -3,63 +3,150 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 export const metadata: Metadata = {
-  title: "FinancePlots — Free FP&A Tools for Individuals & Companies",
+  title: "FinancePlots — Independent Writing on Markets, Macro & FP&A",
   description:
-    "Free financial planning & analysis tools for individuals, finance teams and wealth managers. Personal budget, portfolio analysis, cash flow forecast, DCF valuation and more. No signup.",
+    "Independent writing on markets, macro and corporate finance, plus 16 free FP&A tools — personal budget, portfolio analysis, DCF valuation, cash flow forecast and more. No signup.",
   alternates: { canonical: "https://www.financeplots.com" },
+};
+
+type Article = {
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+  tag: string;
+};
+
+const TAG_COLORS: Record<string, string> = {
+  "Corporate Finance": "text-blue-400",
+  "Finanzas Corporativas": "text-blue-400",
+  "Valuation": "text-purple-400",
+  "Valoración": "text-purple-400",
+  "Small Business Finance": "text-yellow-400",
+  "Finanzas para Pymes": "text-yellow-400",
+  "Personal Finance": "text-green-400",
+  "Finanzas Personales": "text-green-400",
+  "Startup Finance": "text-orange-400",
+  "Finanzas para Startups": "text-orange-400",
+  "Analysis": "text-gray-400",
+  "Análisis": "text-gray-400",
+  "Opinion": "text-red-400",
+  "Opinión": "text-red-400",
+  "Tutorial": "text-teal-400",
+  "Tutorial (es)": "text-teal-400",
+  "Guide": "text-purple-400",
+  "Guía": "text-purple-400",
 };
 
 export default function Home() {
   const t = useTranslations("home");
+  const tBlog = useTranslations("blog");
 
   const personalTools = t.raw("personalTools") as [string, string, string, string][];
   const professionalTools = t.raw("professionalTools") as [string, string, string, string][];
+  const articles = tBlog.raw("articles") as Article[];
+
+  const featured = articles[0];
+  const recent = articles.slice(1, 7); // next 6 after the featured one
+  const totalArticles = articles.length;
 
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white">
 
-      {/* ── Hero ── */}
-      <section className="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 overflow-hidden">
+      {/* ── Hero: featured article ── */}
+      <section className="relative px-6 pt-32 pb-20 overflow-hidden">
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
-        <span className="inline-block text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full px-4 py-1.5 mb-6">
-          {t("badge")}
-        </span>
-        <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] max-w-4xl mb-6 tracking-tight">
-          {t("heroTitle1")}<br />
-          <span className="text-blue-400">{t("heroTitle2")}</span>
-        </h1>
-        <p className="text-gray-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed">
-          {t("heroSubtitle")}
-        </p>
-        <div className="flex gap-4 flex-wrap justify-center mb-16">
-          <Link
-            href="/tools"
-            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-xl text-base transition shadow-lg shadow-blue-600/25"
-          >
-            {t("ctaPrimary")}
-          </Link>
-        </div>
+        <div className="max-w-4xl mx-auto relative">
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
+            <span className="inline-block text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full px-4 py-1.5">
+              {t("featuredArticleBadge")}
+            </span>
+            <span className={`text-xs font-semibold uppercase tracking-wider ${TAG_COLORS[featured.tag] ?? "text-blue-400"}`}>
+              {featured.tag}
+            </span>
+            <span className="text-gray-500 text-xs">{featured.date}</span>
+          </div>
 
-        {/* Stats bar */}
-        <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
-          {[
-            ["16", t("stat1Label")],
-            ["2",  t("stat2Label")],
-            ["14", t("stat3Label")],
-          ].map(([num, label]) => (
-            <div key={label}>
-              <div className="text-3xl font-extrabold text-white">{num}</div>
-              <div className="text-gray-500 text-xs uppercase tracking-wider mt-1">{label}</div>
-            </div>
-          ))}
+          <Link
+            href={`/blog/${featured.slug}`}
+            className="block group"
+          >
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight group-hover:text-blue-300 transition">
+              {featured.title}
+            </h1>
+            <p className="text-gray-400 text-lg md:text-xl leading-relaxed mb-10 max-w-3xl">
+              {featured.description}
+            </p>
+          </Link>
+
+          <div className="flex gap-4 flex-wrap">
+            <Link
+              href={`/blog/${featured.slug}`}
+              className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl text-base transition shadow-lg shadow-blue-600/25"
+            >
+              {t("heroCtaArticle")}
+            </Link>
+            <Link
+              href="/tools"
+              className="bg-white/5 hover:bg-white/10 border border-gray-700 hover:border-gray-600 text-gray-200 font-semibold px-8 py-4 rounded-xl text-base transition"
+            >
+              {t("heroCtaTools")}
+            </Link>
+          </div>
+
+          {/* Stats bar */}
+          <div className="flex flex-wrap gap-8 md:gap-12 mt-16 pt-10 border-t border-gray-800">
+            {[
+              [String(totalArticles), t("stat3Label")],
+              ["16", t("stat1Label")],
+              ["2",  t("stat2Label")],
+            ].map(([num, label]) => (
+              <div key={label}>
+                <div className="text-3xl font-extrabold text-white">{num}</div>
+                <div className="text-gray-500 text-xs uppercase tracking-wider mt-1">{label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
+      {/* ── Blog grid: recent articles ── */}
+      <section className="bg-[#0d1426] py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+            <div>
+              <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-2">{t("blogLabel")}</p>
+              <h2 className="text-3xl font-bold">{t("latestArticlesTitle")}</h2>
+            </div>
+            <Link href="/blog" className="text-blue-400 hover:text-blue-300 text-sm font-semibold transition">
+              {t("viewAllArticles")}
+            </Link>
+          </div>
 
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {recent.map((a) => (
+              <Link
+                key={a.slug}
+                href={`/blog/${a.slug}`}
+                className="block bg-[#111827] border border-gray-800 rounded-2xl p-6 hover:border-blue-700/50 transition group"
+              >
+                <span className={`text-xs font-bold uppercase tracking-wider ${TAG_COLORS[a.tag] ?? "text-blue-400"}`}>
+                  {a.tag}
+                </span>
+                <h3 className="text-white font-semibold mt-2 mb-2 text-base leading-snug group-hover:text-blue-300 transition">
+                  {a.title}
+                </h3>
+                <p className="text-gray-500 text-xs mb-3 leading-relaxed line-clamp-2">{a.description}</p>
+                <span className="text-gray-600 text-xs">{a.date}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── Promo video ── */}
-      <section className="px-6 pb-20">
+      <section className="px-6 py-20">
         <div className="max-w-sm mx-auto">
           <div className="relative aspect-[9/16] rounded-2xl overflow-hidden border border-blue-700/30 shadow-2xl shadow-blue-600/10 bg-[#0d1426]">
             <video
@@ -249,37 +336,6 @@ export default function Home() {
         </div>
       </section>
 
-
-      {/* ── Blog teaser ── */}
-      <section className="bg-[#0d1426] py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest text-center mb-3">{t("blogLabel")}</p>
-          <h2 className="text-3xl font-bold text-center mb-12">{t("blogTitle")}</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { slug: "cash-flow-forecast-guide", tag: t("blogArticle1Tag"), title: t("blogArticle1Title") },
-              { slug: "investment-portfolio-analysis", tag: t("blogArticle2Tag"), title: t("blogArticle2Title") },
-              { slug: "dcf-valuation-guide", tag: t("blogArticle3Tag"), title: t("blogArticle3Title") },
-            ].map((a) => (
-              <a
-                key={a.slug}
-                href={`/blog/${a.slug}`}
-                className="block bg-[#111827] border border-gray-800 rounded-2xl p-6 hover:border-blue-700/50 transition group"
-              >
-                <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">{a.tag}</span>
-                <h3 className="text-white font-semibold mt-2 text-sm leading-snug group-hover:text-blue-300 transition">{a.title}</h3>
-                <span className="text-gray-500 text-xs mt-3 block">{t("readArticle")}</span>
-              </a>
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <a href="/blog" className="text-blue-400 hover:text-blue-300 text-sm font-semibold transition">
-              {t("viewAllArticles")}
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* ── Book ── */}
       <section className="py-16 px-6">
         <div className="max-w-3xl mx-auto">
@@ -334,8 +390,8 @@ export default function Home() {
               <p className="text-gray-500 text-xs">{t("footerTagline")}</p>
             </div>
             <div className="flex gap-8 text-sm text-gray-500">
-              <a href="/tools" className="hover:text-gray-300 transition">Tools</a>
               <a href="/blog" className="hover:text-gray-300 transition">Blog</a>
+              <a href="/tools" className="hover:text-gray-300 transition">Tools</a>
               <a href="/about" className="hover:text-gray-300 transition">About</a>
               <a href="/#contact" className="hover:text-gray-300 transition">Contact</a>
             </div>
