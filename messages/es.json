@@ -208,6 +208,13 @@
     },
     "articles": [
       {
+        "slug": "ifrs-ias-standards-guide",
+        "title": "Las Normas IFRS e IAS Más Importantes que Todo Profesional de Finanzas Debe Conocer",
+        "date": "Mayo 2026",
+        "description": "Una guía clara de las normas IFRS e IAS que mueven los estados financieros reales — IFRS 9, 15, 16, IAS 1, 36, 37 y el resto de normas que importan en la práctica.",
+        "tag": "Finanzas Corporativas"
+      },
+      {
         "slug": "real-assets-balance-sheets-opportunities",
         "title": "Activos reales, balances y dónde se esconden las oportunidades",
         "date": "Mayo 2026",

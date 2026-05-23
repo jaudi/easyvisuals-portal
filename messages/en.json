@@ -208,6 +208,13 @@
     },
     "articles": [
       {
+        "slug": "ifrs-ias-standards-guide",
+        "title": "The Most Important IFRS and IAS Standards Every Finance Professional Should Know",
+        "date": "May 2026",
+        "description": "A plain-English guide to the IFRS and IAS standards that move real financial statements — IFRS 9, 15, 16, IAS 1, 36, 37 and the rest of the standards that matter in practice.",
+        "tag": "Corporate Finance"
+      },
+      {
         "slug": "real-assets-balance-sheets-opportunities",
         "title": "Real Assets, Balance Sheets and Where the Opportunities Are Hiding",
         "date": "May 2026",

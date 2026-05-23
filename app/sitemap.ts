@@ -12,6 +12,7 @@ const BLOG_SLUGS = [
   "dcf-valuation-guide",
   "finance-dashboard-problem",
   "financial-forecasting",
+  "ifrs-ias-standards-guide",
   "investment-portfolio-analysis",
   "personal-budget-guide",
   "powerbi-vs-streamlit",
