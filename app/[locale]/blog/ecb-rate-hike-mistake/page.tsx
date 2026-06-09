@@ -77,7 +77,7 @@ export default async function ECBRateHikeMistake({ params }: Props) {
 
           <p>
             {es
-              ? "Descompon el IPC europeo de abril y verás exactamente esto: el 70% del incremento de la inflación viene de la energía y de los efectos de segunda ronda en transporte, logística y alimentos básicos. El componente subyacente que no incluye energía, alimentos no procesados y servicios regulados está prácticamente plano. Los servicios siguen donde estaban — sin disparar — porque los salarios pactados en convenio no se han renegociado al alza desde el shock."
+              ? "Descompon el IPC europeo de abril y verás exactamente esto: el 70% del incremento de la inflación viene de la energía y de los efectos de segundo orden en transporte, logística y alimentos básicos. El componente subyacente que no incluye energía, alimentos no procesados y servicios regulados está prácticamente plano. Los servicios siguen donde estaban — sin disparar — porque los salarios pactados en convenio no se han renegociado al alza desde el shock."
               : "Decompose April’s European CPI and you see exactly that: 70% of the increase in inflation comes from energy and second-round effects in transport, logistics and basic food. The narrow core component — excluding energy, unprocessed food and regulated services — is essentially flat. Services are where they were before — not firing up — because collectively-bargained wages haven’t renegotiated higher since the shock."}
           </p>
 
