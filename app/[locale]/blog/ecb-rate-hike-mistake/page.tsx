@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 import BlogArticleShell from "@/components/BlogArticleShell";
 
 export const metadata: Metadata = {
-  title: "Hiking Rates Into the Iran Oil Shock Would Be the ECB's Biggest Mistake in a Decade | FinancePlots",
+  title: "Why an ECB Rate Hike on June 11 Would Be the Wrong Response to the Iran Oil Shock | FinancePlots",
   description:
-    "Eurozone inflation is rising again, but not because the economy is hot. It's a structural supply shock from the Iran war pushing energy back up. Monetary policy can't make oil cheaper — and the ECB is about to learn that the wrong way.",
+    "Eurozone inflation is rising, but not because the economy is hot. It's a structural supply shock from the Iran war pushing energy back up. Monetary policy can't make oil cheaper — and an ECB hike on June 11 would be the wrong tool for the wrong problem.",
   alternates: { canonical: "https://www.financeplots.com/blog/ecb-rate-hike-mistake" },
   openGraph: {
-    title: "Hiking Rates Into the Iran Oil Shock Would Be the ECB's Biggest Mistake in a Decade",
+    title: "Why an ECB Rate Hike on June 11 Would Be the Wrong Response to the Iran Oil Shock",
     description:
-      "Eurozone inflation is rising again, but not because the economy is hot. It's a structural supply shock from the Iran war pushing energy back up. Monetary policy can't make oil cheaper — and the ECB is about to learn that the wrong way.",
+      "Eurozone inflation is rising, but not because the economy is hot. It's a structural supply shock from the Iran war pushing energy back up. Monetary policy can't make oil cheaper — and an ECB hike on June 11 would be the wrong tool for the wrong problem.",
     url: "https://www.financeplots.com/blog/ecb-rate-hike-mistake",
     siteName: "FinancePlots",
     type: "article",
@@ -18,9 +18,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hiking Rates Into the Iran Oil Shock Would Be the ECB's Biggest Mistake in a Decade",
+    title: "Why an ECB Rate Hike on June 11 Would Be the Wrong Response to the Iran Oil Shock",
     description:
-      "Eurozone inflation is rising again, but not because the economy is hot. It's a structural supply shock from the Iran war pushing energy back up. Monetary policy can't make oil cheaper.",
+      "Eurozone inflation is rising, but not because the economy is hot. It's a structural supply shock from the Iran war. Monetary policy can't make oil cheaper.",
     images: ["https://www.financeplots.com/og-image.png"],
   },
 };
@@ -44,8 +44,8 @@ export default async function ECBRateHikeMistake({ params }: Props) {
         </span>
         <h1 className="text-4xl font-bold mt-2 mb-3 leading-tight">
           {es
-            ? "Subir tipos en el shock del petróleo iraní sería el peor error del BCE en una década"
-            : "Hiking Rates Into the Iran Oil Shock Would Be the ECB's Biggest Mistake in a Decade"}
+            ? "Por qué subir tipos el 11 de junio sería la respuesta equivocada al shock del petróleo iraní"
+            : "Why an ECB Rate Hike on June 11 Would Be the Wrong Response to the Iran Oil Shock"}
         </h1>
         <p className="text-gray-400 text-sm mb-10">
           {es ? "Junio 2026 · 10 min de lectura · Por Javier Audibert" : "June 2026 · 10 min read · By Javier Audibert"}
@@ -99,8 +99,8 @@ export default async function ECBRateHikeMistake({ params }: Props) {
 
           <p>
             {es
-              ? "Lo que no funciona — porque matemáticamente no puede funcionar — es contra la inflación de oferta. Si el petróleo sube porque Irán bloquea Ormuz, ¿qué exactamente vas a hacer subiendo el Euribor 50 puntos básicos? ¿Convencer al ayatolá Khamenei de que abra el estrecho? ¿Hacer que la refinería de Ras Tanura procese más barriles? ¿Fabricar GNL adicional en Qatar? No. Lo que vas a conseguir es destruir suficiente demanda de petróleo en Europa — vía recesión inducida — como para que el barril baje. Es decir, vas a empobrecer al continente hasta que pueda permitirse menos energía."
-              : "What doesn’t work — because mathematically it cannot work — is supply inflation. If oil rises because Iran blocks the Strait of Hormuz, what exactly are you going to do by hiking Euribor 50 basis points? Convince Ayatollah Khamenei to reopen the strait? Make Ras Tanura refine more barrels? Manufacture additional LNG in Qatar? No. What you will manage to do is destroy enough oil demand in Europe — through an induced recession — that the barrel comes down. In other words, you’re going to impoverish the continent until it can afford less energy."}
+              ? "Lo que no funciona — porque matemáticamente no puede funcionar — es contra la inflación de oferta. Si el petróleo sube porque Irán bloquea Ormuz, ¿qué exactamente vas a hacer subiendo el Euribor 25 puntos básicos? ¿Convencer al régimen de Teherán de que abra el estrecho? ¿Hacer que la refinería de Ras Tanura procese más barriles? ¿Fabricar GNL adicional en Qatar? No. Lo que vas a conseguir es destruir suficiente demanda de petróleo en Europa — vía recesión inducida — como para que el barril baje. Es decir, vas a empobrecer al continente hasta que pueda permitirse menos energía."
+              : "What doesn’t work — because mathematically it cannot work — is supply inflation. If oil rises because Iran blocks the Strait of Hormuz, what exactly are you going to do by hiking Euribor 25 basis points? Convince the regime in Tehran to reopen the strait? Make Ras Tanura refine more barrels? Manufacture additional LNG in Qatar? No. What you will manage to do is destroy enough oil demand in Europe — through an induced recession — that the barrel comes down. In other words, you’re going to impoverish the continent until it can afford less energy."}
           </p>
 
           <p>
