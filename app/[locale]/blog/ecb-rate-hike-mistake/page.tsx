@@ -55,8 +55,8 @@ export default async function ECBRateHikeMistake({ params }: Props) {
 
           <p>
             {es
-              ? "El BCE ha vuelto a poner sobre la mesa la posibilidad de subir tipos. No mucho, dicen — 25, quizás 50 puntos básicos — \"por precaución\", \"para anclar expectativas\", \"porque la inflación está volviendo\". Y la parte incómoda es esta: la inflación está volviendo de verdad. El IPC armonizado del área euro ha pasado del 2.2% de febrero al 3.4% en mayo. La core lleva tres meses subiendo. Los mercados de futuros del Euribor descuentan ya una probabilidad del 60% de subida antes de fin de año."
-              : "The ECB has put the possibility of hiking rates back on the table. Not by much, they say — 25, maybe 50 basis points — “as a precaution,” “to anchor expectations,” “because inflation is coming back.” And here’s the uncomfortable part: inflation really is coming back. Eurozone harmonised CPI has moved from 2.2% in February to 3.4% in May. Core has been rising for three months. Euribor futures are already pricing a 60% probability of a hike before year-end."}
+              ? "El BCE se reúne este jueves 11 de junio y, salvo sorpresa monumental, va a subir tipos. No es ya una posibilidad teórica: los futuros del Euribor descuentan una probabilidad del 99% de una subida de 25 puntos básicos, llevando la tasa de depósito del 2.00% actual al 2.25%. Sería la primera subida desde 2023, y rompería la pausa que el consejo había mantenido desde la reunión del 30 de abril. La parte incómoda es esta: la inflación está volviendo de verdad. El IPC armonizado del área euro pasó del 2.2% de febrero al 3.0% en abril. La core lleva tres meses subiendo. Y los halcones del consejo — Schnabel, Holzmann, Nagel — llevan semanas preparando el terreno con discursos cada vez más duros."
+              : "The ECB meets this Thursday, June 11, and barring a monumental surprise, it is going to hike. This is no longer a theoretical possibility: Euribor futures are pricing a 99% probability of a 25 basis-point increase, lifting the deposit rate from the current 2.00% to 2.25%. It would be the first hike since 2023, breaking the pause the council has held since the April 30 meeting. And here’s the uncomfortable part: inflation really is coming back. Eurozone harmonised CPI moved from 2.2% in February to 3.0% in April. Core has been rising for three months. And the council’s hawks — Schnabel, Holzmann, Nagel — have spent weeks preparing the ground with increasingly hawkish speeches."}
           </p>
 
           <p>
@@ -77,8 +77,8 @@ export default async function ECBRateHikeMistake({ params }: Props) {
 
           <p>
             {es
-              ? "Descompon el IPC europeo de mayo y verás exactamente esto: el 70% del incremento de la inflación viene de la energía y de los efectos de segunda ronda en transporte, logística y alimentos básicos. El componente subyacente que no incluye energía, alimentos no procesados y servicios regulados está prácticamente plano. Los servicios siguen donde estaban — sin disparar — porque los salarios pactados en convenio no se han renegociado al alza desde el shock."
-              : "Decompose May’s European CPI and you see exactly that: 70% of the increase in inflation comes from energy and second-round effects in transport, logistics and basic food. The narrow core component — excluding energy, unprocessed food and regulated services — is essentially flat. Services are where they were before — not firing up — because collectively-bargained wages haven’t renegotiated higher since the shock."}
+              ? "Descompon el IPC europeo de abril y verás exactamente esto: el 70% del incremento de la inflación viene de la energía y de los efectos de segunda ronda en transporte, logística y alimentos básicos. El componente subyacente que no incluye energía, alimentos no procesados y servicios regulados está prácticamente plano. Los servicios siguen donde estaban — sin disparar — porque los salarios pactados en convenio no se han renegociado al alza desde el shock."
+              : "Decompose April’s European CPI and you see exactly that: 70% of the increase in inflation comes from energy and second-round effects in transport, logistics and basic food. The narrow core component — excluding energy, unprocessed food and regulated services — is essentially flat. Services are where they were before — not firing up — because collectively-bargained wages haven’t renegotiated higher since the shock."}
           </p>
 
           <p>
@@ -202,8 +202,8 @@ export default async function ECBRateHikeMistake({ params }: Props) {
 
           <p>
             {es
-              ? "Segundo, mantener tipos. El BCE ya está en política restrictiva — tasa de depósito al 2.5%, refi al 2.75%, balance reduciéndose. Eso es suficiente. Anclar expectativas a través de credibilidad y mensaje, no a través de un trigger pull innecesario."
-              : "Second, hold rates. The ECB is already in restrictive territory — deposit rate at 2.5%, refi at 2.75%, balance sheet shrinking. That’s enough. Anchor expectations through credibility and message, not through an unnecessary trigger pull."}
+              ? "Segundo, mantener tipos. El BCE ya está en política neutral-restrictiva — tasa de depósito al 2.00%, refi al 2.15%, balance reduciéndose ordenadamente. Eso es suficiente para combatir cualquier inflación de demanda que no exista. Anclar expectativas a través de credibilidad y mensaje, no a través de un trigger pull innecesario el jueves 11."
+              : "Second, hold rates. The ECB is already in neutral-restrictive territory — deposit rate at 2.00%, refi at 2.15%, balance sheet shrinking in orderly fashion. That’s enough to fight any demand inflation that doesn’t exist. Anchor expectations through credibility and message, not through an unnecessary trigger pull on Thursday the 11th."}
           </p>
 
           <p>
