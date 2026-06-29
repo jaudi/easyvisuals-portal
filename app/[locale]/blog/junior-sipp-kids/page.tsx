@@ -294,11 +294,6 @@ export default async function ArticleJuniorSIPP({ params }: Props) {
             </p>
           </div>
 
-          <p className="mt-6">
-            {es
-              ? "El lunes siguiente a esa conversación del sábado, mi mujer abrió los tres SIPPs. Menos de 90 £ al mes de nuestra parte, en total. Y una base de capital que, con el tiempo y un poco de suerte del mercado, podría cambiarles la vida."
-              : "The Monday after that Saturday conversation, my wife opened all three. Less than £90 per month from us in total. And a capital foundation that, given time and a little market luck, could change their lives."}
-          </p>
 
         </div>
 
