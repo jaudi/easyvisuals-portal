@@ -144,8 +144,8 @@ export default async function ArticleJuniorSIPP({ params }: Props) {
 
           <p>
             {es
-              ? "El sábado pasado, mi mujer, un amigo y yo acabamos hablando del futuro de nuestros hijos. Tenemos tres, con 7, 11 y 14 años. La vivienda está fuera del alcance de la mayoría de los jóvenes, la IA está redefiniendo el mercado laboral, y la pensión estatal no va a bastar. Mi mujer había estado investigando durante la semana y llegó con una propuesta sencilla: abrir un SIPP Junior para cada uno."
-              : "Last Saturday, my wife, a friend, and I ended up talking about our kids' futures. We have three — aged 7, 11, and 14. Housing is out of reach for most young people, AI is reshaping the job market, and the state pension will not be enough. My wife had spent the week researching and arrived with a simple proposal: open a Junior SIPP for each of them."}
+              ? "El sábado pasado estábamos en la fiesta de cumpleaños de un amigo — una de esas celebraciones en una granja de glamping con los niños corriendo entre tiendas y animales. En un momento de calma, mientras los pequeños jugaban, mi mujer, nuestro amigo y yo acabamos hablando del futuro de nuestros hijos. Tenemos tres, con 7, 11 y 14 años. La vivienda está fuera del alcance de la mayoría de los jóvenes, la IA está redefiniendo el mercado laboral, y la pensión estatal no va a bastar. Mi mujer había estado investigando durante la semana y llegó con una propuesta sencilla: abrir un SIPP Junior para cada uno."
+              : "Last Saturday we were at a friend's birthday party — one of those celebrations at a farm camping, kids running between tents and animals. In a quiet moment, while the children played, my wife, our friend, and I ended up talking about our kids' futures. We have three — aged 7, 11, and 14. Housing is out of reach for most young people, AI is reshaping the job market, and the state pension will not be enough. My wife had spent the week researching and arrived with a simple proposal: open a Junior SIPP for each of them."}
           </p>
           <p>
             {es
