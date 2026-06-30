@@ -167,8 +167,8 @@ export default async function ArticleJuniorSIPP({ params }: Props) {
           </h2>
           <p>
             {es
-              ? "El sistema de desgravación fiscal de las pensiones en el Reino Unido convierte cada 80 £ que aportas en 100 £ dentro del fondo — automáticamente, sin trámites. Es una rentabilidad garantizada del 25% antes de invertir un solo penique."
-              : "The UK pension tax relief system turns every £80 you contribute into £100 inside the pension — automatically, no forms needed. It is a guaranteed 25% return before you have invested a single penny."}
+              ? "El gobierno añade una desgravación fiscal del 20% sobre cada aportación — convirtiendo cada 80 £ que aportas en 100 £ dentro del fondo, automáticamente y sin trámites. En la práctica, eso supone un incremento inmediato del 25% sobre lo que tú desembolsas."
+              : "The government adds 20% tax relief on every contribution — turning every £80 you put in into £100 inside the pension, automatically and with no forms needed. In practice, that is an instant 25% boost on what you actually spend."}
           </p>
           <div className="bg-[#0d1426] border border-blue-700/40 rounded-xl p-5 my-2">
             <div className="grid grid-cols-3 gap-4 text-center">
